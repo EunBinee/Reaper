@@ -190,17 +190,19 @@ public class PlayerController : MonoBehaviour
                 playerPos_Room = i;
             }
         }
-
-        if(collision.CompareTag("key"))
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("key"))
         {
             //만약 플레이어와 닿아있는 Key에서 shift를 누르면.. 인벤토리에 저장
             _item = collision.gameObject;
-            inventory.AddItem(_item.gameObject, _item.gameObject.GetComponent<Item>());
+           // inventory.AddItem(_item.gameObject, _item.gameObject.GetComponent<Item>());
 
-            /*if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift))
             {
                 inventory.AddItem(_item.gameObject, _item.gameObject.GetComponent<Item>());
-            }*/
+            }
         }
 
     }
