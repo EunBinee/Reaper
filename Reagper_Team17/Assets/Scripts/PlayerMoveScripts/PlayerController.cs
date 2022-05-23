@@ -32,8 +32,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Move();
-
+        
         if (isLadder && Input.GetKey(KeyCode.X))
         {
             //만약 사다리를 타고 있다면...?
@@ -43,6 +42,8 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            Move();
+
             if (Input.GetButtonDown("Jump"))
             {
                 //만약 스페이스 바를 눌렀고, 점프가 안되있을 경우!.. 점프!
@@ -61,10 +62,10 @@ public class PlayerController : MonoBehaviour
         if (rigid.velocity.y < 0) //캐릭터가 점프해서 velocity.y가 높아졌을 때만
         {
             Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0)); //에디터 상에서만 레이를 그려준다
-            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 3, mask);
+            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 2, mask);
             if (rayHit.collider != null) // 바닥 감지를 위해서 레이저를 쏜다! 
             {
-                isJumping = false;
+                //isJumping = false;
                 Debug.Log(rayHit.collider.name);
 
                 if (rayHit.collider.CompareTag("1F_Floor"))
@@ -144,8 +145,36 @@ public class PlayerController : MonoBehaviour
         rigid.AddForce(jumpVelocity, ForceMode2D.Impulse);
 
         isJumping = true;
+
+
+/*        if (isJumping == false)
+        {
+
+            isJumping = true;
+            
+            rigid.velocity = Vector3.zero;
+
+            Vector3 jumpVelocity = new Vector3(0, jumpPower, 0);
+            rigid.AddForce(Vector3.up * jumpPower);
+
+        }*/
+
+        
+
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.transform.name == "Ground_1F")
+        {
+            isJumping = false;
+        }
+        if (collision.transform.name == "Ground_2F")
+        {
+            isJumping = false;
+        }
+        
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Ladder"))
