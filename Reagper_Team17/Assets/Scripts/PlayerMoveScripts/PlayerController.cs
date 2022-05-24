@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     //아이템 인벤토리
     public Inventory inventory;
     public GameObject _item;
+    private bool isCilck = false;
 
     void Start()
     {
@@ -146,21 +147,6 @@ public class PlayerController : MonoBehaviour
 
         isJumping = true;
 
-
-/*        if (isJumping == false)
-        {
-
-            isJumping = true;
-            
-            rigid.velocity = Vector3.zero;
-
-            Vector3 jumpVelocity = new Vector3(0, jumpPower, 0);
-            rigid.AddForce(Vector3.up * jumpPower);
-
-        }*/
-
-        
-
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -197,11 +183,16 @@ public class PlayerController : MonoBehaviour
         {
             //만약 플레이어와 닿아있는 Key에서 shift를 누르면.. 인벤토리에 저장
             _item = collision.gameObject;
-           // inventory.AddItem(_item.gameObject, _item.gameObject.GetComponent<Item>());
-
-            if (Input.GetKey(KeyCode.LeftShift))
+            
+            if (Input.GetKey(KeyCode.C))
             {
-                inventory.AddItem(_item.gameObject, _item.gameObject.GetComponent<Item>());
+                if(!isCilck)
+                {
+                    isCilck = true;
+                    inventory.AddItem(_item.gameObject, _item.gameObject.GetComponent<Item>());
+                    Invoke("isCilck_Return", 1); //1초뒤에 이제 아이템을 클릭 할 수 있음.
+                }
+
             }
         }
 
@@ -214,5 +205,8 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
+    void isCilck_Return()
+    {
+        isCilck = false;
+    }
 }

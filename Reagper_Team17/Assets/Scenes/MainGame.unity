@@ -442,7 +442,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &502994339
 GameObject:
@@ -2034,6 +2034,7 @@ MonoBehaviour:
   isLadder: 0
   wantDown: 0
   inventory: {fileID: 1837113313}
+  _item: {fileID: 0}
 --- !u!70 &1349949219
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -2379,6 +2380,7 @@ MonoBehaviour:
   item: []
   item_Object: []
   preItem: {fileID: 0}
+  SlotItem_Img: {fileID: 1663790884}
 --- !u!4 &1837113314
 Transform:
   m_ObjectHideFlags: 0
@@ -2576,5 +2578,5 @@ Transform:
   - {fileID: 1663527856}
   - {fileID: 1840310819}
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
