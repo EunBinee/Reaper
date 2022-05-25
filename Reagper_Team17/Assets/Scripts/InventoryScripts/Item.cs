@@ -7,7 +7,8 @@ public enum ItemType
     //Key는 사용자가 가지고 사용하기위해 인벤토리에 들고다니는 물건
     //Lock 그 Key를 사용할 수 있는 아이템
     Key,
-    Lock
+    Lock,
+    Object
 }
 
 [System.Serializable]

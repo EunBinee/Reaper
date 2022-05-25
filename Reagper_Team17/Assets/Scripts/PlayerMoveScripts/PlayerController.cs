@@ -24,6 +24,12 @@ public class PlayerController : MonoBehaviour
     public Inventory inventory;
     public GameObject _item;
     private bool isCilck = false;
+    //====================================
+
+    //맨처음.. 만약 케이지 안이라면, z를 눌러야만 움직이게...
+    bool inCase = false;
+
+    //==============================================
 
     void Start()
     {
@@ -85,7 +91,9 @@ public class PlayerController : MonoBehaviour
     }
     void Move()
     {
+        
         Vector3 moveVelocity = Vector3.zero;
+        bool Dash = false; //빠르게 달리고 있는지..
 
         // left
         if (Input.GetAxisRaw("Horizontal") < 0)  //왼쪽
@@ -108,11 +116,13 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.Z))
             {
+                Dash = true;
                 movementSpeed = 7;
                 condiBar.GetComponent<ConditionBar>().currentHP -= 0.5f;
             }
             else
             {
+                Dash = false;
                 movementSpeed = 3;
 
                 condiBar.GetComponent<ConditionBar>().currentHP += 0.2f;
@@ -127,10 +137,23 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        
-        
 
-        transform.position += moveVelocity * movementSpeed * Time.deltaTime;
+
+        if (!inCase)
+        {
+            transform.position += moveVelocity * movementSpeed * Time.deltaTime;
+        }
+        else if (inCase && Dash)
+        {
+            movementSpeed = 2;
+            transform.position += moveVelocity * movementSpeed * Time.deltaTime;
+        }
+        else if (inCase)
+        {
+            movementSpeed = 0.1f;
+            transform.position += moveVelocity * movementSpeed * Time.deltaTime;
+        }
+
     }
     void Jump()
     {
@@ -159,7 +182,12 @@ public class PlayerController : MonoBehaviour
         {
             isJumping = false;
         }
-        
+        //만약 케이지안에 플레이어가 갇혀있다면..
+        if (collision.gameObject.tag=="playerCase")
+        {
+            inCase = true;
+        }
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

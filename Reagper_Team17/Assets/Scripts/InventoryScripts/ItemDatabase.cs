@@ -14,5 +14,4 @@ public class ItemDatabase : MonoBehaviour
         instance = this;
     }
     public List<GameObject> itemDB = new List<GameObject>();
-
 }
