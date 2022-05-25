@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     public float jumpPower = 30f;
     public GameObject condiBar; //캐릭터의 체력바를 위한 선언
     public bool condiZero = false; //컨디션BAr.. 너무 달려서 체력이 0이 됨.
-    bool isJumping = false; //캐릭터가 점프를 하고있는지 아닌지..
+    public  bool isJumping = false; //캐릭터가 점프를 하고있는지 아닌지..
     public int playerPos_Floor = 1;//캐릭터의 위치_층별_ 1층 _2층
     
     public int playerPos_Room = 0;//캐릭터의 위치_층별_ 1층 _2층
@@ -27,10 +27,13 @@ public class PlayerController : MonoBehaviour
     //====================================
 
     //맨처음.. 만약 케이지 안이라면, z를 눌러야만 움직이게...
-    public bool inCase = false;
+    public bool inCase = true;
 
     //==============================================
+    //숨었는지 확인
+    public bool ishiding = false;
 
+    //===================================
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -50,11 +53,13 @@ public class PlayerController : MonoBehaviour
         else
         {
             Move();
-
-            if (Input.GetButtonDown("Jump"))
+            if (!inCase)
             {
-                //만약 스페이스 바를 눌렀고, 점프가 안되있을 경우!.. 점프!
-                Jump(); //사다리를 타고있지 않을 땐, 중력 있게
+                if (Input.GetButtonDown("Jump"))
+                {
+                    //만약 스페이스 바를 눌렀고, 점프가 안되있을 경우!.. 점프!
+                    Jump(); //사다리를 타고있지 않을 땐, 중력 있게
+                }
             }
             rigid.gravityScale = 3;
         }
@@ -145,12 +150,12 @@ public class PlayerController : MonoBehaviour
         }
         else if (inCase && Dash)
         {
-            movementSpeed = 2;
+            movementSpeed /= 3;
             transform.position += moveVelocity * movementSpeed * Time.deltaTime;
         }
         else if (inCase)
         {
-            movementSpeed = 0.1f;
+            movementSpeed /= 3f;
             transform.position += moveVelocity * movementSpeed * Time.deltaTime;
         }
 
@@ -174,11 +179,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.transform.name == "Ground_1F")
+        if (collision.transform.tag == "1F_Floor")
         {
             isJumping = false;
         }
-        if (collision.transform.name == "Ground_2F")
+        if (collision.transform.name == "2F_Floor")
         {
             isJumping = false;
         }
@@ -213,6 +218,8 @@ public class PlayerController : MonoBehaviour
                 playerPos_Room = i;
             }
         }
+
+        
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -229,16 +236,30 @@ public class PlayerController : MonoBehaviour
                     inventory.AddItem(_item.gameObject, _item.gameObject.GetComponent<Item>());
                     Invoke("isCilck_Return", 1); //1초뒤에 이제 아이템을 클릭 할 수 있음.
                 }
-
             }
         }
 
+        if (collision.CompareTag("Hide"))
+        {
+            if (Input.GetKey(KeyCode.DownArrow))
+            {
+                //숨었나요?
+                //납짝 업드린 애니메이션 추가
+                sr.color = new Color(0.55f,0.5f,0.5f,0.7f);
+                ishiding = true;
+            }
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.CompareTag("Ladder"))
         {
             isLadder = false;
+        }
+        if (collision.CompareTag("Hide"))
+        {
+            sr.color = new Color(1, 1, 1, 1);
+            ishiding = false;
         }
     }
 
