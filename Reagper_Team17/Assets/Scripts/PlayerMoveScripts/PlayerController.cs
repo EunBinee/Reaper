@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     //====================================
 
     //맨처음.. 만약 케이지 안이라면, z를 눌러야만 움직이게...
-    bool inCase = false;
+    public bool inCase = false;
 
     //==============================================
 
@@ -187,8 +187,17 @@ public class PlayerController : MonoBehaviour
         {
             inCase = true;
         }
-
     }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        //만약 케이지안에 플레이어가 나온다면..
+        if (collision.gameObject.tag == "playerCase")
+        {
+            inCase = false;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Ladder"))

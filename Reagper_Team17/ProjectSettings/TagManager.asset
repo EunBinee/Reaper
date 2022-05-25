@@ -13,6 +13,7 @@ TagManager:
   - room4
   - key
   - playerCase
+  - room5
   layers:
   - Default
   - TransparentFX
