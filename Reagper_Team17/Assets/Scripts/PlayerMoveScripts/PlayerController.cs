@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
             float v = Input.GetAxisRaw("Vertical");
             rigid.gravityScale = 0; //사다리를 타고있을땐, 중력 없게
             rigid.velocity = new Vector2(rigid.velocity.x, v * movementSpeed);
+            Debug.Log(transform.position.y);
         }
         else
         {
@@ -68,31 +69,6 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        //착지와 캐릭터가 위치한 방의 위치파악을 위해..
-        LayerMask mask = LayerMask.GetMask("1F") | LayerMask.GetMask("2F");
-
-        if (rigid.velocity.y < 0) //캐릭터가 점프해서 velocity.y가 높아졌을 때만
-        {
-            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0)); //에디터 상에서만 레이를 그려준다
-            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 2, mask);
-            if (rayHit.collider != null) // 바닥 감지를 위해서 레이저를 쏜다! 
-            {
-                //isJumping = false;
-                Debug.Log(rayHit.collider.name);
-
-                if (rayHit.collider.CompareTag("1F_Floor"))
-                {
-                    playerPos_Floor = 1;
-                    Debug.Log("현재 층 : " + playerPos_Floor);
-                }
-                else if (rayHit.collider.CompareTag("2F_Floor"))
-                {
-                    playerPos_Floor = 2;
-                    Debug.Log("현재 층 : " + playerPos_Floor);
-                }
-
-            }
-        }
     }
     void Move()
     {
@@ -177,14 +153,34 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    public int GetFloor()
+    {
+        //플레이어가 서있는 층 위치를 반환한다.
+        if(playerPos_Floor==1)
+        {
+
+            //1층에 있다면..
+            return 1;
+        }
+        else
+        {
+            //2층에 있다면..
+            return 2;
+        }
+
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.tag == "1F_Floor")
         {
+            playerPos_Floor = 1;
+            Debug.Log("현재 층 : " + playerPos_Floor);
             isJumping = false;
         }
-        if (collision.transform.name == "2F_Floor")
+        if (collision.transform.tag == "2F_Floor")
         {
+            playerPos_Floor = 2;
+            Debug.Log("현재 층 : " + playerPos_Floor);
             isJumping = false;
         }
         //만약 케이지안에 플레이어가 갇혀있다면..
