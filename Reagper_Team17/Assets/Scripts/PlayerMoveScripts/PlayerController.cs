@@ -158,7 +158,6 @@ public class PlayerController : MonoBehaviour
         //플레이어가 서있는 층 위치를 반환한다.
         if(playerPos_Floor==1)
         {
-
             //1층에 있다면..
             return 1;
         }
