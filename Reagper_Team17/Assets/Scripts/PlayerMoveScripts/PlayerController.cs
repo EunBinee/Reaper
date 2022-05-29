@@ -24,6 +24,10 @@ public class PlayerController : MonoBehaviour
     public Inventory inventory;
     public GameObject _item;
     private bool isCilck = false;
+
+    public GameObject _lockItem;
+    public bool isUsing;
+
     //====================================
 
     //맨처음.. 만약 케이지 안이라면, z를 눌러야만 움직이게...
@@ -168,6 +172,11 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+    public GameObject GetLockItem()
+    {
+        return _lockItem;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.tag == "1F_Floor")
@@ -233,14 +242,26 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-
+        if (collision.CompareTag("lock"))
+        {
+            //만약 자물쇠에 맞닿아 있다면.
+            _lockItem = collision.gameObject;
+            if(Input.GetKey(KeyCode.C))
+            {
+                isUsing = true;
+            }
+            if(Input.GetKeyUp(KeyCode.C))
+            {
+                isUsing = false;
+            }//이거 만약 수정 될 수도..
+        }
         if (collision.CompareTag("Hide"))
         {
             if (Input.GetKey(KeyCode.DownArrow))
             {
                 //숨었나요?
                 //납짝 업드린 애니메이션 추가
-                sr.color = new Color(0.55f,0.5f,0.5f,0.7f);
+                sr.color = new Color(0.55f, 0.5f, 0.5f, 0.7f);
                 ishiding = true;
             }
         }
@@ -251,6 +272,14 @@ public class PlayerController : MonoBehaviour
         {
             isLadder = false;
         }
+
+        if (collision.CompareTag("lock"))
+        {
+            //만약 자물쇠에서 벗어난다면...
+            _lockItem = null;
+            isUsing = false;
+        }
+
         if (collision.CompareTag("Hide"))
         {
             sr.color = new Color(1, 1, 1, 1);

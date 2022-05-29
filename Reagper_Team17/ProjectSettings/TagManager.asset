@@ -15,6 +15,7 @@ TagManager:
   - playerCase
   - room5
   - Hide
+  - lock
   layers:
   - Default
   - TransparentFX

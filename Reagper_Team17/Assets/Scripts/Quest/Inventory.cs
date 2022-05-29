@@ -16,6 +16,7 @@ public class Inventory : MonoBehaviour
     public Image SlotItem_Img;
     //============================
 
+    GameObject usedKey;
 
     void Start()
     {
@@ -55,7 +56,6 @@ public class Inventory : MonoBehaviour
 
             //UI할 건지 아닌지 확인 UI
 
-
             //가득 찼을 때, 안의 아이템을 버리고 새로운 아이템을 가지고 온다.
             preItem = item_Object[0];
 
@@ -80,5 +80,27 @@ public class Inventory : MonoBehaviour
             return true; //인벤토리에 이전 아이템이 있어서.. 버려야 할 경우..
         }
             
+    }
+
+    public GameObject GetInventoryItem()
+    {
+        if (item.Count < slot_size)
+        {
+            //만약 인벤토리 슬롯에 아무 것도 안들어가있을 경우
+            return null;
+        }
+        else
+            return item_Object[0];
+    }
+
+    public void Destroy_item()
+    {
+        usedKey = item_Object[0];
+        item_Object.Remove(item_Object[0]);
+        item.Remove(item[0]);
+        preItem = null;
+
+        Debug.Log("삭제 완료");
+        Destroy(usedKey);
     }
 }
