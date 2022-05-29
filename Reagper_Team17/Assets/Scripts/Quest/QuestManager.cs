@@ -69,9 +69,13 @@ public class QuestManager : MonoBehaviour
             case 0:
                 Debug.Log("0퀘스트입니다.");
                 keys[0].transform.position = keysTran[0].position;
-                keys[0].SetActive(true);
-                //inventory.Destory_onlyList();
+         
+                inventory.Destory_onlyList();
 
+                //화면상에 존재하지만, 이제 아이템으로써 움직이지않겠다는 의미
+                keys[0].GetComponent<Item>().notMoving = true;
+
+                keys[0].SetActive(true);
                 break;
             default:
                 Debug.Log("1퀘스트입니다.");

@@ -34,52 +34,54 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public bool AddItem( GameObject _itemObject, Item _item)
+    public void AddItem(GameObject _itemObject, Item _item)
     {
- 
-        if (item.Count < slot_size)
+        if (_item.notMoving == false)
         {
-            //만약 아무 것도 안들어있다면..
-            item.Add(_item);
-            item_Object.Add(_itemObject);
+            //움직이는 아이템일 경우에만.. 진행
+            if (item.Count < slot_size)
+            {
+                //만약 아무 것도 안들어있다면..
+                item.Add(_item);
+                item_Object.Add(_itemObject);
 
-            SlotItem_Img.sprite = item_Object[0].GetComponent<SpriteRenderer>().sprite; // 인벤토리에 스프라이트 이미지 바꾸기
+                SlotItem_Img.sprite = item_Object[0].GetComponent<SpriteRenderer>().sprite; // 인벤토리에 스프라이트 이미지 바꾸기
 
-            item_Object[0].SetActive(false);
+                item_Object[0].SetActive(false);
 
-            Debug.Log(_itemObject.name + " 넣음");
+                Debug.Log(_itemObject.name + " 넣음");
 
-            return false; //인벤토리에 처음부터 아무것도 없었기에.. 이전 아이템이 없는 경우..
+                 //인벤토리에 처음부터 아무것도 없었기에.. 이전 아이템이 없는 경우..
+            }
+            else
+            {
+
+                //UI할 건지 아닌지 확인 UI
+
+                //가득 찼을 때, 안의 아이템을 버리고 새로운 아이템을 가지고 온다.
+                preItem = item_Object[0];
+
+                item.Remove(item[0]);//기존의 아이템 없앰
+                item_Object.Remove(item_Object[0]);
+
+                item.Add(_item);
+                item_Object.Add(_itemObject);
+
+                //====================================
+                //인벤토리 UI 스프라이트 부분            
+                SlotItem_Img.sprite = item_Object[0].GetComponent<SpriteRenderer>().sprite;
+                //====================================
+
+                preItem.SetActive(true);
+                preItem.transform.position = item_Object[0].transform.position;
+
+                item_Object[0].SetActive(false);
+
+                Debug.Log(preItem + " 빼고 " + _itemObject.name + " 넣음");
+
+                //인벤토리에 이전 아이템이 있어서.. 버려야 할 경우..
+            }
         }
-        else
-        {
-
-            //UI할 건지 아닌지 확인 UI
-
-            //가득 찼을 때, 안의 아이템을 버리고 새로운 아이템을 가지고 온다.
-            preItem = item_Object[0];
-
-            item.Remove(item[0]);//기존의 아이템 없앰
-            item_Object.Remove(item_Object[0]);
-
-            item.Add(_item);
-            item_Object.Add(_itemObject);
-            
-            //====================================
-            //인벤토리 UI 스프라이트 부분            
-            SlotItem_Img.sprite = item_Object[0].GetComponent<SpriteRenderer>().sprite;
-            //====================================
-
-            preItem.SetActive(true);
-            preItem.transform.position = item_Object[0].transform.position;
-
-            item_Object[0].SetActive(false);
-
-            Debug.Log(preItem + " 빼고 " + _itemObject.name + " 넣음");
-
-            return true; //인벤토리에 이전 아이템이 있어서.. 버려야 할 경우..
-        }
-            
     }
 
     public GameObject GetInventoryItem()
