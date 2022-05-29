@@ -23,6 +23,8 @@ public class QuestManager : MonoBehaviour
     //퀘스트에 사용될 열쇠들~~
     public GameObject[] keys;
 
+    public Transform[] keysTran;
+
 
     void Start()
     {
@@ -66,8 +68,10 @@ public class QuestManager : MonoBehaviour
         {
             case 0:
                 Debug.Log("0퀘스트입니다.");
-                inventory.Destroy_item();
+                keys[0].transform.position = keysTran[0].position;
                 keys[0].SetActive(true);
+                //inventory.Destory_onlyList();
+
                 break;
             default:
                 Debug.Log("1퀘스트입니다.");

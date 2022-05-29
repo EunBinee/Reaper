@@ -103,4 +103,12 @@ public class Inventory : MonoBehaviour
         Debug.Log("삭제 완료");
         Destroy(usedKey);
     }
+
+    public void Destory_onlyList()
+    {
+        item_Object.Remove(item_Object[0]);
+        item.Remove(item[0]);
+        preItem = null;
+        Debug.Log("삭제 완료_onlyList");
+    }
 }
