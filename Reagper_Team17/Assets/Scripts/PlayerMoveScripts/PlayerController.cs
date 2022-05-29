@@ -191,6 +191,10 @@ public class PlayerController : MonoBehaviour
             Debug.Log("현재 층 : " + playerPos_Floor);
             isJumping = false;
         }
+        if(collision.transform.tag == "canJump"|| collision.transform.tag == "key")
+        {
+            isJumping = false;
+        }
         //만약 케이지안에 플레이어가 갇혀있다면..
         if (collision.gameObject.tag=="playerCase")
         {

@@ -16,6 +16,7 @@ TagManager:
   - room5
   - Hide
   - lock
+  - canJump
   layers:
   - Default
   - TransparentFX
