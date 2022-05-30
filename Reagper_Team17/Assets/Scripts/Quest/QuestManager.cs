@@ -26,9 +26,8 @@ public class QuestManager : MonoBehaviour
     public Transform[] keysTran;
     //Quest 01 번
     //색퍼즐
-    public bool startQuest01 =true;
-    public GameObject[] slot;
-    public int colorball=0;
+    public GameObject[] colorBall;
+    public int trueNum=0;
 
     void Start()
     {
@@ -82,11 +81,57 @@ public class QuestManager : MonoBehaviour
 
                 keys[0].SetActive(true);
                 break;
-            default:
+            case 1:
                 Debug.Log("1퀘스트입니다.");
+                
+                break;
+            default:
 
                 break;
         }
     }
     
+
+
+    public void Finish_Quest01_B()
+    {
+        //색깔 퍼즐 다 맞추고 다했을 때 누르는 버튼
+        for (int i = 0; i < colorBall.Length; i++) 
+        {
+            if (colorBall[i].GetComponent<Item_DragDrop>().Matching == true) 
+            {
+                trueNum++;
+            }
+        }
+        if (trueNum >= colorBall.Length) 
+        {
+            //만약에 Matching이 전부 되어있으면..
+            //열쇠주기
+
+            Debug.Log(trueNum);
+            Debug.Log(colorBall.Length);
+            Debug.Log("열쇠 줌~");
+        }
+        else
+        {
+            //초기화
+            trueNum = 0;
+            Debug.Log("초기화!");
+            Replace_Quest01();
+        }
+    }
+    public void Replace_Quest01_B()
+    {
+        //초기화 버튼
+        Replace_Quest01();
+    }
+
+    void Replace_Quest01()
+    {
+        //색깔 퍼즐 다시 시작하기
+        for (int i = 0; i < colorBall.Length; i++)
+        {
+            colorBall[i].GetComponent<DragDrop>().Replace();  
+        }
+    }
 }

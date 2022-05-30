@@ -25,7 +25,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler,IBeginDragHandler,IEn
     {
         Debug.Log("OnBeginDrag");
 
-        item_DragDrop.matching = false;
+        item_DragDrop.Matching = false;
         canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;
     }
@@ -55,12 +55,9 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler,IBeginDragHandler,IEn
         Debug.Log("_OnDrop");
     }
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.CompareTag("notSlot"))
-        {
-            gameObject.GetComponent<RectTransform>().anchoredPosition = other_rectTransform.anchoredPosition;
 
-        }
+    public void Replace()
+    {
+        rectTransform.anchoredPosition = other_rectTransform.anchoredPosition;
     }
 }

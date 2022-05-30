@@ -7,8 +7,8 @@ public class Item_DragDrop : MonoBehaviour
     //»ö, slotÀÎÁö
 
     public bool isSlot;
-    public string color;
+    public int color;
 
-    public bool matching;
+    public bool Matching;
 
 }

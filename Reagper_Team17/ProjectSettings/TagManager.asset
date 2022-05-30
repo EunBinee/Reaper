@@ -19,6 +19,7 @@ TagManager:
   - canJump
   - Itemslot
   - notSlot
+  - Hint01
   layers:
   - Default
   - TransparentFX
