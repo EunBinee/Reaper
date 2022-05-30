@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class QuestManager : MonoBehaviour
 {
     public Inventory inventory;
@@ -24,7 +24,11 @@ public class QuestManager : MonoBehaviour
     public GameObject[] keys;
 
     public Transform[] keysTran;
-
+    //Quest 01 ¹ø
+    //»öÆÛÁñ
+    public bool startQuest01 =true;
+    public GameObject[] slot;
+    public int colorball=0;
 
     void Start()
     {
@@ -60,6 +64,7 @@ public class QuestManager : MonoBehaviour
             }
 
         }
+
     }
 
     void OpenQuest()

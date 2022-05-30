@@ -11,8 +11,9 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler,IBeginDragHandler,IEn
 
     public RectTransform other_rectTransform;
 
-    public bool isDrop = false; //false 안들어갔을 경우 true 완벽히 slot에 들어갔을 경우.
-     
+    //===========================================
+    public Item_DragDrop item_DragDrop;
+    
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -23,7 +24,8 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler,IBeginDragHandler,IEn
     public void OnBeginDrag(PointerEventData eventData)
     {
         Debug.Log("OnBeginDrag");
-        isDrop = false;
+
+        item_DragDrop.matching = false;
         canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;
     }
@@ -38,7 +40,6 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler,IBeginDragHandler,IEn
     public void OnEndDrag(PointerEventData eventData)
     {
         Debug.Log("OnEndDrag");
-        //eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = other_rectTransform.anchoredPosition;
 
         canvasGroup.alpha = 1;
         canvasGroup.blocksRaycasts = true;

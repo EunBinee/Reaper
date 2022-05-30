@@ -18,4 +18,6 @@ public class GameDirector : MonoBehaviour
     {
         playerPosText.text = playercontroller.playerPos_Floor.ToString() + "Ãþ" +" Room"+ playercontroller.playerPos_Room.ToString();
     }
+
+
 }
