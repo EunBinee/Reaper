@@ -23,11 +23,18 @@ public class QuestManager : MonoBehaviour
     //퀘스트에 사용될 열쇠들~~
     public GameObject[] keys;
 
-    public Transform[] keysTran;
+    public Transform[] Locks;
     //Quest 01 번
     //색퍼즐
+    public bool color_Quest01 = false;
+    public GameObject color_Quest01_room01;
+
     public GameObject[] colorBall;
     public int trueNum=0;
+    //색퍼즐의 힌트 보기
+    public bool Hint01_Quest01 = false;
+    public GameObject hint01_Room01;
+
 
     void Start()
     {
@@ -64,6 +71,45 @@ public class QuestManager : MonoBehaviour
 
         }
 
+
+        if (Hint01_Quest01) 
+        {
+            //힌트 1일 볼때
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+
+                //위방향 버튼 누르면.. 힌트 보여주기
+                if (!playerController.dontMove)
+                {
+                    //만약 dontMove가 false면 hint보여주고
+                    playerController.dontMove = true;
+                    hint01_Room01.SetActive(true);
+                }
+                else
+                {
+                    //true면
+                    playerController.dontMove = false;
+                    hint01_Room01.SetActive(false);
+                }
+            }
+        } //색 힌트
+
+        if (color_Quest01 && trueNum < colorBall.Length)
+        {
+            //컬러 퀘스트 UI
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+
+                //위방향 버튼 누르면.. 힌트 보여주기
+                if (!playerController.dontMove)
+                {
+                    //만약 dontMove가 false면 hint보여주고
+                    playerController.dontMove = true;
+                    color_Quest01_room01.SetActive(true);
+                }
+            }
+        } //색 퍼즐
+
     }
 
     void OpenQuest()
@@ -72,7 +118,7 @@ public class QuestManager : MonoBehaviour
         {
             case 0:
                 Debug.Log("0퀘스트입니다.");
-                keys[0].transform.position = keysTran[0].position;
+                keys[0].transform.position = Locks[0].position;
          
                 inventory.Destory_onlyList();
 
@@ -92,7 +138,7 @@ public class QuestManager : MonoBehaviour
     }
     
 
-
+    //색 퍼즐 메소드-----------------------------------------------
     public void Finish_Quest01_B()
     {
         //색깔 퍼즐 다 맞추고 다했을 때 누르는 버튼
@@ -111,6 +157,10 @@ public class QuestManager : MonoBehaviour
             Debug.Log(trueNum);
             Debug.Log(colorBall.Length);
             Debug.Log("열쇠 줌~");
+
+            keys[1].SetActive(true);
+
+            Exit_Quest01_B();
         }
         else
         {
@@ -125,7 +175,15 @@ public class QuestManager : MonoBehaviour
         //초기화 버튼
         Replace_Quest01();
     }
+    public void Exit_Quest01_B()
+    {
+        //초기화
+        Replace_Quest01();
+        
+        playerController.dontMove = false;
+        color_Quest01_room01.SetActive(false);//UI닫기
 
+    }
     void Replace_Quest01()
     {
         //색깔 퍼즐 다시 시작하기
@@ -134,4 +192,5 @@ public class QuestManager : MonoBehaviour
             colorBall[i].GetComponent<DragDrop>().Replace();  
         }
     }
+    //=====================================================================
 }

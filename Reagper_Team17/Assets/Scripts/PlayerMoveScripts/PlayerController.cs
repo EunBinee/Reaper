@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class PlayerController : MonoBehaviour
 {
     Rigidbody2D rigid;
     SpriteRenderer sr;
+
+    public  QuestManager questManager;
+
+    //움직임을 멈추는 변수
+    public bool dontMove = false;
+    //=======================
 
     public float movementSpeed = 3.0f;
     public float jumpPower = 30f;
@@ -36,8 +41,10 @@ public class PlayerController : MonoBehaviour
     //==============================================
     //숨었는지 확인
     public bool ishiding = false;
-
     //===================================
+    //Quest01 Hint01 사진 보기
+
+    //====================================
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -46,7 +53,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        
+
+
+
         if (isLadder && Input.GetKey(KeyCode.X))
         {
             //만약 사다리를 타고 있다면...?
@@ -70,73 +79,77 @@ public class PlayerController : MonoBehaviour
         }
 
 
+
     }
     private void FixedUpdate()
     {
     }
     void Move()
     {
-        
-        Vector3 moveVelocity = Vector3.zero;
-        bool Dash = false; //빠르게 달리고 있는지..
-
-        // left
-        if (Input.GetAxisRaw("Horizontal") < 0)  //왼쪽
+        if(!dontMove) 
         {
-            moveVelocity = Vector3.left;
+            Vector3 moveVelocity = Vector3.zero;
+            bool Dash = false; //빠르게 달리고 있는지..
 
-            sr.flipX = true;
-        }
-        // right
-        else if (Input.GetAxisRaw("Horizontal") > 0) //오른쪽
-        {
-            moveVelocity = Vector3.right;
-
-            sr.flipX = false;
-        }
-
-
-
-        if (!condiZero)//false일때, 즉 체력이 바닥 나지않았을때.. 실행
-        {
-            if (Input.GetKey(KeyCode.Z))
+            // left
+            if (Input.GetAxisRaw("Horizontal") < 0)  //왼쪽
             {
-                Dash = true;
-                movementSpeed = 7;
-                condiBar.GetComponent<ConditionBar>().currentHP -= 0.5f;
+                moveVelocity = Vector3.left;
+
+                sr.flipX = true;
             }
-            else
+            // right
+            else if (Input.GetAxisRaw("Horizontal") > 0) //오른쪽
             {
-                Dash = false;
-                movementSpeed = 3;
+                moveVelocity = Vector3.right;
+
+                sr.flipX = false;
+            }
+
+
+
+            if (!condiZero)//false일때, 즉 체력이 바닥 나지않았을때.. 실행
+            {
+                if (Input.GetKey(KeyCode.Z))
+                {
+                    Dash = true;
+                    movementSpeed = 7;
+                    condiBar.GetComponent<ConditionBar>().currentHP -= 0.5f;
+                }
+                else
+                {
+                    Dash = false;
+                    movementSpeed = 3;
+
+                    condiBar.GetComponent<ConditionBar>().currentHP += 0.2f;
+                }
+            }
+            else if (condiZero) //true일때, 즉 체력이 바닥 났을때.. 실행
+            {
+                //힘들어하는 애니메이션 추가
+                movementSpeed = 2;//느려진 스피드..
 
                 condiBar.GetComponent<ConditionBar>().currentHP += 0.2f;
             }
-        }
-        else if (condiZero) //true일때, 즉 체력이 바닥 났을때.. 실행
-        {
-            //힘들어하는 애니메이션 추가
-            movementSpeed = 2;//느려진 스피드..
-
-            condiBar.GetComponent<ConditionBar>().currentHP += 0.2f;
-        }
 
 
 
 
-        if (!inCase)
-        {
-            transform.position += moveVelocity * movementSpeed * Time.deltaTime;
-        }
-        else if (inCase && Dash)
-        {
-            movementSpeed /= 3;
-            transform.position += moveVelocity * movementSpeed * Time.deltaTime;
-        }
-        else if (inCase)
-        {
-            movementSpeed /= 3f;
-            transform.position += moveVelocity * movementSpeed * Time.deltaTime;
+            if (!inCase)
+            {
+                transform.position += moveVelocity * movementSpeed * Time.deltaTime;
+            }
+            else if (inCase && Dash)
+            {
+                movementSpeed /= 3;
+                transform.position += moveVelocity * movementSpeed * Time.deltaTime;
+            }
+            else if (inCase)
+            {
+                movementSpeed /= 3f;
+                transform.position += moveVelocity * movementSpeed * Time.deltaTime;
+            }
+
         }
 
     }
@@ -218,7 +231,7 @@ public class PlayerController : MonoBehaviour
             //사다리에 닿였는지
             isLadder = true;
         }
-        for(int i=1;i<5;i++)
+        for(int i=1;i<11;i++)
         {
             //플레이어가 있는 방 위치 파악
             if (collision.CompareTag("room"+i.ToString()))
@@ -227,7 +240,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        
+
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -269,6 +282,18 @@ public class PlayerController : MonoBehaviour
                 ishiding = true;
             }
         }
+
+        
+        if (collision.CompareTag("Hint01_room1"))
+        {
+            Debug.Log(collision.tag);
+            questManager.Hint01_Quest01 = true;
+ 
+        }
+        if (collision.CompareTag("Color_Quest01"))
+        {
+            questManager.color_Quest01 = true;
+        }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -288,6 +313,16 @@ public class PlayerController : MonoBehaviour
         {
             sr.color = new Color(1, 1, 1, 1);
             ishiding = false;
+        }
+
+        if (collision.CompareTag("Hint01_room1"))
+        {
+            questManager.Hint01_Quest01 = false;
+
+        }
+        if (collision.CompareTag("Color_Quest01"))
+        {
+            questManager.color_Quest01 = false;
         }
     }
 

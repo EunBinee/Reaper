@@ -18,8 +18,14 @@ TagManager:
   - lock
   - canJump
   - Itemslot
-  - notSlot
-  - Hint01
+  - Undefined
+  - Hint01_room1
+  - Color_Quest01
+  - room6
+  - room7
+  - room8
+  - room9
+  - room10
   layers:
   - Default
   - TransparentFX

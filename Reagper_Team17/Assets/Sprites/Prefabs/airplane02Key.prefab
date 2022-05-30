@@ -79,7 +79,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.24, y: 0.24}
+  m_Size: {x: 0.08, y: 0.11}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -101,6 +101,7 @@ MonoBehaviour:
   itemName: airplane02Key
   itemImage: {fileID: -7976837497307082302, guid: addeb71dbd51e3f4ea01c27a66afd038, type: 3}
   pair: 1
+  notMoving: 0
 --- !u!58 &4515077264114052695
 CircleCollider2D:
   m_ObjectHideFlags: 0
