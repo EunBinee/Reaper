@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 public class QuestManager : MonoBehaviour
 {
+    SpriteRenderer sp;
+
     public Inventory inventory;
     public PlayerController playerController;
     //현재 인벤토리에 있는 열쇠의 정보 가지고 오기
@@ -35,9 +37,12 @@ public class QuestManager : MonoBehaviour
     public bool Hint01_Quest01 = false;
     public GameObject hint01_Room01;
 
+    public bool canUseDoor_Quest01; //Quest01에서 연 방을 사용할수 있다는 뜻
 
     void Start()
     {
+        //스프라이트 렌더러
+        sp = GetComponent<SpriteRenderer>();
         curInventor_Item = inventory.GetInventoryItem();
         curLockItem = playerController.GetLockItem();
     }
@@ -129,7 +134,11 @@ public class QuestManager : MonoBehaviour
                 break;
             case 1:
                 Debug.Log("1퀘스트입니다.");
-                
+                //문의 잠금을 연다.
+                //스프라이트를 바꾼다.(지금은 색을 바꾸는 것으로 대신함)
+                sp.color = new Color(0.5f, 0.5f, 0.5f, 1);
+
+
                 break;
             default:
 
