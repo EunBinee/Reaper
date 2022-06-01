@@ -41,7 +41,7 @@ public class QuestManager : MonoBehaviour
     public int trueNum=0;
     //색퍼즐의 힌트 보기
     public bool Hint01_Quest01 = false;
-    public GameObject hint01;
+    public GameObject hint01_UI;
     //Quest 02 번==========================================================================
     //Hint02
     public bool Hint02_Quest02 = false;
@@ -119,13 +119,13 @@ public class QuestManager : MonoBehaviour
                 {
                     //만약 dontMove가 false면 hint보여주고
                     playerController.dontMove = true;
-                    hint01.SetActive(true);
+                    hint01_UI.SetActive(true);
                 }
                 else
                 {
                     //true면
                     playerController.dontMove = false;
-                    hint01.SetActive(false);
+                    hint01_UI.SetActive(false);
                 }
             }
         } //색 힌트

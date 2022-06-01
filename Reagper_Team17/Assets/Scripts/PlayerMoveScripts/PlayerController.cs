@@ -348,7 +348,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Quest01======================================
-        if (collision.CompareTag("Hint01_room1"))
+        if (collision.CompareTag("Hint01_Quest01"))
         {
             questManager.Hint01_Quest01 = false;
 
