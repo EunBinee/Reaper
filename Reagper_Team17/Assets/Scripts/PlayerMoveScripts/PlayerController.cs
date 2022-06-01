@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer sr;
 
     public  QuestManager questManager;
-
+    public GameDirector gameDirector;
     //움직임을 멈추는 변수
     public bool dontMove = false;
     //=======================
@@ -44,9 +44,6 @@ public class PlayerController : MonoBehaviour
     //숨었는지 확인
     public bool ishiding = false;
     //===================================
-    //Quest01 Hint01 사진 보기
-
-    //====================================
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -242,7 +239,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -299,8 +295,8 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        
-        if (collision.CompareTag("Hint01_room1"))
+        //Quest01
+        if (collision.CompareTag("Hint01_Quest01"))
         {
             Debug.Log(collision.tag);
             questManager.Hint01_Quest01 = true;
@@ -310,6 +306,21 @@ public class PlayerController : MonoBehaviour
         {
             questManager.color_Quest01 = true;
         }
+        //Quest02
+        if (collision.CompareTag("Hint02_Quest02"))
+        {
+            //힌트 보기
+            questManager.Hint02_Quest02 = true;
+        }
+            
+        //생명의 조각
+        if (collision.CompareTag("life"))
+        {
+            //만약 닿으면..
+            gameDirector.curLife = collision.gameObject;
+            gameDirector.GetLife = true;
+        }
+
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
@@ -336,6 +347,7 @@ public class PlayerController : MonoBehaviour
             ishiding = false;
         }
 
+        //Quest01======================================
         if (collision.CompareTag("Hint01_room1"))
         {
             questManager.Hint01_Quest01 = false;
@@ -344,6 +356,20 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Color_Quest01"))
         {
             questManager.color_Quest01 = false;
+        }
+
+        //Quest02======================================
+        if (collision.CompareTag("Hint02_Quest02"))
+        {
+            //힌트 보기
+            questManager.Hint02_Quest02 = false;
+        }
+        //생명의 조각======================================
+        if (collision.CompareTag("life"))
+        {
+            //생명의 조각에게서 떨어지면.
+            gameDirector.curLife = null;
+            gameDirector.GetLife = false;
         }
     }
 

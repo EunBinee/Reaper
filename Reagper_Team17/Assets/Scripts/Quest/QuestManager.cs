@@ -4,16 +4,17 @@ using UnityEngine;
 using UnityEngine.UI;
 public class QuestManager : MonoBehaviour
 {
-   
-
     public Inventory inventory;
     public PlayerController playerController;
     public GameObject player;
+
     //현재 인벤토리에 있는 열쇠의 정보 가지고 오기
     [SerializeField] private GameObject curInventor_Item;
     //현재 플레이어가 맞닿아있는 Lock자물쇠의 정보.
     [SerializeField] private GameObject curLockItem;
+    //현재 플레이어가 맞닿아있는 (이벤트를 위한)오브젝트의 정보.
     [SerializeField] private GameObject curObject;
+
     bool usingItem;
     bool usingObject;
     //item 스크립트를 받아올것
@@ -24,23 +25,28 @@ public class QuestManager : MonoBehaviour
     //맞는 짝이 있다면.. 현재 퀘스트의 정보값, 자물쇠와 키의 pair값
     int match_Pair = -1;
 
-
     //퀘스트에 사용될 열쇠들~~
     public GameObject[] keys;
 
-    public Transform[] Locks_And_Object;
-    //Quest 01 번
+    public Transform[] Locks_And_Object; //암튼 위치값 저장해야 할 경우.. 사용
+    public GameObject[] changeTag; //이벤트 발생시 태그값을 바꿔야 하는 경우 사용.
+
+    //Quest 01 번==========================================================================
+    //색퍼즐
     //색퍼즐
     public bool color_Quest01 = false;
-    public GameObject color_Quest01_room01;
+    public GameObject color_Quest01_room01; //색퀴즈 UI 오브젝트
 
     public GameObject[] colorBall;
     public int trueNum=0;
     //색퍼즐의 힌트 보기
     public bool Hint01_Quest01 = false;
-    public GameObject hint01_Room01;
-
-    public bool canUseDoor_Quest01; //Quest01에서 연 방을 사용할수 있다는 뜻
+    public GameObject hint01;
+    //Quest 02 번==========================================================================
+    //Hint02
+    public bool Hint02_Quest02 = false;
+    public GameObject hint02; //화면에 나오는 hint
+    public GameObject hint02_UI;
 
     //========================
     //쿨타임 //오브젝트 사용시
@@ -96,11 +102,12 @@ public class QuestManager : MonoBehaviour
 
             if(time>maxTime)
             {
-                UseItem();
+                UseObject();
                 time = 0;
             }
         }
 
+        //Quest01======================================================
         if (Hint01_Quest01) 
         {
             //힌트 1일 볼때
@@ -112,13 +119,13 @@ public class QuestManager : MonoBehaviour
                 {
                     //만약 dontMove가 false면 hint보여주고
                     playerController.dontMove = true;
-                    hint01_Room01.SetActive(true);
+                    hint01.SetActive(true);
                 }
                 else
                 {
                     //true면
                     playerController.dontMove = false;
-                    hint01_Room01.SetActive(false);
+                    hint01.SetActive(false);
                 }
             }
         } //색 힌트
@@ -138,7 +145,28 @@ public class QuestManager : MonoBehaviour
                 }
             }
         } //색 퍼즐
+        //Quest02======================================================
+        if (Hint02_Quest02) //Quest02 힌트 보기
+        {
+            //힌트 1일 볼때
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
 
+                //위방향 버튼 누르면.. 힌트 보여주기
+                if (!playerController.dontMove)
+                {
+                    //만약 dontMove가 false면 hint보여주고
+                    playerController.dontMove = true;
+                    hint02_UI.SetActive(true);
+                }
+                else
+                {
+                    //true면
+                    playerController.dontMove = false;
+                    hint02_UI.SetActive(false);
+                }
+            }
+        }//Quest02 힌트 보기
     }
 
     void OpenQuest()
@@ -204,7 +232,7 @@ public class QuestManager : MonoBehaviour
     }
     
 
-    //색 퍼즐 메소드-----------------------------------------------
+    //Quest 01 색 퍼즐 메소드-----------------------------------------------
     public void Finish_Quest01_B()
     {
         //색깔 퍼즐 다 맞추고 다했을 때 누르는 버튼
@@ -259,4 +287,13 @@ public class QuestManager : MonoBehaviour
         }
     }
     //=====================================================================
+    //Quest 02 보물(열쇠)찾기
+    public void Start_Quest02()
+    {
+        //지도가 생기도록
+        hint02.SetActive(true);
+        changeTag[0].tag = "key"; //2층 액자tag를 key로 
+    }
+
+
 }
