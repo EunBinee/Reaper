@@ -30,8 +30,10 @@ public class PlayerController : MonoBehaviour
     public GameObject _item;
     private bool isCilck = false;
 
-    public GameObject _lockItem;
-    public bool isUsing;
+    public GameObject _lock_And_Object_Item;
+    public bool isUsingItem; //아이템을 사용하겠다는 의미
+    public bool isUsingObject;//이벤트가 일어나야하는 오브젝트를 사용하겠다는의미.
+
 
     //====================================
 
@@ -89,7 +91,7 @@ public class PlayerController : MonoBehaviour
         if(!dontMove) 
         {
             Vector3 moveVelocity = Vector3.zero;
-            bool Dash = false; //빠르게 달리고 있는지..
+           // bool Dash = false; //빠르게 달리고 있는지..
 
             // left
             if (Input.GetAxisRaw("Horizontal") < 0)  //왼쪽
@@ -112,16 +114,16 @@ public class PlayerController : MonoBehaviour
             {
                 if (Input.GetKey(KeyCode.Z))
                 {
-                    Dash = true;
+                    //Dash = true;
                     movementSpeed = 7;
-                    condiBar.GetComponent<ConditionBar>().currentHP -= 0.5f;
+                    condiBar.GetComponent<ConditionBar>().currentHP -= 0.3f;
                 }
                 else
                 {
-                    Dash = false;
+                    //Dash = false;
                     movementSpeed = 3;
 
-                    condiBar.GetComponent<ConditionBar>().currentHP += 0.2f;
+                    condiBar.GetComponent<ConditionBar>().currentHP += 0.3f;
                 }
             }
             else if (condiZero) //true일때, 즉 체력이 바닥 났을때.. 실행
@@ -129,7 +131,7 @@ public class PlayerController : MonoBehaviour
                 //힘들어하는 애니메이션 추가
                 movementSpeed = 2;//느려진 스피드..
 
-                condiBar.GetComponent<ConditionBar>().currentHP += 0.2f;
+                condiBar.GetComponent<ConditionBar>().currentHP += 0.3f;
             }
 
 
@@ -139,14 +141,14 @@ public class PlayerController : MonoBehaviour
             {
                 transform.position += moveVelocity * movementSpeed * Time.deltaTime;
             }
-            else if (inCase && Dash)
+            /*else if (inCase && Dash)
             {
-                movementSpeed /= 3;
+                movementSpeed /= 2;
                 transform.position += moveVelocity * movementSpeed * Time.deltaTime;
-            }
+            }*/
             else if (inCase)
             {
-                movementSpeed /= 3f;
+                movementSpeed /= 3;
                 transform.position += moveVelocity * movementSpeed * Time.deltaTime;
             }
 
@@ -185,9 +187,9 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-    public GameObject GetLockItem()
+    public GameObject GetLockAndObjectItem()
     {
-        return _lockItem;
+        return _lock_And_Object_Item;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -262,16 +264,30 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("lock"))
         {
             //만약 자물쇠에 맞닿아 있다면.
-            _lockItem = collision.gameObject;
+            _lock_And_Object_Item = collision.gameObject;
             if(Input.GetKey(KeyCode.C))
             {
-                isUsing = true;
+                isUsingItem = true;
             }
             if(Input.GetKeyUp(KeyCode.C))
             {
-                isUsing = false;
+                isUsingItem = false;
             }//이거 만약 수정 될 수도..
         }
+        if (collision.CompareTag("object_Item"))
+        {
+            //만약 이벤트가 실행되어야하는 오브젝트 아이템에 닿아있다면.. 
+            _lock_And_Object_Item = collision.gameObject;
+            if (Input.GetKey(KeyCode.C))
+            {
+                isUsingObject = true;
+            }
+            if (Input.GetKeyUp(KeyCode.C))
+            {
+                isUsingObject = false;
+            }
+        }
+        //
         if (collision.CompareTag("Hide"))
         {
             if (Input.GetKey(KeyCode.DownArrow))
@@ -305,10 +321,15 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("lock"))
         {
             //만약 자물쇠에서 벗어난다면...
-            _lockItem = null;
-            isUsing = false;
+            _lock_And_Object_Item = null;
+            isUsingItem = false;
         }
-
+        if (collision.CompareTag("object_Item"))
+        {
+            //만약 (이벤트가 일어날)오브젝트에서 벗어난다면...
+            _lock_And_Object_Item = null;
+            isUsingObject = false;
+        }
         if (collision.CompareTag("Hide"))
         {
             sr.color = new Color(1, 1, 1, 1);

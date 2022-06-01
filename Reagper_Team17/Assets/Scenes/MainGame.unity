@@ -1893,7 +1893,7 @@ GameObject:
   - component: {fileID: 510142492}
   - component: {fileID: 510142491}
   m_Layer: 0
-  m_Name: Lock01
+  m_Name: Lock01_Door01
   m_TagString: lock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1923,7 +1923,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1952,9 +1952,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: 1
-  itemName: Key00_lock
+  itemName: Key01_lock_And_Door01_Quest01
   itemImage: {fileID: 0}
-  pair: 0
+  pair: 1
   notMoving: 0
 --- !u!212 &510142493
 SpriteRenderer:
@@ -3536,8 +3536,8 @@ GameObject:
   - component: {fileID: 878455209}
   - component: {fileID: 878455208}
   m_Layer: 0
-  m_Name: Lock01 (1)
-  m_TagString: lock
+  m_Name: Door02
+  m_TagString: object_Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3566,7 +3566,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -3595,7 +3595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemType: 1
-  itemName: Key00_lock
+  itemName: Door02_Quest01
   itemImage: {fileID: 0}
   pair: 1
   notMoving: 0
@@ -4547,11 +4547,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventory: {fileID: 1837113313}
   playerController: {fileID: 1349949218}
+  curInventor_Item: {fileID: 0}
+  curLockItem: {fileID: 0}
+  curObject: {fileID: 0}
   keys:
   - {fileID: 1766227545}
   - {fileID: 1854681431}
-  Locks:
+  Locks_And_Object:
   - {fileID: 50261081}
+  - {fileID: 510142490}
+  - {fileID: 878455207}
   color_Quest01: 0
   color_Quest01_room01: {fileID: 1266615823}
   colorBall:
@@ -4564,6 +4569,7 @@ MonoBehaviour:
   trueNum: 0
   Hint01_Quest01: 0
   hint01_Room01: {fileID: 1445134653}
+  canUseDoor_Quest01: 0
 --- !u!4 &1253860570
 Transform:
   m_ObjectHideFlags: 0
@@ -5437,7 +5443,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349949212}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -54.32, y: 4.43, z: 0}
+  m_LocalPosition: {x: 22.4, y: 4.43, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 519420032}
@@ -5469,8 +5475,9 @@ MonoBehaviour:
   wantDown: 0
   inventory: {fileID: 1837113313}
   _item: {fileID: 0}
-  _lockItem: {fileID: 0}
-  isUsing: 0
+  _lock_And_Object_Item: {fileID: 0}
+  isUsingItem: 0
+  isUsingObject: 0
   inCase: 0
   ishiding: 0
 --- !u!70 &1349949219

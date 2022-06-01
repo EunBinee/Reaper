@@ -4,19 +4,22 @@ using UnityEngine;
 using UnityEngine.UI;
 public class QuestManager : MonoBehaviour
 {
-    SpriteRenderer sp;
+   
 
     public Inventory inventory;
     public PlayerController playerController;
+    public GameObject player;
     //현재 인벤토리에 있는 열쇠의 정보 가지고 오기
-    GameObject curInventor_Item;
+    [SerializeField] private GameObject curInventor_Item;
     //현재 플레이어가 맞닿아있는 Lock자물쇠의 정보.
-    GameObject curLockItem;
+    [SerializeField] private GameObject curLockItem;
+    [SerializeField] private GameObject curObject;
     bool usingItem;
-
+    bool usingObject;
     //item 스크립트를 받아올것
     Item KeyItem;
     Item LockItem;
+    Item ObjectItem;
 
     //맞는 짝이 있다면.. 현재 퀘스트의 정보값, 자물쇠와 키의 pair값
     int match_Pair = -1;
@@ -25,7 +28,7 @@ public class QuestManager : MonoBehaviour
     //퀘스트에 사용될 열쇠들~~
     public GameObject[] keys;
 
-    public Transform[] Locks;
+    public Transform[] Locks_And_Object;
     //Quest 01 번
     //색퍼즐
     public bool color_Quest01 = false;
@@ -39,21 +42,28 @@ public class QuestManager : MonoBehaviour
 
     public bool canUseDoor_Quest01; //Quest01에서 연 방을 사용할수 있다는 뜻
 
+    //========================
+    //쿨타임 //오브젝트 사용시
+    float time;
+    float maxTime = 1f;
     void Start()
     {
-        //스프라이트 렌더러
-        sp = GetComponent<SpriteRenderer>();
+
         curInventor_Item = inventory.GetInventoryItem();
-        curLockItem = playerController.GetLockItem();
+        curLockItem = playerController.GetLockAndObjectItem();
     }
     void Update()
     {
-        usingItem = playerController.isUsing;
-        if(usingItem)
+        usingItem = playerController.isUsingItem;
+        usingObject = playerController.isUsingObject;
+
+        time += Time.deltaTime;
+
+        if (usingItem)
         {
             //만약 사용한다고 됐을 경우..
             curInventor_Item = inventory.GetInventoryItem();
-            curLockItem = playerController.GetLockItem();
+            curLockItem = playerController.GetLockAndObjectItem();
             //다시 받아온다!!
             if (curInventor_Item != null && curLockItem != null) 
             {
@@ -74,8 +84,22 @@ public class QuestManager : MonoBehaviour
                 }
             }
 
-        }
+        } //아이템을 사용하기위한..
 
+        if(usingObject)
+        {
+
+            playerController.isUsingObject = false;
+
+            curObject = playerController.GetLockAndObjectItem();
+            ObjectItem = curObject.GetComponent<Item>();
+
+            if(time>maxTime)
+            {
+                UseItem();
+                time = 0;
+            }
+        }
 
         if (Hint01_Quest01) 
         {
@@ -123,12 +147,15 @@ public class QuestManager : MonoBehaviour
         {
             case 0:
                 Debug.Log("0퀘스트입니다.");
-                keys[0].transform.position = Locks[0].position;
-         
+                keys[0].transform.position = Locks_And_Object[0].position;
+                
                 inventory.Destory_onlyList();
 
                 //화면상에 존재하지만, 이제 아이템으로써 움직이지않겠다는 의미
                 keys[0].GetComponent<Item>().notMoving = true;
+
+                //**필수 !!
+                playerController.isUsingItem = false;
 
                 keys[0].SetActive(true);
                 break;
@@ -136,14 +163,44 @@ public class QuestManager : MonoBehaviour
                 Debug.Log("1퀘스트입니다.");
                 //문의 잠금을 연다.
                 //스프라이트를 바꾼다.(지금은 색을 바꾸는 것으로 대신함)
-                sp.color = new Color(0.5f, 0.5f, 0.5f, 1);
+                SpriteRenderer sp = curLockItem.GetComponent<SpriteRenderer>();
+                sp.color = new Color(0.3f, 0.5f, 0.5f, 1);
+                inventory.Destroy_item();//인벤토리에 있는 Key지우기
+                curLockItem.tag = "object_Item"; //문의 태그를 Lock>>object_Item으로 변경;
 
+                //**필수 !!
+                playerController.isUsingItem = false;
 
                 break;
             default:
 
                 break;
         }
+    } //퀘스트 아이템을 조정한다.
+
+    void UseObject()
+    {
+        //오브젝트 (문 등) 사용!
+        if(ObjectItem.itemName== "Key01_lock_And_Door01_Quest01")
+        {
+            //ObjectItem.itemName은 현재 오브젝트의 Item 스크립트를 받고있다.
+            //Quest1번 문이라면..
+            float ObectPosX = Locks_And_Object[2].position.x;
+
+            player.transform.position = new Vector3(ObectPosX, player.transform.position.y, player.transform.position.z);
+
+            Debug.Log("Key01_lock_And_Door01_Quest01 오브젝트 이벤트 실행!!");
+        }
+        if (ObjectItem.itemName == "Door02_Quest01")
+        {
+            float ObectPosX = Locks_And_Object[1].position.x;
+
+            player.transform.position = new Vector3(ObectPosX, player.transform.position.y, player.transform.position.z);
+
+
+            Debug.Log("Door02_Quest01 오브젝트 이벤트 실행!!");
+        }
+
     }
     
 
