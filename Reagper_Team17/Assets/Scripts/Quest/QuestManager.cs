@@ -48,6 +48,13 @@ public class QuestManager : MonoBehaviour
     public GameObject hint02; //화면에 나오는 hint
     public GameObject hint02_UI;
 
+    //액자를 얻은 경우
+    public bool PressTheButton;
+    public GameObject ExplanationBox;
+    public Text TextForExplanation;
+
+    bool usingExplanationBox;
+
     //========================
     //쿨타임 //오브젝트 사용시
     float time;
@@ -63,21 +70,28 @@ public class QuestManager : MonoBehaviour
         usingItem = playerController.isUsingItem;
         usingObject = playerController.isUsingObject;
 
+        curInventor_Item = inventory.GetInventoryItem();
+        if (curInventor_Item != null)
+        {
+            KeyItem = curInventor_Item.GetComponent<Item>();//Key
+            if (KeyItem.haveEventAsObject)
+            {
+                UseObject(curInventor_Item, KeyItem); //만약 오브젝트에 이벤트가 포함되어있다면!
+            }
+        }
+
         time += Time.deltaTime;
 
         if (usingItem)
         {
-            //만약 사용한다고 됐을 경우..
-            curInventor_Item = inventory.GetInventoryItem();
             curLockItem = playerController.GetLockAndObjectItem();
             //다시 받아온다!!
             if (curInventor_Item != null && curLockItem != null) 
             {
                 //인벤토리 아이템과, 락 아이템 둘다 안에 무언가 있을 때 발동
-                KeyItem = curInventor_Item.GetComponent<Item>();
                 LockItem = curLockItem.GetComponent<Item>();
 
-                if(KeyItem.pair==LockItem.pair)
+                if (KeyItem.pair==LockItem.pair)
                 {
                     //만약 Key아이템과 Lock아이템의 pair가 맞다면...
                     if(match_Pair != KeyItem.pair)
@@ -167,6 +181,14 @@ public class QuestManager : MonoBehaviour
                 }
             }
         }//Quest02 힌트 보기
+        
+        if(usingExplanationBox)
+        {
+            if(Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                StartCoroutine("ExBox_FadeOut");
+            }
+        }
     }
 
     void OpenQuest()
@@ -228,9 +250,57 @@ public class QuestManager : MonoBehaviour
 
             Debug.Log("Door02_Quest01 오브젝트 이벤트 실행!!");
         }
-
     }
-    
+    void UseObject(GameObject curItem_, Item item)
+    {
+        //액자 이벤트
+        if(item.itemName== "PhotoPrame_Key03_Quest02")
+        {
+            item.haveEventAsObject = false;
+
+            //UI
+            ExplanationBox.SetActive(true);
+            StartCoroutine("ExBox_FadeIn");
+            TextForExplanation.text = "달칵 소리가 났다.";
+            
+            usingExplanationBox = true;
+
+        }
+    }
+    IEnumerator ExBox_FadeOut()
+    {
+        usingExplanationBox = false;
+        int i = 10;
+        while (i >= 0)
+        {
+            i -= 1;
+            float f = i / 10.0f;
+            Color color = ExplanationBox.GetComponent<Image>().color;
+            color.a = f;
+            ExplanationBox.GetComponent<Image>().color = color;
+
+            if(i<=0)
+            {
+                ExplanationBox.SetActive(false);
+            }
+            
+            yield return new WaitForSeconds(0.02f);
+        }
+    }
+
+    IEnumerator ExBox_FadeIn()
+    {
+        int i = 0;
+        while (i < 10)
+        {
+            i += 1;
+            float f = i / 10.0f;
+            Color color = ExplanationBox.GetComponent<Image>().color;
+            color.a = f;
+            ExplanationBox.GetComponent<Image>().color = color;
+            yield return new WaitForSeconds(0.02f);
+        }
+    }
 
     //Quest 01 색 퍼즐 메소드-----------------------------------------------
     public void Finish_Quest01_B()

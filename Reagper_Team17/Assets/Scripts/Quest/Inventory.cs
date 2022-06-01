@@ -20,7 +20,7 @@ public class Inventory : MonoBehaviour
 
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -30,8 +30,8 @@ public class Inventory : MonoBehaviour
         {
             //만약 가지고 있는 아이템이 없으면
             SlotItem_Img.sprite = null; // 아무 스프라이트도 UI에 띄우지 마셔용
-
         }
+
     }
 
     public void AddItem(GameObject _itemObject, Item _item)
