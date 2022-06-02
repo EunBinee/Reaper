@@ -8,6 +8,8 @@ public class GameDirector : MonoBehaviour
     public Text playerPosText;
     PlayerController playercontroller;
     QuestManager questManager;
+    public CameraShake cameraShake; //카메라 흔들림
+    bool ShakeStart;
 
     //생명의 조각
     public int LifeCount = 0;
@@ -34,7 +36,13 @@ public class GameDirector : MonoBehaviour
         {
             time += Time.deltaTime;
             Debug.Log((int)time);
-            if(time>maxTime)
+
+
+            ShakeStart = true;
+            cameraShake.ShakeTime(maxTime, 0.05f);
+            cameraShake.Shake = true;
+
+            if (time>maxTime)
             {
                 //만약 max Time만큼 생명의 조각에 닿고 시간이 지나면..
                 LifeCount++;
@@ -62,6 +70,12 @@ public class GameDirector : MonoBehaviour
         else if(!GetLife)
         {
             //GetLife가 false면
+            if(ShakeStart)
+            {
+                cameraShake.Stop();
+                ShakeStart = false;
+            }
+            //cameraShake.Stop();
             time = 0;
         }
 

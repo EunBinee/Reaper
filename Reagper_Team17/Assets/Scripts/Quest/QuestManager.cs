@@ -7,6 +7,7 @@ public class QuestManager : MonoBehaviour
     public Inventory inventory;
     public PlayerController playerController;
     public GameObject player;
+    public CameraShake cameraShake; //카메라의 흔들림
 
     //현재 인벤토리에 있는 열쇠의 정보 가지고 오기
     [SerializeField] private GameObject curInventor_Item;
@@ -294,6 +295,8 @@ public class QuestManager : MonoBehaviour
         {
             item.haveEventAsObject = false;
 
+            cameraShake.ShakeTime(0.3f,0.4f);
+            cameraShake.Shake = true;
             //메시지 박스 UI=============================================
             ExplanationBox.SetActive(true);
             StartCoroutine("ExBox_FadeIn");
