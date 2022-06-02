@@ -17,7 +17,9 @@ public class GameDirector : MonoBehaviour
     float time;
     float maxTime = 7.0f;
     //=====================
-    //Quest02의 시작
+    //메세지 박스(설명용도)
+    public GameObject ExplanationBox;
+    public Text TextForExplanation;
 
     void Start()
     {
@@ -37,7 +39,14 @@ public class GameDirector : MonoBehaviour
                 //만약 max Time만큼 생명의 조각에 닿고 시간이 지나면..
                 LifeCount++;
 
-                if(curLife.name== "Life02")
+                //메시지 박스 UI=============================================
+                ExplanationBox.SetActive(true);
+                StartCoroutine("ExBox_FadeIn");
+                TextForExplanation.text = "생명의 조각을 얻었다.";
+                StartCoroutine("ExBox_FadeOut");
+                //===========================================================
+
+                if (curLife.name== "Life02")
                 {
                     //만약 Life02가 사라졌을 경우
                     //Quest02 힌트 주기
@@ -60,5 +69,43 @@ public class GameDirector : MonoBehaviour
         LifeCountText.text = LifeCount + "/3";
     }
 
+
+
+    //메세지 박스 페이드인 페이드 아웃
+    IEnumerator ExBox_FadeOut()
+    {
+        yield return new WaitForSeconds(2f); //4초동안 기다리는 뜻
+
+        int i = 10;
+        while (i >= 0)
+        {
+            i -= 1;
+            float f = i / 10.0f;
+            Color color = ExplanationBox.GetComponent<Image>().color;
+            color.a = f;
+            ExplanationBox.GetComponent<Image>().color = color;
+
+            if (i <= 0)
+            {
+                ExplanationBox.SetActive(false);
+            }
+
+            yield return new WaitForSeconds(0.02f);
+        }
+    }
+
+    IEnumerator ExBox_FadeIn()
+    {
+        int i = 0;
+        while (i < 10)
+        {
+            i += 1;
+            float f = i / 10.0f;
+            Color color = ExplanationBox.GetComponent<Image>().color;
+            color.a = f;
+            ExplanationBox.GetComponent<Image>().color = color;
+            yield return new WaitForSeconds(0.02f);
+        }
+    }
 
 }

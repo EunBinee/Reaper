@@ -49,11 +49,10 @@ public class QuestManager : MonoBehaviour
     public GameObject hint02_UI;
 
     //액자를 얻은 경우
-    public bool PressTheButton;
+   // public bool PressTheButton;
     public GameObject ExplanationBox;
     public Text TextForExplanation;
 
-    bool usingExplanationBox;
 
     //========================
     //쿨타임 //오브젝트 사용시
@@ -182,13 +181,13 @@ public class QuestManager : MonoBehaviour
             }
         }//Quest02 힌트 보기
         
-        if(usingExplanationBox)
+        /*if(usingExplanationBox)
         {
             if(Input.GetKeyDown(KeyCode.DownArrow))
             {
                 StartCoroutine("ExBox_FadeOut");
             }
-        }
+        }*/
     }
 
     void OpenQuest()
@@ -250,26 +249,73 @@ public class QuestManager : MonoBehaviour
 
             Debug.Log("Door02_Quest01 오브젝트 이벤트 실행!!");
         }
+
+        if (ObjectItem.itemName == "Crack")
+        {
+            //Quest02의 crack
+            //열쇠를 줌.
+            keys[2].SetActive(true);
+            changeTag[1].tag = "nothing"; //크랙의 tag를 이제 오브젝트에서 그냥 아무것도 아닌 것으로 바꿔줌
+        }
     }
     void UseObject(GameObject curItem_, Item item)
     {
-        //액자 이벤트
-        if(item.itemName== "PhotoPrame_Key03_Quest02")
+        //Key00_Quest00_의자
+        if (item.itemName == "chair_Key00_Quest00")
         {
             item.haveEventAsObject = false;
 
-            //UI
+            //메시지 박스 UI=============================================
             ExplanationBox.SetActive(true);
             StartCoroutine("ExBox_FadeIn");
-            TextForExplanation.text = "달칵 소리가 났다.";
-            
-            usingExplanationBox = true;
+            TextForExplanation.text = "어딘가에 밟고 올라갈 수 있을 것 같다.";
+            StartCoroutine("ExBox_FadeOut");
+            //===========================================================
+        }
+        //Key01_Quest01_문 열쇠
+        if (item.itemName == "Key01_Quest01")
+        {
+            item.haveEventAsObject = false;
 
+            //메시지 박스 UI=============================================
+            ExplanationBox.SetActive(true);
+            StartCoroutine("ExBox_FadeIn");
+            TextForExplanation.text = "열쇠를 얻었다.";
+            StartCoroutine("ExBox_FadeOut");
+            //===========================================================
+        }
+        //문열쇠02(대칭방 여는 용도
+        if (item.itemName == "key02_Quest02")
+        {
+            item.haveEventAsObject = false;
+
+            //메시지 박스 UI=============================================
+            ExplanationBox.SetActive(true);
+            StartCoroutine("ExBox_FadeIn");
+            TextForExplanation.text = "열쇠를 얻었다.";
+            StartCoroutine("ExBox_FadeOut");
+            //===========================================================
+        }
+        //액자 이벤트_Key03_대칭에 쓰임.
+        if (item.itemName== "PhotoPrame_Key03_Quest03")
+        {
+            item.haveEventAsObject = false;
+
+            //메시지 박스 UI=============================================
+            ExplanationBox.SetActive(true);
+            StartCoroutine("ExBox_FadeIn");
+            TextForExplanation.text = "무언가가 부서지는 소리가 났다.";
+            StartCoroutine("ExBox_FadeOut");
+            //===========================================================
+
+            changeTag[1].tag = "object_Item"; //crack의 태그를 바꿔준다.
         }
     }
+    //메세지 박스 페이드인 페이드 아웃
     IEnumerator ExBox_FadeOut()
     {
-        usingExplanationBox = false;
+        yield return new WaitForSeconds(2f); //4초동안 기다리는 뜻
+
         int i = 10;
         while (i >= 0)
         {

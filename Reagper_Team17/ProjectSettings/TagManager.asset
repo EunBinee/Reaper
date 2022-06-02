@@ -28,6 +28,8 @@ TagManager:
   - life
   - Hint01_Quest01
   - Hint02_Quest02
+  - notSlot
+  - nothing
   layers:
   - Default
   - TransparentFX
