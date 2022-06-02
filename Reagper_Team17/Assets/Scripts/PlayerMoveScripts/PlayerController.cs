@@ -53,15 +53,32 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
 
-
-
         if (isLadder && Input.GetKey(KeyCode.X))
         {
             //만약 사다리를 타고 있다면...?
-            float v = Input.GetAxisRaw("Vertical");
+            /*float v = Input.GetAxisRaw("Vertical");
             rigid.gravityScale = 0; //사다리를 타고있을땐, 중력 없게
             rigid.velocity = new Vector2(rigid.velocity.x, v * movementSpeed);
-            Debug.Log(transform.position.y);
+            condiBar.GetComponent<ConditionBar>().currentHP += 0.3f;
+            Debug.Log(transform.position.y);*/
+
+
+            //======
+            rigid.gravityScale = 0;
+            Vector3 moveVelocity = Vector3.zero;
+            if (Input.GetAxisRaw("Vertical") < 0)  //아래
+            {
+                moveVelocity = Vector3.down;
+            }
+            // right
+            else if (Input.GetAxisRaw("Vertical") > 0) //d위
+            {
+                moveVelocity = Vector3.up;
+
+            }
+            transform.position += moveVelocity * movementSpeed * Time.deltaTime;
+
+            condiBar.GetComponent<ConditionBar>().currentHP += 0.3f;
         }
         else
         {

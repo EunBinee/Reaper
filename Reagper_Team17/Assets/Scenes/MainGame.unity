@@ -632,7 +632,7 @@ MonoBehaviour:
   itemImage: {fileID: -7976837497307082302, guid: addeb71dbd51e3f4ea01c27a66afd038, type: 3}
   pair: 1
   notMoving: 0
-  haveEventAsObject: 0
+  haveEventAsObject: 1
 --- !u!1 &116920472
 GameObject:
   m_ObjectHideFlags: 0
@@ -2561,6 +2561,8 @@ MonoBehaviour:
   LifeCountText: {fileID: 353492384}
   GetLife: 0
   curLife: {fileID: 0}
+  ExplanationBox: {fileID: 1201882223}
+  TextForExplanation: {fileID: 1043286901}
 --- !u!4 &502994341
 Transform:
   m_ObjectHideFlags: 0
@@ -3441,7 +3443,7 @@ MonoBehaviour:
   itemImage: {fileID: 874343242196921964, guid: addeb71dbd51e3f4ea01c27a66afd038, type: 3}
   pair: 2
   notMoving: 0
-  haveEventAsObject: 0
+  haveEventAsObject: 1
 --- !u!212 &646949770
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6364,7 +6366,6 @@ MonoBehaviour:
   Hint02_Quest02: 0
   hint02: {fileID: 152779695}
   hint02_UI: {fileID: 2145499352}
-  PressTheButton: 0
   ExplanationBox: {fileID: 1201882223}
   TextForExplanation: {fileID: 1043286901}
 --- !u!4 &1253860570
@@ -6974,7 +6975,7 @@ GameObject:
   - component: {fileID: 1319445483}
   m_Layer: 0
   m_Name: PhotoPrame_Key03_Quest03
-  m_TagString: key
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7453,7 +7454,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349949212}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 21.8, y: 26.74, z: 0}
+  m_LocalPosition: {x: -54.62, y: 4.66, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 519420032}
