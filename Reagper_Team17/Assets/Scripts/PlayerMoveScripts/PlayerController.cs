@@ -55,31 +55,15 @@ public class PlayerController : MonoBehaviour
         if (isLadder && Input.GetKey(KeyCode.X))
         {
             //만약 사다리를 타고 있다면...?
-            /*float v = Input.GetAxisRaw("Vertical");
+            float v = Input.GetAxisRaw("Vertical");
             rigid.gravityScale = 0; //사다리를 타고있을땐, 중력 없게
             rigid.velocity = new Vector2(rigid.velocity.x, v * movementSpeed);
             condiBar.GetComponent<ConditionBar>().currentHP += 0.3f;
-            Debug.Log(transform.position.y);*/
+            Debug.Log(transform.position.y);
 
 
             inLadder = true; //사다리를 타는 중이예여
 
-            //======
-            rigid.gravityScale = 0;
-            Vector3 moveVelocity = Vector3.zero;
-            if (Input.GetAxisRaw("Vertical") < 0)  //아래
-            {
-                moveVelocity = Vector3.down;
-            }
-            // right
-            else if (Input.GetAxisRaw("Vertical") > 0) //d위
-            {
-                moveVelocity = Vector3.up;
-
-            }
-            transform.position += moveVelocity * movementSpeed * Time.deltaTime;
-
-            condiBar.GetComponent<ConditionBar>().currentHP += 0.3f;
         }
         else
         {
@@ -244,7 +228,20 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Ladder"))
+        if (collision.transform.tag == "1F_Floor")
+        {
+            playerPos_Floor = 1;
+            Debug.Log("현재 층 : " + playerPos_Floor);
+            isJumping = false;
+        }
+        if (collision.transform.tag == "2F_Floor")
+        {
+            playerPos_Floor = 2;
+            Debug.Log("현재 층 : " + playerPos_Floor);
+            isJumping = false;
+        }
+
+        if (collision.CompareTag("Ladder"))
         {
             //사다리에 닿였는지
             isLadder = true;
@@ -343,6 +340,7 @@ public class PlayerController : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
+
         if (collision.CompareTag("Ladder"))
         {
             isLadder = false;
