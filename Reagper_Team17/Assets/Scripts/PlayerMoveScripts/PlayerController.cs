@@ -11,9 +11,9 @@ public class PlayerController : MonoBehaviour
     //움직임을 멈추는 변수
     public bool dontMove = false;
     //=======================
-
+    public Vector3 moveVelocity;
     public float movementSpeed = 3.0f;
-    public float jumpPower = 30f;
+    public float jumpPower = 13f;
     public GameObject condiBar; //캐릭터의 체력바를 위한 선언
     public bool condiZero = false; //컨디션BAr.. 너무 달려서 체력이 0이 됨.
     public  bool isJumping = false; //캐릭터가 점프를 하고있는지 아닌지..
@@ -21,9 +21,8 @@ public class PlayerController : MonoBehaviour
     
     public int playerPos_Room = 0;//캐릭터의 위치_층별_ 1층 _2층
 
-
-    public bool isLadder = false; //사다리를 타고 있는지 아닌지 여부
-    public bool wantDown; //아래로 내려가고싶은지 여부
+    public bool inLadder = false;
+    bool isLadder = false; //사다리를 타고 있는지 아닌지 여부
     //====================================
     //아이템 인벤토리
     public Inventory inventory;
@@ -63,6 +62,8 @@ public class PlayerController : MonoBehaviour
             Debug.Log(transform.position.y);*/
 
 
+            inLadder = true; //사다리를 타는 중이예여
+
             //======
             rigid.gravityScale = 0;
             Vector3 moveVelocity = Vector3.zero;
@@ -82,6 +83,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            inLadder = false;
             Move();
             if (!inCase)
             {

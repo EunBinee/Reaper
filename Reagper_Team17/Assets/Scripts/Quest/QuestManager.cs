@@ -180,14 +180,7 @@ public class QuestManager : MonoBehaviour
                 }
             }
         }//Quest02 ÈùÆ® º¸±â
-        
-        /*if(usingExplanationBox)
-        {
-            if(Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                StartCoroutine("ExBox_FadeOut");
-            }
-        }*/
+
     }
 
     void OpenQuest()
