@@ -246,7 +246,35 @@ public class PlayerController : MonoBehaviour
             inCase = true;
         }
     }
-
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "lock")
+        {
+            //만약 자물쇠에 맞닿아 있다면.
+            _lock_And_Object_Item = collision.gameObject;
+            if (Input.GetKey(KeyCode.C))
+            {
+                isUsingItem = true;
+            }
+            if (Input.GetKeyUp(KeyCode.C))
+            {
+                isUsingItem = false;
+            }//이거 만약 수정 될 수도..
+        }
+        if (collision.gameObject.tag == "object_Item")
+        {
+            //만약 이벤트가 실행되어야하는 오브젝트 아이템에 닿아있다면.. 
+            _lock_And_Object_Item = collision.gameObject;
+            if (Input.GetKey(KeyCode.C))
+            {
+                isUsingObject = true;
+            }
+            if (Input.GetKeyUp(KeyCode.C))
+            {
+                isUsingObject = false;
+            }
+        }
+    }
     private void OnCollisionExit2D(Collision2D collision)
     {
         //만약 케이지안에 플레이어가 나온다면..

@@ -215,6 +215,25 @@ public class QuestManager : MonoBehaviour
                 playerController.isUsingItem = false;
 
                 break;
+            case 2:
+                Debug.Log("2퀘스트입니다.");
+
+                cameraShake.ShakeTime(0.3f, 0.4f);
+                cameraShake.Shake = true;
+                //벽이 사라진다.
+                inventory.Destroy_item();//인벤토리에 있는 Key지우기
+                Destroy(curLockItem);// Lock인 벽도 없앤다.
+                //메시지 박스 UI=============================================
+                ExplanationBox.SetActive(true);
+                StartCoroutine("ExBox_FadeIn");
+                TextForExplanation.text = "벽이 사라졌다.";
+                StartCoroutine("ExBox_FadeOut");
+                //===========================================================
+
+                //**필수 !!
+                playerController.isUsingItem = false;
+
+                break;
             default:
 
                 break;
@@ -251,6 +270,20 @@ public class QuestManager : MonoBehaviour
             keys[2].SetActive(true);
             changeTag[1].tag = "nothing"; //크랙의 tag를 이제 오브젝트에서 그냥 아무것도 아닌 것으로 바꿔줌
         }
+
+        //Quest03_ 대칭방_ Lock은 처음에는 object로 분류
+        if (ObjectItem.itemName == "Lock02_Quest02")
+        {
+            //Quest03의 보이지 않는 벽
+            cameraShake.ShakeTime(0.3f, 0.3f);
+            cameraShake.Shake = true;
+            //메시지 박스 UI=============================================
+            ExplanationBox.SetActive(true);
+            StartCoroutine("ExBox_FadeIn");
+            TextForExplanation.text = "열쇠 구멍이 있다.\n벽뒤에 방이 있을것같다.";
+            StartCoroutine("ExBox_FadeOut");
+            //===========================================================
+        }
     }
     void UseObject(GameObject curItem_, Item item)
     {
@@ -270,7 +303,7 @@ public class QuestManager : MonoBehaviour
         if (item.itemName == "Key01_Quest01")
         {
             item.haveEventAsObject = false;
-
+            changeTag[1].tag = "lock";
             //메시지 박스 UI=============================================
             ExplanationBox.SetActive(true);
             StartCoroutine("ExBox_FadeIn");
@@ -282,6 +315,8 @@ public class QuestManager : MonoBehaviour
         if (item.itemName == "key02_Quest02")
         {
             item.haveEventAsObject = false;
+            changeTag[2].tag = "lock";
+            //보이지않는 벽 tag. Lock으로 변경
 
             //메시지 박스 UI=============================================
             ExplanationBox.SetActive(true);
