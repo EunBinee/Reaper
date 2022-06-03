@@ -77,8 +77,38 @@ public class PlayerController : MonoBehaviour
                     Jump(); //사다리를 타고있지 않을 땐, 중력 있게
                 }
             }
-            rigid.gravityScale = 3;
+            rigid.gravityScale = 2f;
         }
+ /*       if (isLadder)
+        {
+            //만약 사다리를 타고 있다면...?
+            float v = Input.GetAxisRaw("Vertical");
+            rigid.gravityScale = 0; //사다리를 타고있을땐, 중력 없게
+            rigid.velocity = new Vector2(rigid.velocity.x, v * movementSpeed);
+            condiBar.GetComponent<ConditionBar>().currentHP += 0.3f;
+            Debug.Log(transform.position.y);
+
+
+            inLadder = true; //사다리를 타는 중이예여
+
+        }
+
+        Move();
+        if(!isLadder)
+        {
+            if (!inCase)
+            {
+                if (Input.GetButtonDown("Jump"))
+                {
+                    //만약 스페이스 바를 눌렀고, 점프가 안되있을 경우!.. 점프!
+                    Jump(); //사다리를 타고있지 않을 땐, 중력 있게
+                }
+            }
+            rigid.gravityScale = 2f;
+        }*/
+
+
+
 
 
 
