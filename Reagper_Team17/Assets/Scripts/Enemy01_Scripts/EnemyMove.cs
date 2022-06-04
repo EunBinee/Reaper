@@ -11,6 +11,11 @@ public class EnemyMove : MonoBehaviour
 
     public int movementSpeed = 3;
 
+    //==============================
+    //추적 시작을 알리는 변수
+    public bool isChasing;
+    float time;
+    float maxtime = 4f;
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -20,13 +25,30 @@ public class EnemyMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckDirec();
+        
         Move();
     }
     private void Move()
     {
         Vector3 moveVelocity = Vector3.zero;
-
+        if (isChasing)
+        {
+            //만약 추격 중이라면.
+            time += Time.deltaTime;
+            if(time>maxtime)
+            {
+                CheckDirec();// maxtime초 마다 플레이어의 위치 받아옴.
+                maxtime = Random.Range(2, 7);
+                time = 0;
+            }
+            movementSpeed = 6;//ㅈㄴ빠르게
+        }
+        else
+        {
+            time = 0;
+            movementSpeed = 3;
+        }
+        
         if(direction == "Left")
         {
             //만약 플레이어가 왼쪽에 있어서.. 왼쪽 이동해야한다면..
@@ -42,7 +64,7 @@ public class EnemyMove : MonoBehaviour
         transform.position += moveVelocity * movementSpeed * Time.deltaTime;
     }
 
-    void CheckDirec()
+    public void CheckDirec()
     {
         //처음 생겨났을 때, 플레이어가 어떤 방향에 있는지 확인하고, 그 방향으로 움직인다.
         if (player.transform.position.x < this.transform.position.x)
