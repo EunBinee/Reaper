@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rigid;
     SpriteRenderer sr;
 
+    public EnemyMove enemyMove; //적의 움직임 파악을 위해서
     public  QuestManager questManager;
     public GameDirector gameDirector;
     //움직임을 멈추는 변수
@@ -368,7 +369,17 @@ public class PlayerController : MonoBehaviour
                 //숨었나요?
                 //납짝 업드린 애니메이션 추가
                 sr.color = new Color(0.55f, 0.5f, 0.5f, 0.7f);
-                ishiding = true;
+
+                if(enemyMove.SameRoom)
+                {
+                    //만약 같은 방에 enemy가 있다면, ishiding실패
+                    ishiding = false;
+                }
+               else
+                {
+                    //만약 같은 방에 enemy가 없다면, ishiding성공
+                    ishiding = true;
+                }
             }
         }
 
@@ -399,6 +410,7 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
     private void OnTriggerExit2D(Collider2D collision)
     {
 

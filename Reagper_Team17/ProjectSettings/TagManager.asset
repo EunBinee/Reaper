@@ -31,6 +31,8 @@ TagManager:
   - notSlot
   - nothing
   - chase
+  - Enemy
+  - sidewall
   layers:
   - Default
   - TransparentFX

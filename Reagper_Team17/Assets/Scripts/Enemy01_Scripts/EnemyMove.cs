@@ -6,19 +6,20 @@ public class EnemyMove : MonoBehaviour
 {
     //플레이어의 위치와 적의 위치 비교를 위함
     public PlayerController player;
-    int playerRoomPos; //플레이어가 있는 방
-    int playerFloorPos;//플레이어가 있는 층
+    public int playerRoomPos; //플레이어가 있는 방
+    public int playerFloorPos;//플레이어가 있는 층
 
-    int EnemyRoomPos; //적이 있는 방
-    int EnemyFloorPos; //적이 있는 층
+    public int EnemyRoomPos; //적이 있는 방
+    public int EnemyFloorPos; //적이 있는 층
 
     public bool SameRoom = false;
-    public bool SameFloor = false;
+    public bool SameFloor = true;
+    //========================================
+    //만약 같은 층이 아니면 5초뒤에 사라지게 하기위한 변수
+    bool EnemyDestory = false;
     //=========================================
-
-
     SpriteRenderer sr;
-    string direction = ""; //저승사자가 움직일 방향
+    public string direction = ""; //저승사자가 움직일 방향
 
     public int movementSpeed = 3;
 
@@ -27,6 +28,14 @@ public class EnemyMove : MonoBehaviour
     public bool isChasing;
     float time;
     float maxtime = 4f;
+
+    float hidingTime = 0;
+    float maxhidingTime = 15f;
+    
+    //======================================
+
+
+
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -38,14 +47,18 @@ public class EnemyMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        playerRoomPos = player.GetRoom();
+        playerFloorPos = player.GetFloor();
+
         //플레이어와 같은 층인지 계속 연산
-        if(EnemyFloorPos == playerFloorPos)
+        if (EnemyFloorPos == playerFloorPos)
         {
             SameFloor = true;
         }
         else
         {
             SameFloor = false;
+            EnemyDestory = true;
         }
         //플레이어와 같은 방인지 계속 연산
         if (EnemyRoomPos == playerRoomPos)
@@ -56,19 +69,41 @@ public class EnemyMove : MonoBehaviour
         {
             SameRoom = false;
         }
+
         Move();
+
+        //만약 같은 층이 아니면 10초뒤에 사라지게 하기위한 변수
+
+        if(EnemyDestory)
+        {
+            Invoke("EnemyDestroy", 10f);
+            EnemyDestory = false;
+        }
     }
     private void Move()
     {
         Vector3 moveVelocity = Vector3.zero;
         if (isChasing)
         {
+            if(player.ishiding)
+            {
+                //만약 player가 숨었다면..
+                hidingTime += Time.deltaTime;
+                if(hidingTime>maxhidingTime)
+                {
+                    //숨었는데 15초동안 숨으면.. 
+
+                    isChasing = false;
+                    Debug.Log("추적이 멈추었습니다.");
+                    hidingTime = 0;
+                }
+            }
             //만약 추격 중이라면.
             time += Time.deltaTime;
             if(time>maxtime)
             {
                 CheckDirec();// maxtime초 마다 플레이어의 위치 받아옴.
-                maxtime = Random.Range(2, 7);
+                maxtime = Random.Range(2, 6);
                 time = 0;
             }
             movementSpeed = 6;//ㅈㄴ빠르게
@@ -108,9 +143,53 @@ public class EnemyMove : MonoBehaviour
         }
     } //플레이어가 적의 왼쪽에 있는지 오른쪽에 있는지.
 
+    void EnemyDestroy()
+    {
+        if (SameFloor)
+        {
+            //다시한번더 체크 지금도 같은 층인지
+            Debug.Log("지금은 같은 층입니다. 사라지지않습니다");
+        }
+        else if (!SameFloor)
+        {
+            Debug.Log("플레이어와 다른 층입니다. 사라집니다.");
+            Destroy(gameObject);
+        }
+    }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "sidewall")
+        {
+            //만약 양옆 벽에 사신이 부딪쳤을때.
+            if (direction == "Left")
+            {
+                direction = "Right";
+            }
+            if (direction == "Right")
+            {
+                direction = "Left";
+            }
+        }
+    }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.tag == "sidewall")
+        {
+            //만약 양옆 벽에 사신이 부딪쳤을때.
+            if (direction == "Left")
+            {
+                direction = "Right";
+            }
+            if (direction == "Right")
+            {
+                direction = "Left";
+            }
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.transform.tag == "1F_Floor")
         {
