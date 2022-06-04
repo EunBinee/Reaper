@@ -12,6 +12,24 @@ TagManager:
   - room3
   - room4
   - key
+  - playerCase
+  - room5
+  - Hide
+  - lock
+  - canJump
+  - Itemslot
+  - Color_Quest01
+  - room6
+  - room7
+  - room8
+  - room9
+  - room10
+  - object_Item
+  - life
+  - Hint01_Quest01
+  - Hint02_Quest02
+  - notSlot
+  - nothing
   layers:
   - Default
   - TransparentFX
