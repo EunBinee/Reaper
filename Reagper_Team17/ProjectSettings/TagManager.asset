@@ -30,6 +30,7 @@ TagManager:
   - Hint02_Quest02
   - notSlot
   - nothing
+  - chase
   layers:
   - Default
   - TransparentFX
