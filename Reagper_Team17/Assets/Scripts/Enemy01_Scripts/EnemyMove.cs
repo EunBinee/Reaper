@@ -4,7 +4,18 @@ using UnityEngine;
 
 public class EnemyMove : MonoBehaviour
 {
-    public GameObject player;
+    //플레이어의 위치와 적의 위치 비교를 위함
+    public PlayerController player;
+    int playerRoomPos; //플레이어가 있는 방
+    int playerFloorPos;//플레이어가 있는 층
+
+    int EnemyRoomPos; //적이 있는 방
+    int EnemyFloorPos; //적이 있는 층
+
+    public bool SameRoom = false;
+    public bool SameFloor = false;
+    //=========================================
+
 
     SpriteRenderer sr;
     string direction = ""; //저승사자가 움직일 방향
@@ -19,13 +30,32 @@ public class EnemyMove : MonoBehaviour
     void Start()
     {
         sr = GetComponent<SpriteRenderer>();
+        playerRoomPos = player.GetRoom();
+        playerFloorPos = player.GetFloor();
         CheckDirec();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //플레이어와 같은 층인지 계속 연산
+        if(EnemyFloorPos == playerFloorPos)
+        {
+            SameFloor = true;
+        }
+        else
+        {
+            SameFloor = false;
+        }
+        //플레이어와 같은 방인지 계속 연산
+        if (EnemyRoomPos == playerRoomPos)
+        {
+            SameRoom = true;
+        }
+        else
+        {
+            SameRoom = false;
+        }
         Move();
     }
     private void Move()
@@ -76,6 +106,32 @@ public class EnemyMove : MonoBehaviour
             direction = "Right";
 
         }
-    }
+    } //플레이어가 적의 왼쪽에 있는지 오른쪽에 있는지.
 
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.tag == "1F_Floor")
+        {
+            EnemyFloorPos = 1;
+            Debug.Log("적 현재 층 : " + EnemyFloorPos);
+        }
+        if (collision.transform.tag == "2F_Floor")
+        {
+            EnemyFloorPos = 2;
+            Debug.Log("현재 층 : " + EnemyFloorPos);
+        }
+
+        for (int i = 1; i < 11; i++)
+        {
+            //적이 있는 방 위치 파악
+            if (collision.CompareTag("room" + i.ToString()))
+            {
+                EnemyRoomPos = i;
+            }
+        }
+
+    }
+    
 }
