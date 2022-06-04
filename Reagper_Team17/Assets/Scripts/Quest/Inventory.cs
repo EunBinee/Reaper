@@ -108,6 +108,7 @@ public class Inventory : MonoBehaviour
 
     public void Destory_onlyList()
     {
+        
         item_Object.Remove(item_Object[0]);
         item.Remove(item[0]);
         preItem = null;

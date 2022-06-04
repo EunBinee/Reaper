@@ -145,13 +145,13 @@ public class PlayerController : MonoBehaviour
                 if (Input.GetKey(KeyCode.Z))
                 {
                     //Dash = true;
-                    movementSpeed = 7;
-                    condiBar.GetComponent<ConditionBar>().currentHP -= 0.3f;
+                    movementSpeed = 8;
+                    //condiBar.GetComponent<ConditionBar>().currentHP -= 0.3f;
                 }
                 else
                 {
                     //Dash = false;
-                    movementSpeed = 3;
+                    movementSpeed = 4;
 
                     condiBar.GetComponent<ConditionBar>().currentHP += 0.3f;
                 }
@@ -178,7 +178,7 @@ public class PlayerController : MonoBehaviour
             }*/
             else if (inCase)
             {
-                movementSpeed /= 3;
+                movementSpeed /= 4;
                 transform.position += moveVelocity * movementSpeed * Time.deltaTime;
             }
 

@@ -9,6 +9,8 @@ public class QuestManager : MonoBehaviour
     public GameObject player;
     public CameraShake cameraShake; //카메라의 흔들림
 
+    SpriteRenderer sp;//나중에 openQuest()에서 lock의 sp를 불러오는데 쓰인다.
+
     //현재 인벤토리에 있는 열쇠의 정보 가지고 오기
     [SerializeField] private GameObject curInventor_Item;
     //현재 플레이어가 맞닿아있는 Lock자물쇠의 정보.
@@ -59,6 +61,10 @@ public class QuestManager : MonoBehaviour
     //쿨타임 //오브젝트 사용시
     float time;
     float maxTime = 1f;
+    //=========================================
+    //Quest03 대칭게임
+    int count_Quest03 = 0;
+    public GameObject Life03;
     void Start()
     {
 
@@ -181,7 +187,23 @@ public class QuestManager : MonoBehaviour
                 }
             }
         }//Quest02 힌트 보기
+        //Quest03======================================================
+        if(count_Quest03==3)
+        {
+            cameraShake.ShakeTime(0.3f, 0.5f);
+            cameraShake.Shake = true;
 
+            //메시지 박스 UI=============================================
+            ExplanationBox.SetActive(true);
+            StartCoroutine("ExBox_FadeIn");
+            TextForExplanation.text = "생명의 조각이 나타났습니다.";
+            StartCoroutine("ExBox_FadeOut");
+            //===========================================================
+            //생명의 조각 true, 열쇠 true;
+            Life03.SetActive(true);
+            keys[6].SetActive(true);
+            count_Quest03 = -1; //이제 실행안되도록
+        }
     }
 
     void OpenQuest()
@@ -195,8 +217,8 @@ public class QuestManager : MonoBehaviour
                 inventory.Destory_onlyList();
 
                 //화면상에 존재하지만, 이제 아이템으로써 움직이지않겠다는 의미
-                keys[0].GetComponent<Item>().notMoving = true;
-
+                //keys[0].GetComponent<Item>().notMoving = true;
+                keys[0].tag = "nothing";
                 //**필수 !!
                 playerController.isUsingItem = false;
 
@@ -206,7 +228,7 @@ public class QuestManager : MonoBehaviour
                 Debug.Log("1퀘스트입니다.");
                 //문의 잠금을 연다.
                 //스프라이트를 바꾼다.(지금은 색을 바꾸는 것으로 대신함)
-                SpriteRenderer sp = curLockItem.GetComponent<SpriteRenderer>();
+                sp = curLockItem.GetComponent<SpriteRenderer>();
                 sp.color = new Color(0.3f, 0.5f, 0.5f, 1);
                 inventory.Destroy_item();//인벤토리에 있는 Key지우기
                 curLockItem.tag = "object_Item"; //문의 태그를 Lock>>object_Item으로 변경;
@@ -229,13 +251,83 @@ public class QuestManager : MonoBehaviour
                 TextForExplanation.text = "벽이 사라졌다.";
                 StartCoroutine("ExBox_FadeOut");
                 //===========================================================
+                //벽이 사라지고 박스Key와 촛불key를 이제 tag활성화
+                changeTag[3].tag = "key";//발판 상자
+                changeTag[4].tag = "key";//촛불
+                changeTag[3].GetComponent<Item>().pair = 4;
+                changeTag[3].GetComponent<Item>().haveEventAsObject = true;
 
                 //**필수 !!
                 playerController.isUsingItem = false;
 
                 break;
-            default:
+            case 3:
+                //액자액자!!!
+                Debug.Log("3퀘스트의 액자입니다.");
+                count_Quest03++;
+                keys[3].transform.position = Locks_And_Object[3].position;
 
+                cameraShake.ShakeTime(0.3f, 0.3f);
+                cameraShake.Shake = true;
+                //벽이 사라진다.
+                keys[3].tag = "nothing";
+                inventory.Destory_onlyList(); //Key오브젝트는 화면에있고, 인벤토리 리스트에서만 지운다. 
+
+                //**필수 !!
+                playerController.isUsingItem = false;
+                keys[3].SetActive(true);
+                break;
+            case 4:
+                //발판 상자
+                count_Quest03++;
+                Debug.Log("3퀘스트의 발판상자입니다.");
+                keys[4].transform.position = Locks_And_Object[4].position;
+
+                cameraShake.ShakeTime(0.3f, 0.3f);
+                cameraShake.Shake = true;
+                //벽이 사라진다.
+                keys[4].tag = "canJump";
+                inventory.Destory_onlyList(); //Key오브젝트는 화면에있고, 인벤토리 리스트에서만 지운다. 
+                //key아이템의 tag도 Destory_onlyList()안에서 nothing으로 바뀜
+
+                //**필수 !!
+                playerController.isUsingItem = false;
+                keys[4].SetActive(true);
+                break;
+            case 5:
+                //촛불
+                count_Quest03++;
+                Debug.Log("3퀘스트의 촛불입니다.");
+                keys[5].transform.position = Locks_And_Object[5].position;
+
+                cameraShake.ShakeTime(0.3f, 0.3f);
+                cameraShake.Shake = true;
+                //벽이 사라진다.
+                keys[5].tag = "nothing";
+                inventory.Destory_onlyList(); //Key오브젝트는 화면에있고, 인벤토리 리스트에서만 지운다. 
+                //key아이템의 tag도 Destory_onlyList()안에서 nothing으로 바뀜
+
+                //**필수 !!
+                playerController.isUsingItem = false;
+                keys[5].SetActive(true);
+                break;
+            case 6:
+                //마지막 방문 오픈
+                Debug.Log("마지막 방 열림");
+
+                Debug.Log("1퀘스트입니다.");
+                //문의 잠금을 연다.
+                //스프라이트를 바꾼다.(지금은 색을 바꾸는 것으로 대신함)
+                sp = curLockItem.GetComponent<SpriteRenderer>();
+                sp.color = new Color(0.3f, 0.5f, 0.5f, 1);
+                inventory.Destroy_item();//인벤토리에 있는 Key지우기
+                curLockItem.tag = "object_Item"; //문의 태그를 Lock>>object_Item으로 변경;
+
+                //**필수 !!
+                playerController.isUsingItem = false;
+                break;
+
+            default:
                 break;
         }
     } //퀘스트 아이템을 조정한다.
@@ -284,6 +376,31 @@ public class QuestManager : MonoBehaviour
             StartCoroutine("ExBox_FadeOut");
             //===========================================================
         }
+
+        //마지막 문---------------------------------------
+        //오브젝트 (문 등) 사용!
+        if (ObjectItem.itemName == "Lock06_Door03_LastLock")
+        {
+            //ObjectItem.itemName은 현재 오브젝트의 Item 스크립트를 받고있다.
+            //Lock06_Door02_LastLock 문이라면..
+            float ObectPosX = Locks_And_Object[7].position.x;
+
+            player.transform.position = new Vector3(ObectPosX, player.transform.position.y, player.transform.position.z);
+
+            Debug.Log("Lock06_Door02_LastLock 오브젝트 이벤트 실행!!");
+        }
+        if (ObjectItem.itemName == "Door04_LastDoor")
+        {
+            float ObectPosX = Locks_And_Object[6].position.x;
+
+            player.transform.position = new Vector3(ObectPosX, player.transform.position.y, player.transform.position.z);
+
+
+            Debug.Log("Door04_LastDoor 오브젝트 이벤트 실행!!");
+        }
+
+
+
     }
     void UseObject(GameObject curItem_, Item item)
     {
@@ -291,6 +408,9 @@ public class QuestManager : MonoBehaviour
         if (item.itemName == "chair_Key00_Quest00")
         {
             item.haveEventAsObject = false;
+
+            cameraShake.ShakeTime(0.3f, 0.3f);
+            cameraShake.Shake = true;
 
             //메시지 박스 UI=============================================
             ExplanationBox.SetActive(true);
@@ -340,6 +460,19 @@ public class QuestManager : MonoBehaviour
             //===========================================================
 
             changeTag[1].tag = "object_Item"; //crack의 태그를 바꿔준다.
+        }
+
+        if(item.itemName == "Key06_LastKey")
+        {
+            item.haveEventAsObject = false;
+
+            //메시지 박스 UI=============================================
+            ExplanationBox.SetActive(true);
+            StartCoroutine("ExBox_FadeIn");
+            TextForExplanation.text = "마지막 열쇠를 얻었다.. 이제 탈출하자!";
+            StartCoroutine("ExBox_FadeOut");
+            //===========================================================
+
         }
     }
     //메세지 박스 페이드인 페이드 아웃
