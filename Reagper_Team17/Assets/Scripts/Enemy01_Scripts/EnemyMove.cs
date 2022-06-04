@@ -157,21 +157,7 @@ public class EnemyMove : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "sidewall")
-        {
-            //¸¸¾à ¾ç¿· º®¿¡ »ç½ÅÀÌ ºÎµúÃÆÀ»¶§.
-            if (direction == "Left")
-            {
-                direction = "Right";
-            }
-            if (direction == "Right")
-            {
-                direction = "Left";
-            }
-        }
-    }
+
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
