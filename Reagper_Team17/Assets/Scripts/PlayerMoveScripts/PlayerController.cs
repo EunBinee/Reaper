@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer sr;
 
     EnemyGanerator enemyGanerator;
+    Portal portalScript;
     GameObject Enemy;
     EnemyController enemyController;
 
@@ -53,8 +54,10 @@ public class PlayerController : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
 
         //적 스크립트
-        enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
-        Enemy = enemyGanerator.CurEnemy;
+        //enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
+        portalScript = GameObject.Find("Portal").GetComponent<Portal>();
+        //Enemy = enemyGanerator.CurEnemy;
+        Enemy = portalScript.CurEnemy;
         if (Enemy != null)
         {
             enemyController = Enemy.GetComponent<EnemyController>();
@@ -63,8 +66,9 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        Enemy = enemyGanerator.CurEnemy;
-        if(Enemy!=null)
+        // Enemy = enemyGanerator.CurEnemy;
+        Enemy = portalScript.CurEnemy;
+        if (Enemy!=null)
         {
             enemyController = Enemy.GetComponent<EnemyController>();
         }

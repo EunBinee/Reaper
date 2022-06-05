@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Chase_Manager : MonoBehaviour
 {
-    EnemyGanerator enemyGanerator;
+    Portal portalScript;
+   // EnemyGanerator enemyGanerator;
     GameObject Enemy;
     EnemyController enemyController;
     PlayerController playerController;
@@ -13,15 +14,18 @@ public class Chase_Manager : MonoBehaviour
     void Start()
     {
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
-        enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
-        Enemy = enemyGanerator.CurEnemy;
+        /* enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
+         Enemy = enemyGanerator.CurEnemy;*/
+        portalScript = GameObject.Find("Portal").GetComponent<Portal>();
+        Enemy = portalScript.CurEnemy;
         enemyController = Enemy.GetComponent<EnemyController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Enemy = enemyGanerator.CurEnemy;
+        //Enemy = enemyGanerator.CurEnemy;
+        Enemy = portalScript.CurEnemy;
         if (Enemy != null)
         {
             enemyController = Enemy.GetComponent<EnemyController>();

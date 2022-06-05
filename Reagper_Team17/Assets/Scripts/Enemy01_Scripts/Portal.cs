@@ -4,29 +4,61 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
+    SpriteRenderer sr;
     float time = 0;
     float maxtime = 7.0f;
 
     bool EndPortal = false; //만약 false인 경우, 막 처음 생성 된 경우, true인 경우 이제 사라질 포탈
+    bool StopPortal = true;
+    //현재 적 오브젝트
+    public GameObject[] enemyPrefab; //적의 프리펩을 받아온다.
+
+    public GameObject CurEnemy;
+    GameObject CurEnemyCollider;
+    Vector3 EnemyPos; //적의 위치
+
+
     void Start()
     {
+        sr = GetComponent<SpriteRenderer>();
         maxtime = Random.Range(4, 7);
     }
 
     // Update is called once per frame
     void Update()
-    { 
-        if(!EndPortal) //갓 태어난 포탈일 경우
+    {
+        if (!EndPortal) //갓 태어난 포탈일 경우
         {
             time += Time.deltaTime;
-            
-            if()
-
-            if (time >maxtime)
+            Debug.Log("maxtime : " + maxtime);
+            if (time > maxtime)
             {
+
+                EnemyPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+
+                CurEnemy = Instantiate(enemyPrefab[0], EnemyPos, Quaternion.identity); //적생성
+                CurEnemyCollider = Instantiate(enemyPrefab[1], EnemyPos, Quaternion.identity); //적생성
+
+                EndPortal = true;
+                StopPortal = true;
+                sr.color = new Color(1, 1, 1, 0);//투명하게 만듬
+
                 time = 0;
             }
         }
+        if (EndPortal) //한번이상 태어난 경우
+        {
+            if (StopPortal) //true 일때, 사신은 움직이고 잇고, 아직 사라지지는 않을 거야.
+            {
 
+            }
+            else if (!StopPortal)//false 일때, 사신은 이제 사라질 거야.
+            {
+                this.transform.position = new Vector3(CurEnemy.transform.position.x, this.transform.position.y, this.transform.position.z);
+                sr.color = new Color(1, 1, 1, 1);//투명하게 만듬
+
+                //사라지게 할 함수
+            }
+        }
     }
 }

@@ -50,8 +50,6 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gameObject.GetComponent<BoxCollider>().enabled = false; //적의 박스 콜라이더 킴
-
         GameObject Player = GameObject.Find("Player");
         player = Player.GetComponent<PlayerController>();
         playerRoomPos = player.GetRoom();
