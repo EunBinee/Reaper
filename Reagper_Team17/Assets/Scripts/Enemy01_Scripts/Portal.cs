@@ -9,9 +9,13 @@ public class Portal : MonoBehaviour
     float maxtime = 7.0f;
 
     bool EndPortal = false; //만약 false인 경우, 막 처음 생성 된 경우, true인 경우 이제 사라질 포탈
-    
+
     //현재 적 오브젝트
-    public GameObject[] enemyPrefab; //적의 프리펩을 받아온다.
+    // public GameObject[] enemyPrefab; //적의 프리펩을 받아온다.
+    EnemyGanerator enemyGanerator; //existEnemy을 변경해줘야함. 나중에
+    GameObject Enemy_Prefab;
+    GameObject Enemy_Prefab_collider;
+
 
     public GameObject CurEnemy;
     EnemyController enemyController;
@@ -23,7 +27,9 @@ public class Portal : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
         maxtime = Random.Range(4, 7);
-
+        enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
+        Enemy_Prefab = enemyGanerator.enemyPrefab[0];
+        Enemy_Prefab_collider= enemyGanerator.enemyPrefab[1];
     }
 
     // Update is called once per frame
@@ -38,8 +44,8 @@ public class Portal : MonoBehaviour
 
                 EnemyPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
 
-                CurEnemy = Instantiate(enemyPrefab[0], EnemyPos, Quaternion.identity); //적생성
-                CurEnemyCollider = Instantiate(enemyPrefab[1], EnemyPos, Quaternion.identity); //적생성
+                CurEnemy = Instantiate(Enemy_Prefab, EnemyPos, Quaternion.identity); //적생성
+                CurEnemyCollider = Instantiate(Enemy_Prefab_collider, EnemyPos, Quaternion.identity); //적 콜라이더 생성
                 enemyController = CurEnemy.GetComponent<EnemyController>();
                 EndPortal = true;
                 enemyController.StopPortal = true;
@@ -72,6 +78,7 @@ public class Portal : MonoBehaviour
 
     void Destroy_Portal()
     {
-       // Destroy(gameObject);
+        enemyGanerator.existEnemy = false;
+        Destroy(gameObject);
     }
 }

@@ -6,23 +6,23 @@ public class EnemyGanerator : MonoBehaviour
 {
     public PlayerController playerController;
 
+    public GameObject Portal_Prefab;
     public GameObject[] enemyPrefab; //적의 프리펩을 받아온다.
     public Transform Pos1F_Enemy; //적의 1층 위치(y와 z를 위해서)
     public Transform Pos2F_Enemy; //적의 2층 위치
 
     //항상 맵에 적이 있는지 없는지 확인
-    bool existEnemy = false;//적이 있으면 ture, 없으면 false;
+    public bool existEnemy = false;//적이 있으면 ture, 없으면 false;
     //player의 위치 
     int playerPosFloor;
     //현재 적 오브젝트
-    public GameObject CurEnemy;
-    GameObject CurEnemyCollider;
+   public  GameObject curPortal;
     Vector3 EnemyPos; //적의 위치
 
 
     void Start()
     {
-        CurEnemy = null;
+        curPortal = null;
     }
     void Update()
     {
@@ -38,7 +38,7 @@ public class EnemyGanerator : MonoBehaviour
     {
         //맵에 적이 없으면 10~15초 사이에 생성한다.
         existEnemy = true;
-        int rand = Random.Range(1, 2);
+        int rand = Random.Range(7, 10);
         Debug.Log(rand+"초 뒤 적 생성");
         Invoke("createEnemy", rand);
     }
@@ -49,7 +49,7 @@ public class EnemyGanerator : MonoBehaviour
         playerPosFloor = playerController.GetFloor();
         if( playerPosFloor==1)
         {
-            int Random_X = Random.Range(10, 20);
+            int Random_X = Random.Range(10, 15);
             int Random_Oper = Random.Range(1, 3); //1이면 -, 2면 +
 
             Debug.Log(Random_X);
@@ -65,14 +65,13 @@ public class EnemyGanerator : MonoBehaviour
                 EnemyPos = new Vector3(playerController.transform.position.x + Random_X, Pos1F_Enemy.position.y, Pos1F_Enemy.position.z);
             }
 
-           
-            CurEnemy = Instantiate(enemyPrefab[0], EnemyPos, Quaternion.identity); //적생성
-            CurEnemyCollider = Instantiate(enemyPrefab[1], EnemyPos, Quaternion.identity); //적생성
+
+            curPortal=Instantiate(Portal_Prefab, EnemyPos, Quaternion.identity); //포탈 생성
         }
         if (playerPosFloor == 2)
         {
             //만약 1층이면..
-            int Random_X = Random.Range(10, 20);
+            int Random_X = Random.Range(10, 15);
             int Random_Oper = Random.Range(1, 3); //1이면 -, 2면 +
 
             Debug.Log(Random_X);
@@ -89,10 +88,9 @@ public class EnemyGanerator : MonoBehaviour
                 EnemyPos = new Vector3(playerController.transform.position.x + Random_X, Pos2F_Enemy.position.y, Pos1F_Enemy.position.z);
             }
 
-            CurEnemy = Instantiate(enemyPrefab[0], EnemyPos, Quaternion.identity); //적생성
-            CurEnemyCollider = Instantiate(enemyPrefab[1], EnemyPos, Quaternion.identity); //적생성
+            curPortal = Instantiate(Portal_Prefab, EnemyPos, Quaternion.identity); //포탈 생성
 
-           
+
         }
     }
 }

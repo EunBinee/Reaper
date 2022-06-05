@@ -6,9 +6,10 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rigid;
     SpriteRenderer sr;
 
-    EnemyGanerator enemyGanerator;
+    public EnemyGanerator enemyGanerator;
     Portal portalScript;
     GameObject Enemy;
+    GameObject Portal;
     EnemyController enemyController;
 
     public  QuestManager questManager;
@@ -55,22 +56,32 @@ public class PlayerController : MonoBehaviour
 
         //적 스크립트
         //enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
-        portalScript = GameObject.Find("Portal").GetComponent<Portal>();
-        //Enemy = enemyGanerator.CurEnemy;
-        Enemy = portalScript.CurEnemy;
-        if (Enemy != null)
+        Portal = enemyGanerator.curPortal;
+
+        if (Portal != null)
         {
-            enemyController = Enemy.GetComponent<EnemyController>();
+            portalScript = Portal.GetComponent<Portal>();
+            Enemy = portalScript.CurEnemy;
+
+            if (Enemy != null)
+            {
+                enemyController = Enemy.GetComponent<EnemyController>();
+            }
         }
+
     }
 
     void Update()
     {
-        // Enemy = enemyGanerator.CurEnemy;
-        Enemy = portalScript.CurEnemy;
-        if (Enemy!=null)
+        if (Portal != null)
         {
-            enemyController = Enemy.GetComponent<EnemyController>();
+            portalScript = Portal.GetComponent<Portal>();
+            Enemy = portalScript.CurEnemy;
+
+            if (Enemy != null)
+            {
+                enemyController = Enemy.GetComponent<EnemyController>();
+            }
         }
 
         if (isLadder && Input.GetKey(KeyCode.X))

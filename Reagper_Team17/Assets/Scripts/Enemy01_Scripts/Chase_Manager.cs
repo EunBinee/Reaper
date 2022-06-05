@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Chase_Manager : MonoBehaviour
 {
+    EnemyGanerator enemyGanerator;
+    GameObject Portal;
     Portal portalScript;
-   // EnemyGanerator enemyGanerator;
+
     GameObject Enemy;
     EnemyController enemyController;
     PlayerController playerController;
@@ -13,25 +15,41 @@ public class Chase_Manager : MonoBehaviour
     bool checking = false; //Stay2d에서enemyMove.CheckDirec();을 여러번 반복하는게 싫어서 // 추적이 풀리면 checking을 다시 푼다.
     void Start()
     {
+        enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
-        /* enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
-         Enemy = enemyGanerator.CurEnemy;*/
-        portalScript = GameObject.Find("Portal").GetComponent<Portal>();
+
+        Portal = enemyGanerator.curPortal;
+
+        if (Portal != null)
+        {
+            portalScript = Portal.GetComponent<Portal>();
+            Enemy = portalScript.CurEnemy;
+
+            if (Enemy != null)
+            {
+                enemyController = Enemy.GetComponent<EnemyController>();
+            }
+        }
+/*
         Enemy = portalScript.CurEnemy;
-        enemyController = Enemy.GetComponent<EnemyController>();
+        enemyController = Enemy.GetComponent<EnemyController>();*/
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Enemy = enemyGanerator.CurEnemy;
-        Enemy = portalScript.CurEnemy;
-        if (Enemy != null)
+        if (Portal != null)
         {
-            enemyController = Enemy.GetComponent<EnemyController>();
-        }
+            portalScript = Portal.GetComponent<Portal>();
+            Enemy = portalScript.CurEnemy;
 
-        this.transform.position = new Vector3(enemyController.transform.position.x, enemyController.transform.position.y + 1.5f, enemyController.transform.position.z);
+            if (Enemy != null)
+            {
+                enemyController = Enemy.GetComponent<EnemyController>();
+
+                this.transform.position = new Vector3(enemyController.transform.position.x, enemyController.transform.position.y + 1.5f, enemyController.transform.position.z);
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -85,9 +85,14 @@ public class EnemyController : MonoBehaviour
         }
 
 
-        if(ChasingTime > ChasingMaxTime|| !SameFloor)
+        if(ChasingTime > ChasingMaxTime)
         {
-            Invoke("EnemyDestroy", 10f);
+            //
+            Invoke("EnemyDestroy", 3f);
+        }
+        else if(!SameFloor)
+        {
+            Invoke("EnemyDestroy", 15f);
         }
 
 
@@ -161,20 +166,7 @@ public class EnemyController : MonoBehaviour
         ChasingMaxTime = Random.Range(15, 20);
 
         StopPortal = false;
-        /*        if (SameFloor)
-                {
-                    //다시한번더 체크 지금도 같은 층인지
-                    Debug.Log("지금은 같은 층입니다. 사라지지않습니다");
-                }
-                else if (!SameFloor)
-                {
-                    Debug.Log("플레이어와 다른 층입니다. 사라집니다.");
-                    StopPortal = false;
-                }
-                else if(ChasingTime>ChasingMaxTime)
-                {
-                    StopPortal = false;
-                }*/
+
     }
 
 
