@@ -33,6 +33,8 @@ public class EnemyController : MonoBehaviour
     float maxhidingTime = 15f;
 
     //======================================
+    //포탈 상태
+    public bool portalStatus = false;
 
 
 
@@ -50,6 +52,8 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        gameObject.GetComponent<BoxCollider>().enabled = false; //적의 박스 콜라이더 킴
+
         GameObject Player = GameObject.Find("Player");
         player = Player.GetComponent<PlayerController>();
         playerRoomPos = player.GetRoom();
@@ -84,6 +88,9 @@ public class EnemyController : MonoBehaviour
             Invoke("EnemyDestroy", 10f);
             EnemyDestory = false;
         }
+
+
+
     }
     private void Move()
     {
@@ -163,32 +170,22 @@ public class EnemyController : MonoBehaviour
     }
 
 
-   private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-/*        if (collision.transform.tag == "1F_Floor")
-        {
-            EnemyFloorPos = 1;
-            Debug.Log("적 현재 층 : " + EnemyFloorPos);
-        }
-        if (collision.transform.tag == "2F_Floor")
-        {
-            EnemyFloorPos = 2;
-            Debug.Log("현재 층 : " + EnemyFloorPos);
-        }*/
-
-        if (collision.transform.tag == "sidewall")
+        if (collision.CompareTag("sidewall"))
         {
             //만약 양옆 벽에 사신이 부딪쳤을때.
             if (direction == "Left")
             {
                 direction = "Right";
             }
-            if (direction == "Right")
+            else if (direction == "Right")
             {
                 direction = "Left";
             }
         }
     }
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.CompareTag("1F_Floor"))

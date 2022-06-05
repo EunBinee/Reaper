@@ -54,9 +54,6 @@ public class CameraShake : MonoBehaviour
 
             }
         }
-        else
-        {
-           }
 
     }
     public void ShakeTime(float time,float amount )

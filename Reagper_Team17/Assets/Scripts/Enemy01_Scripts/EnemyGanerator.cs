@@ -49,41 +49,50 @@ public class EnemyGanerator : MonoBehaviour
         playerPosFloor = playerController.GetFloor();
         if( playerPosFloor==1)
         {
-            //만약 1층이면..
-            int Random_X = Random.Range(-5, 5);
-            if (Random_X == 0)
+            int Random_X = Random.Range(10, 20);
+            int Random_Oper = Random.Range(1, 3); //1이면 -, 2면 +
+
+            Debug.Log(Random_X);
+            
+            if (Random_Oper == 1)
             {
-                Debug.Log("Random_X == 0");
-                //0이 나오면 그냥 3더하기
-                EnemyPos = new Vector3(playerController.transform.position.x + 3, Pos1F_Enemy.position.y, Pos1F_Enemy.position.z);
+                
+                EnemyPos = new Vector3(playerController.transform.position.x - Random_X, Pos1F_Enemy.position.y, Pos1F_Enemy.position.z);
             }
             else
             {
-                Debug.Log("Random_X != 0");
+                
                 EnemyPos = new Vector3(playerController.transform.position.x + Random_X, Pos1F_Enemy.position.y, Pos1F_Enemy.position.z);
             }
 
-            Debug.Log("Random_X != 0 이후입니다.");
+           
             CurEnemy = Instantiate(enemyPrefab[0], EnemyPos, Quaternion.identity); //적생성
             CurEnemyCollider = Instantiate(enemyPrefab[1], EnemyPos, Quaternion.identity); //적생성
         }
         if (playerPosFloor == 2)
         {
             //만약 1층이면..
-            int Random_X = Random.Range(-5, 5);
-            if (Random_X == 0)
+            int Random_X = Random.Range(10, 20);
+            int Random_Oper = Random.Range(1, 3); //1이면 -, 2면 +
+
+            Debug.Log(Random_X);
+
+            if (Random_Oper == 1)
             {
-                //0이 나오면 그냥 3더하기
-                EnemyPos = new Vector3(playerController.transform.position.x + 3, Pos2F_Enemy.position.y, Pos2F_Enemy.position.z);
+                
+
+                EnemyPos = new Vector3(playerController.transform.position.x - Random_X, Pos2F_Enemy.position.y, Pos1F_Enemy.position.z);
             }
             else
             {
-                EnemyPos = new Vector3(playerController.transform.position.x + Random_X, Pos2F_Enemy.position.y, Pos2F_Enemy.position.z);
-            }
 
+                EnemyPos = new Vector3(playerController.transform.position.x + Random_X, Pos2F_Enemy.position.y, Pos1F_Enemy.position.z);
+            }
 
             CurEnemy = Instantiate(enemyPrefab[0], EnemyPos, Quaternion.identity); //적생성
             CurEnemyCollider = Instantiate(enemyPrefab[1], EnemyPos, Quaternion.identity); //적생성
+
+            CurEnemy.GetComponent<EnemyController>().portalStatus = true;
         }
     }
 }
