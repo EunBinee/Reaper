@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     //플레이어의 위치와 적의 위치 비교를 위함
-    public PlayerController player;
+    PlayerController player;
     public int playerRoomPos; //플레이어가 있는 방
     public int playerFloorPos;//플레이어가 있는 층
 
@@ -31,13 +31,16 @@ public class EnemyController : MonoBehaviour
 
     float hidingTime = 0;
     float maxhidingTime = 15f;
-    
+
     //======================================
 
 
 
     void Start()
     {
+        GameObject Player = GameObject.Find("Player");
+        player = Player.GetComponent<PlayerController>();
+
         sr = GetComponent<SpriteRenderer>();
         playerRoomPos = player.GetRoom();
         playerFloorPos = player.GetFloor();
@@ -47,6 +50,8 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        GameObject Player = GameObject.Find("Player");
+        player = Player.GetComponent<PlayerController>();
         playerRoomPos = player.GetRoom();
         playerFloorPos = player.GetFloor();
 
@@ -74,7 +79,7 @@ public class EnemyController : MonoBehaviour
 
         //만약 같은 층이 아니면 10초뒤에 사라지게 하기위한 변수
 
-        if(EnemyDestory)
+        if (EnemyDestory)
         {
             Invoke("EnemyDestroy", 10f);
             EnemyDestory = false;
@@ -85,11 +90,11 @@ public class EnemyController : MonoBehaviour
         Vector3 moveVelocity = Vector3.zero;
         if (isChasing)
         {
-            if(player.ishiding)
+            if (player.ishiding)
             {
                 //만약 player가 숨었다면..
                 hidingTime += Time.deltaTime;
-                if(hidingTime>maxhidingTime)
+                if (hidingTime > maxhidingTime)
                 {
                     //숨었는데 15초동안 숨으면.. 
 
@@ -100,7 +105,7 @@ public class EnemyController : MonoBehaviour
             }
             //만약 추격 중이라면.
             time += Time.deltaTime;
-            if(time>maxtime)
+            if (time > maxtime)
             {
                 CheckDirec();// maxtime초 마다 플레이어의 위치 받아옴.
                 maxtime = Random.Range(2, 6);
@@ -113,8 +118,8 @@ public class EnemyController : MonoBehaviour
             time = 0;
             movementSpeed = 3;
         }
-        
-        if(direction == "Left")
+
+        if (direction == "Left")
         {
             //만약 플레이어가 왼쪽에 있어서.. 왼쪽 이동해야한다면..
             moveVelocity = Vector3.left;
@@ -158,9 +163,19 @@ public class EnemyController : MonoBehaviour
     }
 
 
-
-    public void OnTriggerEnter2D(Collider2D collision)
+   private void OnCollisionEnter2D(Collision2D collision)
     {
+/*        if (collision.transform.tag == "1F_Floor")
+        {
+            EnemyFloorPos = 1;
+            Debug.Log("적 현재 층 : " + EnemyFloorPos);
+        }
+        if (collision.transform.tag == "2F_Floor")
+        {
+            EnemyFloorPos = 2;
+            Debug.Log("현재 층 : " + EnemyFloorPos);
+        }*/
+
         if (collision.transform.tag == "sidewall")
         {
             //만약 양옆 벽에 사신이 부딪쳤을때.
@@ -174,20 +189,18 @@ public class EnemyController : MonoBehaviour
             }
         }
     }
-
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.transform.tag == "1F_Floor")
+        if (collision.CompareTag("1F_Floor"))
         {
             EnemyFloorPos = 1;
             Debug.Log("적 현재 층 : " + EnemyFloorPos);
         }
-        if (collision.transform.tag == "2F_Floor")
+        if (collision.CompareTag("2F_Floor"))
         {
             EnemyFloorPos = 2;
             Debug.Log("현재 층 : " + EnemyFloorPos);
         }
-
         for (int i = 1; i < 11; i++)
         {
             //적이 있는 방 위치 파악
@@ -198,5 +211,4 @@ public class EnemyController : MonoBehaviour
         }
 
     }
-    
 }

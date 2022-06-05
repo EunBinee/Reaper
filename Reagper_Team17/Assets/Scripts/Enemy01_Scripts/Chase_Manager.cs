@@ -4,57 +4,68 @@ using UnityEngine;
 
 public class Chase_Manager : MonoBehaviour
 {
-    public EnemyMove enemyMove;
-    public PlayerController playerController;
+    EnemyGanerator enemyGanerator;
+    GameObject Enemy;
+    EnemyController enemyController;
+    PlayerController playerController;
 
     bool checking = false; //Stay2d에서enemyMove.CheckDirec();을 여러번 반복하는게 싫어서 // 추적이 풀리면 checking을 다시 푼다.
     void Start()
     {
-        
+        playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
+        Enemy = enemyGanerator.CurEnemy;
+        enemyController = Enemy.GetComponent<EnemyController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = new Vector3(enemyMove.transform.position.x, enemyMove.transform.position.y + 1.5f, enemyMove.transform.position.z);
+        Enemy = enemyGanerator.CurEnemy;
+        if (Enemy != null)
+        {
+            enemyController = Enemy.GetComponent<EnemyController>();
+        }
+
+        this.transform.position = new Vector3(enemyController.transform.position.x, enemyController.transform.position.y + 1.5f, enemyController.transform.position.z);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.transform.tag == "Player")
+        if(collision.CompareTag("Player"))
         {
             //만약 Chase의 범위내에 player가 들어온다면 바로 추적 시작이여~
-            enemyMove.CheckDirec();
-            if(enemyMove.isChasing == false && playerController.ishiding == true)
+            enemyController.CheckDirec();
+            if(enemyController.isChasing == false && playerController.ishiding == true)
             {
                 //만약 숨은 상태에서 들어온다면, 추적 안하도록
-                enemyMove.isChasing = false;
+                enemyController.isChasing = false;
             }
             else
             {
-                enemyMove.isChasing = true;
+                enemyController.isChasing = true;
             }
         }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.transform.tag == "Player")
+        if (collision.CompareTag("Player"))
         {
             if(checking)
             {
-                enemyMove.CheckDirec();
+                enemyController.CheckDirec();
                 checking = true;
             }
-            if (enemyMove.isChasing == false && playerController.ishiding == true)
+            if (enemyController.isChasing == false && playerController.ishiding == true)
             {
                 //추적당하는 중이 아니고, 숨어있는 중이여야만.. 추적안함.
-                enemyMove.isChasing = false;
+                enemyController.isChasing = false;
             }
             else
             {
                 //만약 추적 중이라면, 계속 추적함.
                 //ishiding이 true든 머든 계쏙 추적
-                enemyMove.isChasing = true;
+                enemyController.isChasing = true;
             }
         }
     }

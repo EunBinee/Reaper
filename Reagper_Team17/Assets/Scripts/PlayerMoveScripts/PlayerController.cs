@@ -6,7 +6,10 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rigid;
     SpriteRenderer sr;
 
-    public EnemyMove enemyMove; //적의 움직임 파악을 위해서
+    EnemyGanerator enemyGanerator;
+    GameObject Enemy;
+    EnemyController enemyController;
+
     public  QuestManager questManager;
     public GameDirector gameDirector;
     //움직임을 멈추는 변수
@@ -48,10 +51,23 @@ public class PlayerController : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+
+        //적 스크립트
+        enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
+        Enemy = enemyGanerator.CurEnemy;
+        if (Enemy != null)
+        {
+            enemyController = Enemy.GetComponent<EnemyController>();
+        }
     }
 
     void Update()
     {
+        Enemy = enemyGanerator.CurEnemy;
+        if(Enemy!=null)
+        {
+            enemyController = Enemy.GetComponent<EnemyController>();
+        }
 
         if (isLadder && Input.GetKey(KeyCode.X))
         {
@@ -80,38 +96,6 @@ public class PlayerController : MonoBehaviour
             }
             rigid.gravityScale = 2f;
         }
- /*       if (isLadder)
-        {
-            //만약 사다리를 타고 있다면...?
-            float v = Input.GetAxisRaw("Vertical");
-            rigid.gravityScale = 0; //사다리를 타고있을땐, 중력 없게
-            rigid.velocity = new Vector2(rigid.velocity.x, v * movementSpeed);
-            condiBar.GetComponent<ConditionBar>().currentHP += 0.3f;
-            Debug.Log(transform.position.y);
-
-
-            inLadder = true; //사다리를 타는 중이예여
-
-        }
-
-        Move();
-        if(!isLadder)
-        {
-            if (!inCase)
-            {
-                if (Input.GetButtonDown("Jump"))
-                {
-                    //만약 스페이스 바를 눌렀고, 점프가 안되있을 경우!.. 점프!
-                    Jump(); //사다리를 타고있지 않을 땐, 중력 있게
-                }
-            }
-            rigid.gravityScale = 2f;
-        }*/
-
-
-
-
-
 
     }
     private void FixedUpdate()
@@ -290,13 +274,13 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.transform.tag == "1F_Floor")
+        if (collision.CompareTag("1F_Floor"))
         {
             playerPos_Floor = 1;
             Debug.Log("현재 층 : " + playerPos_Floor);
             isJumping = false;
         }
-        if (collision.transform.tag == "2F_Floor")
+        if (collision.CompareTag("2F_Floor"))
         {
             playerPos_Floor = 2;
             Debug.Log("현재 층 : " + playerPos_Floor);
@@ -369,11 +353,18 @@ public class PlayerController : MonoBehaviour
                 //숨었나요?
                 //납짝 업드린 애니메이션 추가
                 sr.color = new Color(0.55f, 0.5f, 0.5f, 0.7f);
-
-                if(enemyMove.SameRoom)
+                if(Enemy!=null)
                 {
-                    //만약 같은 방에 enemy가 있다면, ishiding실패
-                    ishiding = false;
+                    if (enemyController.SameRoom)
+                    {
+                        //만약 같은 방에 enemy가 있다면, ishiding실패
+                        ishiding = false;
+                    }
+                    else
+                    {
+                        //만약 같은 방에 enemy가 없다면, ishiding성공
+                        ishiding = true;
+                    }
                 }
                else
                 {
