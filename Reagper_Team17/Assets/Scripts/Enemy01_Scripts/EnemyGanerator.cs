@@ -92,7 +92,7 @@ public class EnemyGanerator : MonoBehaviour
             CurEnemy = Instantiate(enemyPrefab[0], EnemyPos, Quaternion.identity); //利积己
             CurEnemyCollider = Instantiate(enemyPrefab[1], EnemyPos, Quaternion.identity); //利积己
 
-            CurEnemy.GetComponent<EnemyController>().portalStatus = true;
+           
         }
     }
 }

@@ -34,9 +34,7 @@ public class EnemyController : MonoBehaviour
 
     //======================================
     //Æ÷Å» »óÅÂ
-    public bool portalStatus = false;
-
-
+    
 
     void Start()
     {
