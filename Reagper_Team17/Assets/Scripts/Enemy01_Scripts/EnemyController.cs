@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMove : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
     //플레이어의 위치와 적의 위치 비교를 위함
     public PlayerController player;

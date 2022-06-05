@@ -16,7 +16,7 @@ public class Chase_Manager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        this.transform.position = new Vector3(enemyMove.transform.position.x, enemyMove.transform.position.y + 1.5f, enemyMove.transform.position.z);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
