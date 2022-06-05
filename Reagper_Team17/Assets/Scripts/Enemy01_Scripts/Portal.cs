@@ -9,11 +9,12 @@ public class Portal : MonoBehaviour
     float maxtime = 7.0f;
 
     bool EndPortal = false; //만약 false인 경우, 막 처음 생성 된 경우, true인 경우 이제 사라질 포탈
-    bool StopPortal = true;
+    
     //현재 적 오브젝트
     public GameObject[] enemyPrefab; //적의 프리펩을 받아온다.
 
     public GameObject CurEnemy;
+    EnemyController enemyController;
     GameObject CurEnemyCollider;
     Vector3 EnemyPos; //적의 위치
 
@@ -22,6 +23,7 @@ public class Portal : MonoBehaviour
     {
         sr = GetComponent<SpriteRenderer>();
         maxtime = Random.Range(4, 7);
+
     }
 
     // Update is called once per frame
@@ -38,9 +40,9 @@ public class Portal : MonoBehaviour
 
                 CurEnemy = Instantiate(enemyPrefab[0], EnemyPos, Quaternion.identity); //적생성
                 CurEnemyCollider = Instantiate(enemyPrefab[1], EnemyPos, Quaternion.identity); //적생성
-
+                enemyController = CurEnemy.GetComponent<EnemyController>();
                 EndPortal = true;
-                StopPortal = true;
+                enemyController.StopPortal = true;
                 sr.color = new Color(1, 1, 1, 0);//투명하게 만듬
 
                 time = 0;
@@ -48,17 +50,28 @@ public class Portal : MonoBehaviour
         }
         if (EndPortal) //한번이상 태어난 경우
         {
-            if (StopPortal) //true 일때, 사신은 움직이고 잇고, 아직 사라지지는 않을 거야.
+            if (enemyController.StopPortal) //true 일때, 사신은 움직이고 잇고, 아직 사라지지는 않을 거야.
             {
 
             }
-            else if (!StopPortal)//false 일때, 사신은 이제 사라질 거야.
+            else if (!enemyController.StopPortal)//false 일때, 사신은 이제 사라질 거야.
             {
-                this.transform.position = new Vector3(CurEnemy.transform.position.x, this.transform.position.y, this.transform.position.z);
+                if(CurEnemy!=null)
+                {
+                    this.transform.position = new Vector3(CurEnemy.transform.position.x, this.transform.position.y, this.transform.position.z);
+                }
                 sr.color = new Color(1, 1, 1, 1);//투명하게 만듬
 
                 //사라지게 할 함수
+                Destroy(CurEnemy);
+                Destroy(CurEnemyCollider);
+                Invoke("Destroy_Portal", 3);
             }
         }
+    }
+
+    void Destroy_Portal()
+    {
+       // Destroy(gameObject);
     }
 }

@@ -14,9 +14,7 @@ public class EnemyController : MonoBehaviour
 
     public bool SameRoom = false;
     public bool SameFloor = true;
-    //========================================
-    //만약 같은 층이 아니면 5초뒤에 사라지게 하기위한 변수
-    bool EnemyDestory = false;
+    //=======================================
     //=========================================
     SpriteRenderer sr;
     public string direction = ""; //저승사자가 움직일 방향
@@ -33,8 +31,11 @@ public class EnemyController : MonoBehaviour
     float maxhidingTime = 15f;
 
     //======================================
-    //포탈 상태
-    
+    //사라지기위한 변수
+    float ChasingTime;
+    float ChasingMaxTime = 10;
+    public bool StopPortal = true;
+
 
     void Start()
     {
@@ -63,7 +64,6 @@ public class EnemyController : MonoBehaviour
         else
         {
             SameFloor = false;
-            EnemyDestory = true;
         }
         //플레이어와 같은 방인지 계속 연산
         if (EnemyRoomPos == playerRoomPos)
@@ -77,12 +77,17 @@ public class EnemyController : MonoBehaviour
 
         Move();
 
-        //만약 같은 층이 아니면 10초뒤에 사라지게 하기위한 변수
+        //만약 같은 층이 아니거나, chasing한지 10~15초 지난 경우
+        ChasingTime += Time.deltaTime;
+        if(isChasing)
+        {
+            ChasingTime = 0;
+        }
 
-        if (EnemyDestory)
+
+        if(ChasingTime > ChasingMaxTime|| !SameFloor)
         {
             Invoke("EnemyDestroy", 10f);
-            EnemyDestory = false;
         }
 
 
@@ -153,16 +158,23 @@ public class EnemyController : MonoBehaviour
 
     void EnemyDestroy()
     {
-        if (SameFloor)
-        {
-            //다시한번더 체크 지금도 같은 층인지
-            Debug.Log("지금은 같은 층입니다. 사라지지않습니다");
-        }
-        else if (!SameFloor)
-        {
-            Debug.Log("플레이어와 다른 층입니다. 사라집니다.");
-            Destroy(gameObject);
-        }
+        ChasingMaxTime = Random.Range(15, 20);
+
+        StopPortal = false;
+        /*        if (SameFloor)
+                {
+                    //다시한번더 체크 지금도 같은 층인지
+                    Debug.Log("지금은 같은 층입니다. 사라지지않습니다");
+                }
+                else if (!SameFloor)
+                {
+                    Debug.Log("플레이어와 다른 층입니다. 사라집니다.");
+                    StopPortal = false;
+                }
+                else if(ChasingTime>ChasingMaxTime)
+                {
+                    StopPortal = false;
+                }*/
     }
 
 
