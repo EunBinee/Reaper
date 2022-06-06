@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     public  bool isJumping = false; //캐릭터가 점프를 하고있는지 아닌지..
     public int playerPos_Floor = 1;//캐릭터의 위치_층별_ 1층 _2층
     
-    public int playerPos_Room = 0;//캐릭터의 위치_room별
+    public int playerPos_Room = 1;//캐릭터의 위치_room별
 
     public bool inLadder = false;
     bool isLadder = false; //사다리를 타고 있는지 아닌지 여부
@@ -113,9 +113,7 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-    private void FixedUpdate()
-    {
-    }
+
     void Move()
     {
         if(!dontMove) 
