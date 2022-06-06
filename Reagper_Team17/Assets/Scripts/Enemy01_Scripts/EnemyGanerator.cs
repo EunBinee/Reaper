@@ -19,10 +19,15 @@ public class EnemyGanerator : MonoBehaviour
    public  GameObject curPortal;
     Vector3 EnemyPos; //적의 위치
 
+    //=--------------------
+    //포탈이 side밖으로 나가지않기 위해서
+    public GameObject Board_Map;
+    BoxCollider2D Board_Map_Collider; //전체 맵을 덮고있는 collider을 받아오기 위해서
 
     void Start()
     {
         curPortal = null;
+        Board_Map_Collider = Board_Map.GetComponent<BoxCollider2D>();
     }
     void Update()
     {
@@ -53,18 +58,37 @@ public class EnemyGanerator : MonoBehaviour
             int Random_Oper = Random.Range(1, 3); //1이면 -, 2면 +
 
             Debug.Log(Random_X);
-            
+
             if (Random_Oper == 1)
             {
-                
-                EnemyPos = new Vector3(playerController.transform.position.x - Random_X, Pos1F_Enemy.position.y, Pos1F_Enemy.position.z);
+                //포탈이 플레이어의 왼쪽에 생긴다는뜻.
+                // 만약 왼쪽에 생기는데, BoundsMin.x보다 더 작아지면.. +로 바꾸기
+                if (playerController.transform.position.x - Random_X < Board_Map_Collider.bounds.min.x)
+                {
+                    Debug.Log("-에서 +로 바뀌었습니다.., 플레이어의 오른쪽에서 생깁니다");
+                    EnemyPos = new Vector3(playerController.transform.position.x + Random_X, Pos1F_Enemy.position.y, Pos1F_Enemy.position.z);
+                }
+                else
+                {
+                    EnemyPos = new Vector3(playerController.transform.position.x - Random_X, Pos1F_Enemy.position.y, Pos1F_Enemy.position.z);
+
+                }
             }
             else
             {
-                
-                EnemyPos = new Vector3(playerController.transform.position.x + Random_X, Pos1F_Enemy.position.y, Pos1F_Enemy.position.z);
-            }
+                //포탈이 플레이어의 오른쪽에 생긴다는뜻.
+                // 만약 오른쪽에 생기는데, BoundsMax.x보다 더 커지면.. -로 바꾸기
+                if (playerController.transform.position.x - Random_X > Board_Map_Collider.bounds.max.x)
+                {
+                    Debug.Log("+에서 -로 바뀌었습니다., 플레이어의 왼쪽에서 생깁니다.");
+                    EnemyPos = new Vector3(playerController.transform.position.x - Random_X, Pos1F_Enemy.position.y, Pos1F_Enemy.position.z);
+                }
+                else
+                {
+                    EnemyPos = new Vector3(playerController.transform.position.x + Random_X, Pos1F_Enemy.position.y, Pos1F_Enemy.position.z);
 
+                }
+            }
 
             curPortal=Instantiate(Portal_Prefab, EnemyPos, Quaternion.identity); //포탈 생성
         }
@@ -75,17 +99,35 @@ public class EnemyGanerator : MonoBehaviour
             int Random_Oper = Random.Range(1, 3); //1이면 -, 2면 +
 
             Debug.Log(Random_X);
-
             if (Random_Oper == 1)
             {
-                
+                //포탈이 플레이어의 왼쪽에 생긴다는뜻.
+                // 만약 왼쪽에 생기는데, BoundsMin.x보다 더 작아지면.. +로 바꾸기
+                if (playerController.transform.position.x - Random_X < Board_Map_Collider.bounds.min.x)
+                {
+                    Debug.Log("-에서 +로 바뀌었습니다.., 플레이어의 오른쪽에서 생깁니다");
+                    EnemyPos = new Vector3(playerController.transform.position.x + Random_X, Pos2F_Enemy.position.y, Pos1F_Enemy.position.z);
+                }
+                else
+                {
+                    EnemyPos = new Vector3(playerController.transform.position.x - Random_X, Pos2F_Enemy.position.y, Pos1F_Enemy.position.z);
 
-                EnemyPos = new Vector3(playerController.transform.position.x - Random_X, Pos2F_Enemy.position.y, Pos1F_Enemy.position.z);
+                }
             }
             else
             {
+                //포탈이 플레이어의 오른쪽에 생긴다는뜻.
+                // 만약 오른쪽에 생기는데, BoundsMax.x보다 더 커지면.. -로 바꾸기
+                if (playerController.transform.position.x - Random_X > Board_Map_Collider.bounds.max.x)
+                {
+                    Debug.Log("+에서 -로 바뀌었습니다., 플레이어의 왼쪽에서 생깁니다.");
+                    EnemyPos = new Vector3(playerController.transform.position.x - Random_X, Pos2F_Enemy.position.y, Pos1F_Enemy.position.z);
+                }
+                else
+                {
+                    EnemyPos = new Vector3(playerController.transform.position.x + Random_X, Pos2F_Enemy.position.y, Pos1F_Enemy.position.z);
 
-                EnemyPos = new Vector3(playerController.transform.position.x + Random_X, Pos2F_Enemy.position.y, Pos1F_Enemy.position.z);
+                }
             }
 
             curPortal = Instantiate(Portal_Prefab, EnemyPos, Quaternion.identity); //포탈 생성

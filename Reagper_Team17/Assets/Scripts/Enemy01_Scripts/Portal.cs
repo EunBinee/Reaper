@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour
 {
+    PlayerController playerController;
+
     SpriteRenderer sr;
     float time = 0;
     float maxtime = 7.0f;
@@ -25,6 +27,9 @@ public class Portal : MonoBehaviour
 
     void Start()
     {
+        GameObject Player = GameObject.Find("Player");
+        playerController = Player.GetComponent<PlayerController>();
+
         sr = GetComponent<SpriteRenderer>();
         maxtime = Random.Range(4, 7);
         enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
@@ -80,5 +85,23 @@ public class Portal : MonoBehaviour
     {
         enemyGanerator.existEnemy = false;
         Destroy(gameObject);
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //만약 포탈이 sidewall쪽에 생성 된 경우.. 새로운 위치를 받아온다.
+        //만약 1층이면..
+
+        Debug.Log("SideWall 새로운 위치를 받아온다.");
+        if (collision.CompareTag("sidewall"))
+        {
+
+            EnemyPos = new Vector3(playerController.transform.position.x + 3, transform.position.y, transform.position.z);
+
+        }
+
+        this.transform.position = EnemyPos;
+        
     }
 }
