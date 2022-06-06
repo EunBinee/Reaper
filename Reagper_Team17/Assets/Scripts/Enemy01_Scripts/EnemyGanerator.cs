@@ -95,7 +95,7 @@ public class EnemyGanerator : MonoBehaviour
         if (playerPosFloor == 2)
         {
             //만약 1층이면..
-            int Random_X = Random.Range(10, 15);
+            int Random_X = Random.Range(15, 25);
             int Random_Oper = Random.Range(1, 3); //1이면 -, 2면 +
 
             Debug.Log(Random_X);

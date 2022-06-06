@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MapBoardController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // 여러가지로 화면을 막고 싶을 때 사용 예정
     void Start()
     {
         

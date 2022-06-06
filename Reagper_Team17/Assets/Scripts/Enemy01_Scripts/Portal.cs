@@ -87,21 +87,4 @@ public class Portal : MonoBehaviour
         Destroy(gameObject);
     }
 
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        //만약 포탈이 sidewall쪽에 생성 된 경우.. 새로운 위치를 받아온다.
-        //만약 1층이면..
-
-        Debug.Log("SideWall 새로운 위치를 받아온다.");
-        if (collision.CompareTag("sidewall"))
-        {
-
-            EnemyPos = new Vector3(playerController.transform.position.x + 3, transform.position.y, transform.position.z);
-
-        }
-
-        this.transform.position = EnemyPos;
-        
-    }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 public class Case : MonoBehaviour
 {
     public CameraShake cameraShake;
+    public GameObject EnemyGenerator;
     private void Start()
     {
     }
@@ -13,7 +14,14 @@ public class Case : MonoBehaviour
         {
             cameraShake.ShakeTime(0.15f,0.4f);
             cameraShake.Shake = true;
+
+            Invoke("StartEnemyGenerator", 15);
         }
+    }
+
+    void StartEnemyGenerator()
+    {
+        EnemyGenerator.SetActive(true);
     }
 
 }
