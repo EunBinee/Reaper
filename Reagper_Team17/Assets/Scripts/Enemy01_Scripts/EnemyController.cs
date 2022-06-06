@@ -24,16 +24,16 @@ public class EnemyController : MonoBehaviour
     //==============================
     //추적 시작을 알리는 변수
     public bool isChasing;
-    float time;
-    float maxtime = 4f;
+    float time; //
+    float maxtime = 3f; //추격중_플레이어의 위치를 받아올 타이밍
 
     float hidingTime = 0;
     float maxhidingTime = 15f;
 
     //======================================
     //사라지기위한 변수
-    float ChasingTime;
-    float ChasingMaxTime = 10;
+    float NotChasingTime;
+    float NotChasingMaxTime = 10;
     public bool StopPortal = true;
 
 
@@ -78,21 +78,26 @@ public class EnemyController : MonoBehaviour
         Move();
 
         //만약 같은 층이 아니거나, chasing한지 10~15초 지난 경우
-        ChasingTime += Time.deltaTime;
-        if(isChasing)
-        {
-            ChasingTime = 0;
-        }
 
-
-        if(ChasingTime > ChasingMaxTime)
+        if (isChasing)
         {
-            //
-            Invoke("EnemyDestroy", 3f);
+            NotChasingTime = 0;
         }
-        else if(!SameFloor)
+        else
         {
-            Invoke("EnemyDestroy", 15f);
+            NotChasingTime += Time.deltaTime;
+
+            if (NotChasingTime > NotChasingMaxTime)
+            {
+                Debug.Log("플레이어를 " + (int)NotChasingMaxTime + "동안 찾지 못했습니다. 사라집니다.");
+                Invoke("EnemyDestroy", 3f);
+            }
+        }
+        
+        if(!SameFloor)
+        {
+            Debug.Log("같은 층이 아닙니다.사라집니다");
+            Invoke("EnemyDestroy_NotSameFloor", 15f);
         }
 
 
@@ -121,7 +126,7 @@ public class EnemyController : MonoBehaviour
             if (time > maxtime)
             {
                 CheckDirec();// maxtime초 마다 플레이어의 위치 받아옴.
-                maxtime = Random.Range(2, 6);
+                maxtime = Random.Range(2, 4);
                 time = 0;
             }
             movementSpeed = 6;//ㅈㄴ빠르게
@@ -163,14 +168,31 @@ public class EnemyController : MonoBehaviour
 
     void EnemyDestroy()
     {
-        ChasingMaxTime = Random.Range(15, 20);
+        NotChasingMaxTime = Random.Range(15, 20);
+
+        //사라지기전
 
         StopPortal = false;
 
     }
+    void EnemyDestroy_NotSameFloor()
+    {
+        NotChasingMaxTime = Random.Range(15, 20);
 
+        //사라지기전
+        if (!SameFloor)
+        {
+            Debug.Log("(한번더 확인을 하니)같은 층이 아닙니다.사라집니다");
 
-    private void OnTriggerEnter2D(Collider2D collision)
+            StopPortal = false;
+        }
+        else
+        {
+            Debug.Log("(한번더 확인을 하니)같은 층입니다.사라지지않습니다.");
+        }
+    }
+    
+private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("sidewall"))
         {
