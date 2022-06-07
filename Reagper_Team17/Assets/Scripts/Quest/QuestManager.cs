@@ -7,6 +7,9 @@ public class QuestManager : MonoBehaviour
     public Inventory inventory;
     public PlayerController playerController;
     public GameObject player;
+
+    public GameDirector gameDirector;
+
     public CameraShake cameraShake; //카메라의 흔들림
 
     SpriteRenderer sp;//나중에 openQuest()에서 lock의 sp를 불러오는데 쓰인다.
@@ -198,22 +201,26 @@ public class QuestManager : MonoBehaviour
             StartCoroutine("ExBox_FadeIn");
             TextForExplanation.text = "생명의 조각이 나타났습니다.";
             StartCoroutine("ExBox_FadeOut");
+
             //===========================================================
             //생명의 조각 true, 열쇠 true;
             Life03.SetActive(true);
             keys[6].SetActive(true);
             count_Quest03 = -1; //이제 실행안되도록
         }
+
+        //==========================================================
+        
     }
 
     void OpenQuest()
     {
-        switch(match_Pair)
+        switch (match_Pair)
         {
             case 0:
                 Debug.Log("0퀘스트입니다.");
                 keys[0].transform.position = Locks_And_Object[0].position;
-                
+
                 inventory.Destory_onlyList();
 
                 //화면상에 존재하지만, 이제 아이템으로써 움직이지않겠다는 의미
@@ -312,6 +319,7 @@ public class QuestManager : MonoBehaviour
                 keys[5].SetActive(true);
                 break;
             case 6:
+
                 //마지막 방문 오픈
                 Debug.Log("마지막 방 열림");
 
@@ -325,6 +333,7 @@ public class QuestManager : MonoBehaviour
 
                 //**필수 !!
                 playerController.isUsingItem = false;
+
                 break;
 
             default:
@@ -381,13 +390,41 @@ public class QuestManager : MonoBehaviour
         //오브젝트 (문 등) 사용!
         if (ObjectItem.itemName == "Lock06_Door03_LastLock")
         {
+            if (gameDirector.LifeCount != 3)
+            {
+                //생명의 조각이 부족하다면
+                //item.haveEventAsObject = false;
+
+                //메시지 박스 UI=============================================
+                ExplanationBox.SetActive(true);
+                StartCoroutine("ExBox_FadeIn");
+                TextForExplanation.text = "생명의 조각이 부족합니다.";
+                StartCoroutine("ExBox_FadeOut");
+                //===========================================================
+            }
             //ObjectItem.itemName은 현재 오브젝트의 Item 스크립트를 받고있다.
             //Lock06_Door02_LastLock 문이라면..
-            float ObectPosX = Locks_And_Object[7].position.x;
+            else if (gameDirector.LifeCount == 3 && ObjectItem.pair == -1) 
+            {
+                ObjectItem.pair = 6;
+                curObject.tag = "lock";
 
-            player.transform.position = new Vector3(ObectPosX, player.transform.position.y, player.transform.position.z);
+                //메시지 박스 UI=============================================
+                ExplanationBox.SetActive(true);
+                StartCoroutine("ExBox_FadeIn");
+                TextForExplanation.text = "마지막 방_열쇠로 문을 열어주세요.";
+                StartCoroutine("ExBox_FadeOut");
 
-            Debug.Log("Lock06_Door02_LastLock 오브젝트 이벤트 실행!!");
+                //===========================================================
+            }
+            else
+            {
+                float ObectPosX = Locks_And_Object[7].position.x;
+
+                player.transform.position = new Vector3(ObectPosX, player.transform.position.y, player.transform.position.z);
+
+                Debug.Log("Lock06_Door02_LastLock 오브젝트 이벤트 실행!!");
+            }
         }
         if (ObjectItem.itemName == "Door04_LastDoor")
         {
@@ -446,11 +483,11 @@ public class QuestManager : MonoBehaviour
             //===========================================================
         }
         //액자 이벤트_Key03_대칭에 쓰임.
-        if (item.itemName== "PhotoPrame_Key03_Quest03")
+        if (item.itemName == "PhotoPrame_Key03_Quest03")
         {
             item.haveEventAsObject = false;
 
-            cameraShake.ShakeTime(0.3f,0.4f);
+            cameraShake.ShakeTime(0.3f, 0.4f);
             cameraShake.Shake = true;
             //메시지 박스 UI=============================================
             ExplanationBox.SetActive(true);
@@ -461,8 +498,8 @@ public class QuestManager : MonoBehaviour
 
             changeTag[1].tag = "object_Item"; //crack의 태그를 바꿔준다.
         }
-
-        if(item.itemName == "Key06_LastKey")
+        //마지막 엔딩으로 가는 키
+        if (item.itemName == "Key06_LastKey")
         {
             item.haveEventAsObject = false;
 
@@ -474,6 +511,7 @@ public class QuestManager : MonoBehaviour
             //===========================================================
 
         }
+
     }
     //메세지 박스 페이드인 페이드 아웃
     IEnumerator ExBox_FadeOut()

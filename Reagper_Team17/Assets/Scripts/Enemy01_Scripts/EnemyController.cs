@@ -28,12 +28,12 @@ public class EnemyController : MonoBehaviour
     float maxtime = 3f; //추격중_플레이어의 위치를 받아올 타이밍
 
     float hidingTime = 0;
-    float maxhidingTime = 15f;
+    float maxhidingTime = 10f;
 
     //======================================
     //사라지기위한 변수
     float NotChasingTime;
-    float NotChasingMaxTime = 10;
+    float NotChasingMaxTime = 18;
     public bool StopPortal = true;
 
 
@@ -126,15 +126,15 @@ public class EnemyController : MonoBehaviour
             if (time > maxtime)
             {
                 CheckDirec();// maxtime초 마다 플레이어의 위치 받아옴.
-                maxtime = Random.Range(2, 4);
+                maxtime = Random.Range(1, 4);
                 time = 0;
             }
-            movementSpeed = 6;//ㅈㄴ빠르게
+            movementSpeed = 7;//ㅈㄴ빠르게
         }
         else
         {
             time = 0;
-            movementSpeed = 3;
+            movementSpeed = 4;
         }
 
         if (direction == "Left")

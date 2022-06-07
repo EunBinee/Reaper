@@ -39,7 +39,7 @@ public class GameDirector : MonoBehaviour
 
 
             ShakeStart = true;
-            cameraShake.ShakeTime(maxTime, 0.05f);
+            cameraShake.ShakeTime(maxTime, 0.3f);
             cameraShake.Shake = true;
 
             if (time>maxTime)
