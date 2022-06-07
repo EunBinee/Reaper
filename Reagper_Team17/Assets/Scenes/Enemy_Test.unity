@@ -2679,7 +2679,7 @@ GameObject:
   - component: {fileID: 418898199}
   m_Layer: 0
   m_Name: End_Collider
-  m_TagString: Untagged
+  m_TagString: end_Collider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3085,7 +3085,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &473914554
 Transform:
   m_ObjectHideFlags: 0
@@ -3123,6 +3123,9 @@ MonoBehaviour:
   existEnemy: 0
   curPortal: {fileID: 0}
   Board_Map: {fileID: 1626977218}
+  stop_Ganerator: 0
+  End_Enemy_Ganerator: 0
+  EndEnemy_pos: {fileID: 0}
 --- !u!1 &474692589
 GameObject:
   m_ObjectHideFlags: 0
@@ -3286,14 +3289,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPosText: {fileID: 1437188629}
   cameraShake: {fileID: 519420030}
-  LifeCount: 0
+  LifeCount: 3
   LifeCountText: {fileID: 353492384}
   GetLife: 0
   curLife: {fileID: 0}
   ExplanationBox: {fileID: 1201882223}
   TextForExplanation: {fileID: 1043286901}
-  Enemy_pos: {fileID: 0}
-  prefab_Enemy: {fileID: 0}
+  enemyGanerator: {fileID: 473914555}
 --- !u!4 &502994341
 Transform:
   m_ObjectHideFlags: 0
@@ -6141,7 +6143,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &938716972
 Transform:
   m_ObjectHideFlags: 0
@@ -9502,7 +9504,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349949212}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 78.3, y: 27.9, z: 0}
+  m_LocalPosition: {x: 78.3, y: 3.4, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 1971940151}

@@ -314,6 +314,12 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (collision.CompareTag("end_Collider"))
+        {
+            //end를 위한 collider를 밟는다면..?
+            gameDirector.End_Scene();
+        }
+
     }
     private void OnTriggerStay2D(Collider2D collision)
     {

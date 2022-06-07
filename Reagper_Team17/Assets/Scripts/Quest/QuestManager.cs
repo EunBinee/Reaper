@@ -9,7 +9,7 @@ public class QuestManager : MonoBehaviour
     public GameObject player;
 
     public GameDirector gameDirector;
-    public GameObject enemyGanerator;
+    public EnemyGanerator enemyGanerator;
 
     public CameraShake cameraShake; //카메라의 흔들림
 
@@ -421,7 +421,8 @@ public class QuestManager : MonoBehaviour
             else
             {
                 float ObectPosX = Locks_And_Object[7].position.x;
-                enemyGanerator.SetActive(false); //마지막 문을 열면, 적 생성기 없앰
+                // enemyGanerator.SetActive(false); //마지막 문을 열면, 적 생성기 없앰
+                enemyGanerator.stop_Ganerator = true;
                 player.transform.position = new Vector3(ObectPosX, player.transform.position.y, player.transform.position.z);
 
                 Debug.Log("Lock06_Door02_LastLock 오브젝트 이벤트 실행!!");
@@ -429,12 +430,12 @@ public class QuestManager : MonoBehaviour
         }
         if (ObjectItem.itemName == "Door04_LastDoor")
         {
-            float ObectPosX = Locks_And_Object[6].position.x;
+            /*float ObectPosX = Locks_And_Object[6].position.x;
 
             player.transform.position = new Vector3(ObectPosX, player.transform.position.y, player.transform.position.z);
 
 
-            Debug.Log("Door04_LastDoor 오브젝트 이벤트 실행!!");
+            Debug.Log("Door04_LastDoor 오브젝트 이벤트 실행!!");*/
         }
 
 

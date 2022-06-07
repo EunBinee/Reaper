@@ -9,6 +9,8 @@ public class EnemyController : MonoBehaviour
     public int playerRoomPos; //플레이어가 있는 방
     public int playerFloorPos;//플레이어가 있는 층
 
+    EnemyGanerator enemyGanerator;
+
     public int EnemyRoomPos; //적이 있는 방
     public int EnemyFloorPos; //적이 있는 층
 
@@ -41,11 +43,20 @@ public class EnemyController : MonoBehaviour
     {
         GameObject Player = GameObject.Find("Player");
         player = Player.GetComponent<PlayerController>();
-
+        enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
         sr = GetComponent<SpriteRenderer>();
         playerRoomPos = player.GetRoom();
         playerFloorPos = player.GetFloor();
         CheckDirec();
+
+        if (enemyGanerator.End_Enemy_Ganerator)
+        {
+            //마지막 씬에 나오는 적일 경우,
+            //바로 추적 ㄱㄱㄱ
+            isChasing = true;
+
+
+        }
     }
 
     // Update is called once per frame
@@ -55,6 +66,10 @@ public class EnemyController : MonoBehaviour
         player = Player.GetComponent<PlayerController>();
         playerRoomPos = player.GetRoom();
         playerFloorPos = player.GetFloor();
+
+        //마지막 엔딩씬 enemy인지 확인
+        
+
 
         //플레이어와 같은 층인지 계속 연산
         if (EnemyFloorPos == playerFloorPos)
@@ -111,15 +126,20 @@ public class EnemyController : MonoBehaviour
             if (player.ishiding)
             {
                 //만약 player가 숨었다면..
-                hidingTime += Time.deltaTime;
-                if (hidingTime > maxhidingTime)
+                if(!enemyGanerator.End_Enemy_Ganerator)
                 {
-                    //숨었는데 15초동안 숨으면.. 
+                    //만약 추적이 멈추는 때는 , 마지막 씬의 적이 아니고, 플레이어가 숨엇을 경우...^^..
+                    hidingTime += Time.deltaTime;
+                    if (hidingTime > maxhidingTime)
+                    {
+                        //숨었는데 15초동안 숨으면.. 
 
-                    isChasing = false;
-                    Debug.Log("추적이 멈추었습니다.");
-                    hidingTime = 0;
+                        isChasing = false;
+                        Debug.Log("추적이 멈추었습니다.");
+                        hidingTime = 0;
+                    }
                 }
+                
             }
             //만약 추격 중이라면.
             time += Time.deltaTime;

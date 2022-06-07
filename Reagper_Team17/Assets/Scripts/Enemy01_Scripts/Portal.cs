@@ -43,23 +43,42 @@ public class Portal : MonoBehaviour
     {
         if (!EndPortal) //갓 태어난 포탈일 경우
         {
-            time += Time.deltaTime;
-            Debug.Log("maxtime : " + maxtime);
-            if (time > maxtime)
+            if(enemyGanerator.End_Enemy_Ganerator)
             {
-
+                //마지막 씬인 경우
                 EnemyPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
 
                 CurEnemy = Instantiate(Enemy_Prefab, EnemyPos, Quaternion.identity); //적생성
                 CurEnemyCollider = Instantiate(Enemy_Prefab_collider, EnemyPos, Quaternion.identity); //적 콜라이더 생성
                 Enemy_Prefab_Light = Instantiate(Enemy_Prefab_Light, EnemyPos, Quaternion.identity); //적 라이트 생성
                 enemyController = CurEnemy.GetComponent<EnemyController>();
+
                 EndPortal = true;
                 enemyController.StopPortal = true;
                 sr.color = new Color(1, 1, 1, 0);//투명하게 만듬
-
-                time = 0;
             }
+            else
+            {
+                time += Time.deltaTime;
+                Debug.Log("maxtime : " + maxtime);
+                if (time > maxtime)
+                {
+
+                    EnemyPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+
+                    CurEnemy = Instantiate(Enemy_Prefab, EnemyPos, Quaternion.identity); //적생성
+                    CurEnemyCollider = Instantiate(Enemy_Prefab_collider, EnemyPos, Quaternion.identity); //적 콜라이더 생성
+                    Enemy_Prefab_Light = Instantiate(Enemy_Prefab_Light, EnemyPos, Quaternion.identity); //적 라이트 생성
+                    enemyController = CurEnemy.GetComponent<EnemyController>();
+
+                    EndPortal = true;
+                    enemyController.StopPortal = true;
+                    sr.color = new Color(1, 1, 1, 0);//투명하게 만듬
+
+                    time = 0;
+                }
+            }
+           
         }
         if (EndPortal) //한번이상 태어난 경우
         {
@@ -78,6 +97,7 @@ public class Portal : MonoBehaviour
                 //사라지게 할 함수
                 Destroy(CurEnemy);
                 Destroy(CurEnemyCollider);
+                Destroy(Enemy_Prefab_Light);
                 Invoke("Destroy_Portal", 3);
             }
         }

@@ -26,10 +26,7 @@ public class GameDirector : MonoBehaviour
 
     //==========================
     //엔딩
-    public Transform Enemy_pos;
-    public GameObject prefab_Enemy;
-    GameObject curEnemy;//현재의 Enemy;
-    EnemyController enemyController;
+    public EnemyGanerator enemyGanerator;
     void Start()
     {
         playercontroller = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -130,17 +127,21 @@ public class GameDirector : MonoBehaviour
 
 
     //엔딩 씬..
-    void End_Scene()
+    public void End_Scene()
     {
-        Vector3 EnemyPos = new Vector3(Enemy_pos.position.x, Enemy_pos.position.y, this.transform.position.z);
-
-        curEnemy = Instantiate(prefab_Enemy, EnemyPos, Quaternion.identity);
-        enemyController = curEnemy.GetComponent<EnemyController>();
-        Invoke("ChasingTrue", 3);
+        //적 생성
+        enemyGanerator.End_Enemy_Ganerator = true;
     }
     void ChasingTrue()
     {
-        enemyController.isChasing = true;
+        cameraShake.ShakeTime(0.4f, 0.4f);
+        cameraShake.Shake = true;
+        //메시지 박스 UI=============================================
+        ExplanationBox.SetActive(true);
+        StartCoroutine("ExBox_FadeIn");
+        TextForExplanation.text = "끝까지 달리세요.";
+        StartCoroutine("ExBox_FadeOut");
+        //===========================================================
     }
 
 }
