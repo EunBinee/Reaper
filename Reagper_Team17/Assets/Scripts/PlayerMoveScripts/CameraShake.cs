@@ -5,7 +5,7 @@ using UnityEngine;
 public class CameraShake : MonoBehaviour
 {
     // Start is called before the first frame update
-    public GameObject player;
+    public PlayerController player;
 
     public float shakeAmount;
     float shakeTime;
@@ -54,9 +54,6 @@ public class CameraShake : MonoBehaviour
 
             }
         }
-        else
-        {
-           }
 
     }
     public void ShakeTime(float time,float amount )

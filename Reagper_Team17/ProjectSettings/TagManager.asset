@@ -30,6 +30,9 @@ TagManager:
   - Hint02_Quest02
   - notSlot
   - nothing
+  - chase
+  - Enemy
+  - sidewall
   layers:
   - Default
   - TransparentFX
