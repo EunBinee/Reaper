@@ -29,7 +29,7 @@ public class EnemyGanerator : MonoBehaviour
     public bool End_Enemy_Ganerator = false;
     public Transform EndEnemy_pos;
 
-
+    bool check = false;
     void Start()
     {
         curPortal = null;
@@ -37,15 +37,29 @@ public class EnemyGanerator : MonoBehaviour
     }
     void Update()
     {
+
+        
         if(!existEnemy && !stop_Ganerator)
         {
             //만약 적이 없으면..생성!
             StartEnemy();
             Debug.Log("적 생성 시작");
         }
-
-        if(End_Enemy_Ganerator)
+        if(stop_Ganerator&& !check)
         {
+            check = true;
+           // existEnemy = false;
+            if (curPortal != null)
+            {
+                //만약 curPortal안에 있다면..
+
+                curPortal.GetComponent<Portal>().Destroy_All();
+            }
+        }
+        
+        if(!existEnemy && End_Enemy_Ganerator)
+        {
+            
             createEnemy_EndEnemy();
         }
     }
@@ -150,9 +164,8 @@ public class EnemyGanerator : MonoBehaviour
     void createEnemy_EndEnemy()
     {
         Debug.Log("적 생성!!!!!!!!!!!!");
-
-
-        Vector3 EnemyPos = new Vector3(EndEnemy_pos.position.x, EndEnemy_pos.position.y, this.transform.position.z);
+        existEnemy = true;
+        Vector3 EnemyPos = new Vector3(EndEnemy_pos.position.x, EndEnemy_pos.position.y, EndEnemy_pos.position.z);
         curPortal = Instantiate(Portal_Prefab, EnemyPos, Quaternion.identity); //포탈 생성
 
 

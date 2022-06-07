@@ -30,7 +30,7 @@ public class QuestManager : MonoBehaviour
     Item ObjectItem;
 
     //맞는 짝이 있다면.. 현재 퀘스트의 정보값, 자물쇠와 키의 pair값
-    int match_Pair = -1;
+    public int match_Pair = -1;
 
     //퀘스트에 사용될 열쇠들~~
     public GameObject[] keys;
@@ -74,6 +74,7 @@ public class QuestManager : MonoBehaviour
 
         curInventor_Item = inventory.GetInventoryItem();
         curLockItem = playerController.GetLockAndObjectItem();
+      
     }
     void Update()
     {
@@ -81,12 +82,21 @@ public class QuestManager : MonoBehaviour
         usingObject = playerController.isUsingObject;
 
         curInventor_Item = inventory.GetInventoryItem();
+
         if (curInventor_Item != null)
         {
             KeyItem = curInventor_Item.GetComponent<Item>();//Key
             if (KeyItem.haveEventAsObject)
             {
                 UseObject(curInventor_Item, KeyItem); //만약 오브젝트에 이벤트가 포함되어있다면!
+            }
+        }
+        if(curLockItem!=null)
+        {
+            LockItem = curLockItem.GetComponent<Item>();
+            if (LockItem.haveEventAsObject)
+            {
+                UseObject(curLockItem, LockItem); //만약 오브젝트에 이벤트가 포함되어있다면!
             }
         }
 
@@ -107,6 +117,7 @@ public class QuestManager : MonoBehaviour
                     if(match_Pair != KeyItem.pair)
                     {
                         //mathcpair와 키아이템의 짝이 똑같지않다면..
+                       
                         match_Pair = KeyItem.pair;
                         OpenQuest();
                     }
@@ -320,19 +331,12 @@ public class QuestManager : MonoBehaviour
                 keys[5].SetActive(true);
                 break;
             case 6:
-
-                //마지막 방문 오픈
-                Debug.Log("마지막 방 열림");
-
-                Debug.Log("1퀘스트입니다.");
-                //문의 잠금을 연다.
-                //스프라이트를 바꾼다.(지금은 색을 바꾸는 것으로 대신함)
+                Debug.Log("Lock06_Door02_LastLock 오브젝트 이벤트 실행!!");
                 sp = curLockItem.GetComponent<SpriteRenderer>();
                 sp.color = new Color(0.3f, 0.5f, 0.5f, 1);
                 inventory.Destroy_item();//인벤토리에 있는 Key지우기
-                curLockItem.tag = "object_Item"; //문의 태그를 Lock>>object_Item으로 변경;
+                curLockItem.tag = "object_Item";
 
-                //**필수 !!
                 playerController.isUsingItem = false;
 
                 break;
@@ -345,7 +349,7 @@ public class QuestManager : MonoBehaviour
     void UseObject()
     {
         //오브젝트 (문 등) 사용!
-        if(ObjectItem.itemName== "Key01_lock_And_Door01_Quest01")
+        if (ObjectItem.itemName == "Key01_lock_And_Door01_Quest01")
         {
             //ObjectItem.itemName은 현재 오브젝트의 Item 스크립트를 받고있다.
             //Quest1번 문이라면..
@@ -389,9 +393,10 @@ public class QuestManager : MonoBehaviour
 
         //마지막 문---------------------------------------
         //오브젝트 (문 등) 사용!
+
         if (ObjectItem.itemName == "Lock06_Door03_LastLock")
         {
-            if (gameDirector.LifeCount != 3)
+            if (gameDirector.LifeCount < 3)
             {
                 //생명의 조각이 부족하다면
                 //item.haveEventAsObject = false;
@@ -403,21 +408,6 @@ public class QuestManager : MonoBehaviour
                 StartCoroutine("ExBox_FadeOut");
                 //===========================================================
             }
-            //ObjectItem.itemName은 현재 오브젝트의 Item 스크립트를 받고있다.
-            //Lock06_Door02_LastLock 문이라면..
-            else if (gameDirector.LifeCount == 3 && ObjectItem.pair == -1) 
-            {
-                ObjectItem.pair = 6;
-                curObject.tag = "lock";
-
-                //메시지 박스 UI=============================================
-                ExplanationBox.SetActive(true);
-                StartCoroutine("ExBox_FadeIn");
-                TextForExplanation.text = "마지막 방_열쇠로 문을 열어주세요.";
-                StartCoroutine("ExBox_FadeOut");
-
-                //===========================================================
-            }
             else
             {
                 float ObectPosX = Locks_And_Object[7].position.x;
@@ -427,18 +417,8 @@ public class QuestManager : MonoBehaviour
 
                 Debug.Log("Lock06_Door02_LastLock 오브젝트 이벤트 실행!!");
             }
+
         }
-        if (ObjectItem.itemName == "Door04_LastDoor")
-        {
-            /*float ObectPosX = Locks_And_Object[6].position.x;
-
-            player.transform.position = new Vector3(ObectPosX, player.transform.position.y, player.transform.position.z);
-
-
-            Debug.Log("Door04_LastDoor 오브젝트 이벤트 실행!!");*/
-        }
-
-
 
     }
     void UseObject(GameObject curItem_, Item item)
@@ -513,6 +493,63 @@ public class QuestManager : MonoBehaviour
             //===========================================================
 
         }
+
+        //문
+        if (item.itemName == "Lock06_Door03_LastLock")
+        {
+            item.haveEventAsObject = false;
+
+            cameraShake.ShakeTime(0.3f, 0.3f);
+            cameraShake.Shake = true;
+
+            //메시지 박스 UI=============================================
+            ExplanationBox.SetActive(true);
+            StartCoroutine("ExBox_FadeIn");
+            TextForExplanation.text = "생명의 조각 3조각과 열쇠가 필요합니다.";
+            StartCoroutine("ExBox_FadeOut");
+            //===========================================================
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        /*        if(item.itemName == "Lock06_Door03_LastLock")
+                {
+                    if (gameDirector.LifeCount != 3)
+                    {
+                        //생명의 조각이 부족하다면
+                        //item.haveEventAsObject = false;
+
+                        //메시지 박스 UI=============================================
+                        ExplanationBox.SetActive(true);
+                        StartCoroutine("ExBox_FadeIn");
+                        TextForExplanation.text = "생명의 조각이 부족합니다.";
+                        StartCoroutine("ExBox_FadeOut");
+                        //===========================================================
+                    }
+                    //ObjectItem.itemName은 현재 오브젝트의 Item 스크립트를 받고있다.
+                    //Lock06_Door02_LastLock 문이라면..
+                    else if (gameDirector.LifeCount == 3 && ObjectItem.pair == -1)
+                    {
+                        item.haveEventAsObject = false;
+                        item.pair = 6;
+                        //메시지 박스 UI=============================================
+                        ExplanationBox.SetActive(true);
+                        StartCoroutine("ExBox_FadeIn");
+                        TextForExplanation.text = "마지막 방_열쇠로 문을 열어주세요.";
+                        StartCoroutine("ExBox_FadeOut");
+
+                        //===========================================================
+                    }
+                }*/
 
     }
     //메세지 박스 페이드인 페이드 아웃

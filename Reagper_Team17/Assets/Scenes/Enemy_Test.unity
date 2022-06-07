@@ -2718,7 +2718,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 418898198}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16.167694, y: 7.344763, z: 0}
+  m_LocalPosition: {x: 11.7, y: 7.344763, z: 0}
   m_LocalScale: {x: 1, y: 21.108492, z: 1}
   m_Children: []
   m_Father: {fileID: 2032468432}
@@ -3125,7 +3125,7 @@ MonoBehaviour:
   Board_Map: {fileID: 1626977218}
   stop_Ganerator: 0
   End_Enemy_Ganerator: 0
-  EndEnemy_pos: {fileID: 0}
+  EndEnemy_pos: {fileID: 1158073090}
 --- !u!1 &474692589
 GameObject:
   m_ObjectHideFlags: 0
@@ -6152,7 +6152,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 938716971}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 126.7, y: 1, z: 6.7859335}
+  m_LocalPosition: {x: 94.2, y: 22, z: 6.7859335}
   m_LocalScale: {x: 18.897974, y: 13.699708, z: 18.897974}
   m_Children: []
   m_Father: {fileID: 1342039542}
@@ -7378,7 +7378,7 @@ GameObject:
   - component: {fileID: 1163230803}
   m_Layer: 0
   m_Name: Lock06_Door03_LastLock
-  m_TagString: object_Item
+  m_TagString: lock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7438,9 +7438,9 @@ MonoBehaviour:
   itemType: 1
   itemName: Lock06_Door03_LastLock
   itemImage: {fileID: 0}
-  pair: -1
+  pair: 6
   notMoving: 0
-  haveEventAsObject: 0
+  haveEventAsObject: 1
 --- !u!212 &1163230805
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8360,11 +8360,12 @@ MonoBehaviour:
   playerController: {fileID: 1349949218}
   player: {fileID: 1349949212}
   gameDirector: {fileID: 502994340}
-  enemyGanerator: {fileID: 0}
+  enemyGanerator: {fileID: 473914555}
   cameraShake: {fileID: 519420030}
   curInventor_Item: {fileID: 0}
   curLockItem: {fileID: 0}
   curObject: {fileID: 0}
+  match_Pair: -1
   keys:
   - {fileID: 292610500}
   - {fileID: 113094187}
@@ -9504,7 +9505,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349949212}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 78.3, y: 3.4, z: 0}
+  m_LocalPosition: {x: 58.52, y: 26.1, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 1971940151}
