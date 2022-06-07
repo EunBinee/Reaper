@@ -9,6 +9,7 @@ public class QuestManager : MonoBehaviour
     public GameObject player;
 
     public GameDirector gameDirector;
+    public GameObject enemyGanerator;
 
     public CameraShake cameraShake; //카메라의 흔들림
 
@@ -420,7 +421,7 @@ public class QuestManager : MonoBehaviour
             else
             {
                 float ObectPosX = Locks_And_Object[7].position.x;
-
+                enemyGanerator.SetActive(false); //마지막 문을 열면, 적 생성기 없앰
                 player.transform.position = new Vector3(ObectPosX, player.transform.position.y, player.transform.position.z);
 
                 Debug.Log("Lock06_Door02_LastLock 오브젝트 이벤트 실행!!");

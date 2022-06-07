@@ -144,7 +144,7 @@ public class PlayerController : MonoBehaviour
                 {
                     //Dash = true;
                     movementSpeed = 8;
-                    //condiBar.GetComponent<ConditionBar>().currentHP -= 0.3f;
+                    condiBar.GetComponent<ConditionBar>().currentHP -= 0.3f;
                 }
                 else
                 {

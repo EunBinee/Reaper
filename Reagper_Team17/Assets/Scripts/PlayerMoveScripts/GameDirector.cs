@@ -23,6 +23,13 @@ public class GameDirector : MonoBehaviour
     public GameObject ExplanationBox;
     public Text TextForExplanation;
 
+
+    //==========================
+    //엔딩
+    public Transform Enemy_pos;
+    public GameObject prefab_Enemy;
+    GameObject curEnemy;//현재의 Enemy;
+    EnemyController enemyController;
     void Start()
     {
         playercontroller = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -83,8 +90,6 @@ public class GameDirector : MonoBehaviour
         LifeCountText.text = LifeCount + "/3";
     }
 
-
-
     //메세지 박스 페이드인 페이드 아웃
     IEnumerator ExBox_FadeOut()
     {
@@ -120,6 +125,22 @@ public class GameDirector : MonoBehaviour
             ExplanationBox.GetComponent<Image>().color = color;
             yield return new WaitForSeconds(0.02f);
         }
+    }
+
+
+
+    //엔딩 씬..
+    void End_Scene()
+    {
+        Vector3 EnemyPos = new Vector3(Enemy_pos.position.x, Enemy_pos.position.y, this.transform.position.z);
+
+        curEnemy = Instantiate(prefab_Enemy, EnemyPos, Quaternion.identity);
+        enemyController = curEnemy.GetComponent<EnemyController>();
+        Invoke("ChasingTrue", 3);
+    }
+    void ChasingTrue()
+    {
+        enemyController.isChasing = true;
     }
 
 }
