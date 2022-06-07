@@ -131,6 +131,8 @@ public class GameDirector : MonoBehaviour
     {
         //Àû »ý¼º
         enemyGanerator.End_Enemy_Ganerator = true;
+        enemyGanerator.stop_Ganerator = true;
+        ChasingTrue();
     }
     void ChasingTrue()
     {

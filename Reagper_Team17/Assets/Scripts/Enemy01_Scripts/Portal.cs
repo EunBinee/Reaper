@@ -112,6 +112,7 @@ public class Portal : MonoBehaviour
     public void Destroy_All()
     {
         enemyGanerator.existEnemy = false;
+
         Destroy(CurEnemy);
         Destroy(CurEnemyCollider);
         Destroy(Enemy_Prefab_Light);

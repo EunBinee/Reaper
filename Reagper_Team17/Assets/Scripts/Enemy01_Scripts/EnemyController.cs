@@ -21,8 +21,8 @@ public class EnemyController : MonoBehaviour
     SpriteRenderer sr;
     public string direction = ""; //저승사자가 움직일 방향
 
-    public int movementSpeed = 3;
-    int plus = 0;
+    public float movementSpeed = 3;
+    float plus = 0;
 
     //==============================
     //추적 시작을 알리는 변수
@@ -55,7 +55,7 @@ public class EnemyController : MonoBehaviour
             //마지막 씬에 나오는 적일 경우,
             //바로 추적 ㄱㄱㄱ
             isChasing = true;
-            plus += 1;
+            plus += 1.5f;
 
 
         }
