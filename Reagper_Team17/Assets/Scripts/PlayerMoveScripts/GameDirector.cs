@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class GameDirector : MonoBehaviour
 {
     // 플레이어의 위치 UI, PlayerController에서 받아옴
@@ -17,7 +18,7 @@ public class GameDirector : MonoBehaviour
     public bool GetLife = false;
     public GameObject curLife;
     float time;
-    float maxTime = 7.0f;
+    float maxTime = 5.0f;
     //=====================
     //메세지 박스(설명용도)
     public GameObject ExplanationBox;
@@ -28,8 +29,9 @@ public class GameDirector : MonoBehaviour
     //엔딩
     public EnemyGanerator enemyGanerator;
     public GameObject GameClearBoard; //화면을 밝게 해줄..
+    
     public GameObject GameClearLight;//글로벌 라이트;
-
+    public GameObject Light;//글로벌 라이트;
     void Start()
     {
         playercontroller = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -165,6 +167,10 @@ public class GameDirector : MonoBehaviour
         enemyGanerator.End_Enemy_Ganerator = true;
         enemyGanerator.stop_Ganerator = true;
         GameClearLight.SetActive(false);
+        Light.SetActive(true);
+        GameObject.Find("Background_M").GetComponent<AudioSource>().Stop();
+
+        //Invoke("GameClearScene_Load", 5.0f);
         StartCoroutine("GameClearBoard_FadeIn");
 
     }
@@ -181,7 +187,7 @@ public class GameDirector : MonoBehaviour
             GameClearBoard.GetComponent<SpriteRenderer>().color = color;
 
             
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.2f);
         }
 
         if (i >= 10)
@@ -204,8 +210,12 @@ public class GameDirector : MonoBehaviour
             GameObject.Find("Player").GetComponent<SpriteRenderer>().color = color;
 
 
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.2f);
         }
+
+        SceneManager.LoadScene("GameClearScene");
+
     }
+
 
 }
