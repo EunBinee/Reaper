@@ -49,11 +49,18 @@ public class PlayerController : MonoBehaviour
     //숨었는지 확인
     public bool ishiding = false;
     //===================================
+
+    //오디오 소스!!
+    AudioSource audioSource; //케이지 안의 오디오 소스
+    public AudioClip getItem_S;
+
+
+
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
-
+        audioSource = GetComponent<AudioSource>();
         //적 스크립트
         //enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
         Portal = enemyGanerator.curPortal;
@@ -333,6 +340,11 @@ public class PlayerController : MonoBehaviour
                 if(!isCilck)
                 {
                     isCilck = true;
+
+                    /*audioSource.clip = getItem_S;
+                    audioSource.Play();*/
+                    GameObject.Find("GetItem_S").GetComponent<AudioSource>().Play();
+
                     inventory.AddItem(_item.gameObject, _item.gameObject.GetComponent<Item>());
                     Invoke("isCilck_Return", 1); //1초뒤에 이제 아이템을 클릭 할 수 있음.
                 }

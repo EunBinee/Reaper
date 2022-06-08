@@ -69,9 +69,15 @@ public class QuestManager : MonoBehaviour
     //Quest03 대칭게임
     int count_Quest03 = 0;
     public GameObject Life03;
+
+    //==========================================
+    //오디오
+    /*AudioSource audioSource; //케이지 안의 오디오 소스
+    public AudioClip UsingItem_S;*/
+
     void Start()
     {
-
+        //audioSource = GetComponent<AudioSource>();
         curInventor_Item = inventory.GetInventoryItem();
         curLockItem = playerController.GetLockAndObjectItem();
       
@@ -148,16 +154,18 @@ public class QuestManager : MonoBehaviour
             //힌트 1일 볼때
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-
+                
                 //위방향 버튼 누르면.. 힌트 보여주기
                 if (!playerController.dontMove)
                 {
+                    GameObject.Find("Hint_S").GetComponent<AudioSource>().Play();
                     //만약 dontMove가 false면 hint보여주고
                     playerController.dontMove = true;
                     hint01_UI.SetActive(true);
                 }
                 else
                 {
+                   // GameObject.Find("Hint_S").GetComponent<AudioSource>().Play();
                     //true면
                     playerController.dontMove = false;
                     hint01_UI.SetActive(false);
@@ -190,6 +198,7 @@ public class QuestManager : MonoBehaviour
                 //위방향 버튼 누르면.. 힌트 보여주기
                 if (!playerController.dontMove)
                 {
+                    GameObject.Find("Hint_S").GetComponent<AudioSource>().Play();
                     //만약 dontMove가 false면 hint보여주고
                     playerController.dontMove = true;
                     hint02_UI.SetActive(true);
@@ -230,13 +239,16 @@ public class QuestManager : MonoBehaviour
         switch (match_Pair)
         {
             case 0:
-                Debug.Log("0퀘스트입니다.");
+                
+                Debug.Log("발판을 옳은 위치에 두는 퀘스트.");
+
+                //오디오
+                GameObject.Find("GetItem_S").GetComponent<AudioSource>().Play();
+
                 keys[0].transform.position = Locks_And_Object[0].position;
 
                 inventory.Destory_onlyList();
 
-                //화면상에 존재하지만, 이제 아이템으로써 움직이지않겠다는 의미
-                //keys[0].GetComponent<Item>().notMoving = true;
                 keys[0].tag = "nothing";
                 //**필수 !!
                 playerController.isUsingItem = false;

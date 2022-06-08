@@ -17,6 +17,7 @@ public class ItemSlot : MonoBehaviour, IDropHandler
         Debug.Log("OnDrop");
         if (eventData.pointerDrag != null)
         {
+            GameObject.Find("Quest_01_Click").GetComponent<AudioSource>().Play();
             ItemInSlot = eventData.pointerDrag;
             eventData.pointerDrag.GetComponent<RectTransform>().anchoredPosition = GetComponent<RectTransform>().anchoredPosition;
         
