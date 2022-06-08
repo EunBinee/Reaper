@@ -39,7 +39,10 @@ public class EnemyController : MonoBehaviour
     float NotChasingMaxTime = 18;
     public bool StopPortal = true;
 
-
+    //오디오
+    // 한번만 실행되도록..
+    bool AudioStart_Walk = false;
+    bool AudioStart_Chase = false;
     void Start()
     {
         GameObject Player = GameObject.Find("Player");
@@ -98,6 +101,7 @@ public class EnemyController : MonoBehaviour
 
         if (isChasing)
         {
+
             NotChasingTime = 0;
         }
         else
@@ -122,11 +126,20 @@ public class EnemyController : MonoBehaviour
     }
     private void Move()
     {
-        GameObject.Find("Enemy_Walk").GetComponent<AudioSource>().Play();
+        if(!AudioStart_Walk)
+        {
+            GameObject.Find("Enemy_Walk").GetComponent<AudioSource>().Play();
+            AudioStart_Walk = true;
+        }
         Vector3 moveVelocity = Vector3.zero;
         if (isChasing)
         {
-            GameObject.Find("Enemy_Chase").GetComponent<AudioSource>().Play();
+            if(!AudioStart_Chase)
+            {
+
+                GameObject.Find("Enemy_Chase").GetComponent<AudioSource>().Play();
+                AudioStart_Chase = true;
+            }
             
             if (player.ishiding)
             {
@@ -140,6 +153,7 @@ public class EnemyController : MonoBehaviour
                         //숨었는데 15초동안 숨으면.. 
 
                         isChasing = false;
+                        AudioStart_Chase = false;
                         GameObject.Find("Enemy_Chase").GetComponent<AudioSource>().Stop();
                         Debug.Log("추적이 멈추었습니다.");
                         hidingTime = 0;
@@ -197,7 +211,10 @@ public class EnemyController : MonoBehaviour
         NotChasingMaxTime = Random.Range(15, 20);
 
         //사라지기전
+        AudioStart_Chase = false;
+        AudioStart_Walk = false;
         GameObject.Find("Enemy_Chase").GetComponent<AudioSource>().Stop();
+        GameObject.Find("Enemy_Walk").GetComponent<AudioSource>().Stop();
         StopPortal = false;
 
     }
@@ -209,7 +226,10 @@ public class EnemyController : MonoBehaviour
         if (!SameFloor)
         {
             Debug.Log("(한번더 확인을 하니)같은 층이 아닙니다.사라집니다");
+            AudioStart_Chase = false;
+            AudioStart_Walk = false;
             GameObject.Find("Enemy_Chase").GetComponent<AudioSource>().Stop();
+            GameObject.Find("Enemy_Walk").GetComponent<AudioSource>().Stop();
             StopPortal = false;
         }
         else
