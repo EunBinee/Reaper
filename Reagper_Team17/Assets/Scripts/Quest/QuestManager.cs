@@ -60,6 +60,8 @@ public class QuestManager : MonoBehaviour
     public GameObject ExplanationBox;
     public Text TextForExplanation;
 
+    public Sprite brokenCrack; //부서진 크랙 스프라이트
+    public GameObject[] crack_object;//주변 파편과 라이트
 
     //========================
     //쿨타임 //오브젝트 사용시
@@ -249,7 +251,7 @@ public class QuestManager : MonoBehaviour
 
                 inventory.Destory_onlyList();
 
-                keys[0].tag = "nothing";
+                keys[0].tag = "canJump";
                 //**필수 !!
                 playerController.isUsingItem = false;
 
@@ -385,6 +387,7 @@ public class QuestManager : MonoBehaviour
         {
             //Quest02의 crack
             //열쇠를 줌.
+            crack_object[1].SetActive(false);//빛..
             keys[2].SetActive(true);
             changeTag[1].tag = "nothing"; //크랙의 tag를 이제 오브젝트에서 그냥 아무것도 아닌 것으로 바꿔줌
         }
@@ -490,6 +493,12 @@ public class QuestManager : MonoBehaviour
             StartCoroutine("ExBox_FadeOut");
             //===========================================================
 
+            SpriteRenderer Sr = changeTag[1].GetComponent<SpriteRenderer>();
+            Sr.sprite = brokenCrack; //크랙의 스프라이트를 부서진 것으로 교체해준다.
+
+            crack_object[0].SetActive(true);//파편
+            crack_object[1].SetActive(true);//빛..
+
             changeTag[1].tag = "object_Item"; //crack의 태그를 바꿔준다.
         }
         //마지막 엔딩으로 가는 키
@@ -526,42 +535,6 @@ public class QuestManager : MonoBehaviour
 
 
 
-
-
-
-
-
-
-
-        /*        if(item.itemName == "Lock06_Door03_LastLock")
-                {
-                    if (gameDirector.LifeCount != 3)
-                    {
-                        //생명의 조각이 부족하다면
-                        //item.haveEventAsObject = false;
-
-                        //메시지 박스 UI=============================================
-                        ExplanationBox.SetActive(true);
-                        StartCoroutine("ExBox_FadeIn");
-                        TextForExplanation.text = "생명의 조각이 부족합니다.";
-                        StartCoroutine("ExBox_FadeOut");
-                        //===========================================================
-                    }
-                    //ObjectItem.itemName은 현재 오브젝트의 Item 스크립트를 받고있다.
-                    //Lock06_Door02_LastLock 문이라면..
-                    else if (gameDirector.LifeCount == 3 && ObjectItem.pair == -1)
-                    {
-                        item.haveEventAsObject = false;
-                        item.pair = 6;
-                        //메시지 박스 UI=============================================
-                        ExplanationBox.SetActive(true);
-                        StartCoroutine("ExBox_FadeIn");
-                        TextForExplanation.text = "마지막 방_열쇠로 문을 열어주세요.";
-                        StartCoroutine("ExBox_FadeOut");
-
-                        //===========================================================
-                    }
-                }*/
 
     }
     //메세지 박스 페이드인 페이드 아웃
