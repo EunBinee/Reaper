@@ -43,8 +43,15 @@ public class EnemyController : MonoBehaviour
     // 한번만 실행되도록..
     bool AudioStart_Walk = false;
     bool AudioStart_Chase = false;
+
+    //=======================================
+    //플레이어 추적 중에만 콜라이더 키기.
+    BoxCollider2D boxCollider2D;
+
     void Start()
     {
+        boxCollider2D = FindObjectOfType<BoxCollider2D>();
+
         GameObject Player = GameObject.Find("Player");
         player = Player.GetComponent<PlayerController>();
         enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
@@ -101,11 +108,12 @@ public class EnemyController : MonoBehaviour
 
         if (isChasing)
         {
-
+            boxCollider2D.enabled = true;
             NotChasingTime = 0;
         }
         else
         {
+            boxCollider2D.enabled = false;
             NotChasingTime += Time.deltaTime;
 
             if (NotChasingTime > NotChasingMaxTime)

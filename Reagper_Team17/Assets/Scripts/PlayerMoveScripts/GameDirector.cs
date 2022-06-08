@@ -131,7 +131,15 @@ public class GameDirector : MonoBehaviour
 
 
 
-    //¿£µù ¾À..
+    //¿£µù ¾À..1 GameOver=======================================================================================
+    public void GameOver()
+    {
+
+        SceneManager.LoadScene("GameOverScene");
+
+    }
+
+    //¿£µù ¾À..2 GameClear=======================================================================================
     public void End_Scene()
     {
         //Àû »ý¼º

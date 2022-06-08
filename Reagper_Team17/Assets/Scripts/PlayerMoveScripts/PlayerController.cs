@@ -272,6 +272,8 @@ public class PlayerController : MonoBehaviour
             Debug.Log("이제 끝");
             gameDirector.GameClear();
         }
+
+
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
@@ -348,8 +350,14 @@ public class PlayerController : MonoBehaviour
             //플레이어 체력 가득 채워주기
             condiBar.GetComponent<ConditionBar>().MaxHP();
         }
+      //====================
+        //적
+        if (collision.CompareTag("Enemy"))
+        {
+            gameDirector.GameOver();
 
-        
+        }
+
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
