@@ -27,6 +27,9 @@ public class GameDirector : MonoBehaviour
     //==========================
     //엔딩
     public EnemyGanerator enemyGanerator;
+    public GameObject GameClearBoard; //화면을 밝게 해줄..
+    public GameObject GameClearLight;//글로벌 라이트;
+
     void Start()
     {
         playercontroller = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -144,6 +147,65 @@ public class GameDirector : MonoBehaviour
         TextForExplanation.text = "끝까지 달리세요.";
         StartCoroutine("ExBox_FadeOut");
         //===========================================================
+    }
+    //========================
+    //플레이어가 GameClearcollider에 닿았다!
+
+    //
+    //1. 무서운 음악(배경음, 추적음. 뚜벅소리) 전부 멈춘다.
+    //3. 적을 없앤다..
+    //2.board를 불러와서, alpha값을 서서히 올린다.
+    //그리고 alpha값이 다 뜨면.. 플레이어의 스프라이트 랜더러도 불러와서 알파값을 올려준다.
+    //카메라 쉐이킹도 할까.. 고민되네.ㅠㅠ
+
+    //글로벌 라이트도 없애야함.
+
+    public void GameClear()
+    {
+        enemyGanerator.End_Enemy_Ganerator = true;
+        enemyGanerator.stop_Ganerator = true;
+        GameClearLight.SetActive(false);
+        StartCoroutine("GameClearBoard_FadeIn");
+
+    }
+
+    IEnumerator GameClearBoard_FadeIn()
+    {
+        int i = 0;
+        while (i < 10)
+        {
+            i += 1;
+            float f = i / 10.0f;
+            Color color = GameClearBoard.GetComponent<SpriteRenderer>().color;
+            color.a = f;
+            GameClearBoard.GetComponent<SpriteRenderer>().color = color;
+
+            
+            yield return new WaitForSeconds(0.1f);
+        }
+
+        if (i >= 10)
+        {
+            StartCoroutine("GameClearPlayer_Fadeout");
+        }
+    }
+
+    IEnumerator GameClearPlayer_Fadeout() 
+    {
+        yield return new WaitForSeconds(2f); //4초동안 기다리는 뜻
+
+        int i = 10;
+        while (i >= 0)
+        {
+            i -= 1;
+            float f = i / 10.0f;
+            Color color = GameObject.Find("Player").GetComponent<SpriteRenderer>().color;
+            color.a = f;
+            GameObject.Find("Player").GetComponent<SpriteRenderer>().color = color;
+
+
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
 }

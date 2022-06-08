@@ -267,6 +267,11 @@ public class PlayerController : MonoBehaviour
         {
             inCase = true;
         }
+        if (collision.gameObject.tag == "GameClear")
+        {
+            Debug.Log("¿Ã¡¶ ≥°");
+            gameDirector.GameClear();
+        }
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
@@ -344,6 +349,7 @@ public class PlayerController : MonoBehaviour
             condiBar.GetComponent<ConditionBar>().MaxHP();
         }
 
+        
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
