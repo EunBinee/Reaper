@@ -78,7 +78,7 @@ public class EnemyGanerator : MonoBehaviour
         //맵에 적이 없으면 10~15초 사이에 생성한다.
         startGanerator = true;
         existEnemy = true;
-        int rand = Random.Range(7, 10);
+        int rand = Random.Range(7, 18);
         Debug.Log(rand + "초 뒤 적 생성");
         Invoke("createEnemy", rand);
     }

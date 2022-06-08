@@ -47,4 +47,9 @@ public class ConditionBar : MonoBehaviour
 
         
     }
+
+    public void MaxHP()
+    {
+        currentHP = maxHP;
+    }
 }

@@ -1646,6 +1646,7 @@ GameObject:
   - component: {fileID: 177636311}
   - component: {fileID: 177636310}
   - component: {fileID: 177636309}
+  - component: {fileID: 177636312}
   m_Layer: 0
   m_Name: Wall_Side_L
   m_TagString: sidewall
@@ -1765,6 +1766,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &177636312
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 177636307}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &221368968
 GameObject:
   m_ObjectHideFlags: 0
@@ -2690,6 +2717,7 @@ GameObject:
   - component: {fileID: 358122620}
   - component: {fileID: 358122619}
   - component: {fileID: 358122618}
+  - component: {fileID: 358122621}
   m_Layer: 0
   m_Name: Wall_Side_R
   m_TagString: sidewall
@@ -2809,6 +2837,32 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &358122621
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 358122616}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &373246395
 GameObject:
   m_ObjectHideFlags: 0
@@ -3524,7 +3578,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &473914554
 Transform:
   m_ObjectHideFlags: 0
@@ -5264,8 +5318,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 677872770}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.383, y: 5.94, z: 0}
-  m_LocalScale: {x: 1.7486081, y: 2.236356, z: 1}
+  m_LocalPosition: {x: 0.411, y: 5.94, z: 0}
+  m_LocalScale: {x: 1.8797538, y: 2.236356, z: 1}
   m_Children: []
   m_Father: {fileID: 38639403}
   m_RootOrder: 9
@@ -6365,7 +6419,7 @@ MonoBehaviour:
   m_LightType: 2
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.8392157, b: 0.5226415, a: 1}
   m_Intensity: 1
   m_LightVolumeOpacity: 0
   m_ApplyToSortingLayers: 00000000
@@ -6957,7 +7011,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 938716971}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 126.2, y: 0.5, z: 6.7859335}
+  m_LocalPosition: {x: 127, y: 0.9, z: 6.7859335}
   m_LocalScale: {x: 18.897974, y: 13.699708, z: 18.897974}
   m_Children: []
   m_Father: {fileID: 1342039542}
@@ -9252,7 +9306,7 @@ Transform:
   m_GameObject: {fileID: 1237640434}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 51.5, y: -21.9, z: 121.6}
-  m_LocalScale: {x: 1, y: 3.4894712, z: 1}
+  m_LocalScale: {x: 0.55, y: 3.4894712, z: 1}
   m_Children:
   - {fileID: 1857979082}
   - {fileID: 861584853}
@@ -10862,7 +10916,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349949212}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.5, y: 3.8, z: 0}
+  m_LocalPosition: {x: -5.8, y: -1.8, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 1971940151}
@@ -11338,7 +11392,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -14291,6 +14345,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1725367225}
   - component: {fileID: 1725367226}
+  - component: {fileID: 1725367228}
+  - component: {fileID: 1725367227}
   m_Layer: 6
   m_Name: Wall_Room04
   m_TagString: room4
@@ -14352,7 +14408,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -2
-  m_Sprite: {fileID: 21300000, guid: fb0009d96a7408147b81c28a623c9278, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a0e05250711a9b64e943605e7328d34d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -14360,9 +14416,52 @@ SpriteRenderer:
   m_Size: {x: 20.48, y: 10.24}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!66 &1725367227
+CompositeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725367224}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_GeometryType: 0
+  m_GenerationType: 0
+  m_EdgeRadius: 0
+  m_ColliderPaths: []
+  m_CompositePaths:
+    m_Paths: []
+  m_VertexDistance: 0.0005
+  m_OffsetDistance: 0.00005
+--- !u!50 &1725367228
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1725367224}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1725934088
 GameObject:
   m_ObjectHideFlags: 0
@@ -14750,8 +14849,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1857979081}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.09, z: 0}
+  m_LocalScale: {x: 1, y: 1.0543813, z: 1}
   m_Children: []
   m_Father: {fileID: 1237640438}
   m_RootOrder: 0
@@ -15750,7 +15849,7 @@ MonoBehaviour:
   m_LightType: 3
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.67
-  m_Color: {r: 1, g: 0.9333334, b: 0.78823537, a: 1}
+  m_Color: {r: 1, g: 0.946816, b: 0.73018867, a: 1}
   m_Intensity: 1
   m_LightVolumeOpacity: 0
   m_ApplyToSortingLayers: 00000000
@@ -15783,7 +15882,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1971940149}
-  m_LocalRotation: {x: -0, y: -0, z: -0.04347746, w: 0.99905443}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.1999982, y: -0.1666665, z: 0}
   m_LocalScale: {x: 1.6666666, y: 1.6666666, z: 1.6666665}
   m_Children: []
