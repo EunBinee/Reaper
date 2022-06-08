@@ -21,8 +21,10 @@ public class EnemyGanerator : MonoBehaviour
 
     //=--------------------
     //포탈이 side밖으로 나가지않기 위해서
-    public GameObject Board_Map;
-    BoxCollider2D Board_Map_Collider; //전체 맵을 덮고있는 collider을 받아오기 위해서
+    public GameObject Board_Map_1F;
+    BoxCollider2D Board_Map_Collider_1F; //전체 맵을 덮고있는 collider을 받아오기 위해서
+    public GameObject Board_Map_2F;
+    BoxCollider2D Board_Map_Collider_2F; //전체 맵을 덮고있는 collider을 받아오기 위해서
     //---------------------------
     //endScene
     public bool stop_Ganerator = false; //마지막 방 문을 열면, 이제 generator가 멈춘다.
@@ -34,7 +36,8 @@ public class EnemyGanerator : MonoBehaviour
     void Start()
     {
         curPortal = null;
-        Board_Map_Collider = Board_Map.GetComponent<BoxCollider2D>();
+        Board_Map_Collider_1F = Board_Map_1F.GetComponent<BoxCollider2D>();
+        Board_Map_Collider_2F = Board_Map_2F.GetComponent<BoxCollider2D>();
     }
     void Update()
     {
@@ -102,7 +105,7 @@ public class EnemyGanerator : MonoBehaviour
                 {
                     //포탈이 플레이어의 왼쪽에 생긴다는뜻.
                     // 만약 왼쪽에 생기는데, BoundsMin.x보다 더 작아지면.. +로 바꾸기
-                    if (playerController.transform.position.x - Random_X < Board_Map_Collider.bounds.min.x)
+                    if (playerController.transform.position.x - Random_X < Board_Map_Collider_1F.bounds.min.x)
                     {
                         Debug.Log("-에서 +로 바뀌었습니다.., 플레이어의 오른쪽에서 생깁니다");
                         EnemyPos = new Vector3(playerController.transform.position.x + Random_X, Pos1F_Enemy.position.y, Pos1F_Enemy.position.z);
@@ -117,7 +120,7 @@ public class EnemyGanerator : MonoBehaviour
                 {
                     //포탈이 플레이어의 오른쪽에 생긴다는뜻.
                     // 만약 오른쪽에 생기는데, BoundsMax.x보다 더 커지면.. -로 바꾸기
-                    if (playerController.transform.position.x - Random_X > Board_Map_Collider.bounds.max.x)
+                    if (playerController.transform.position.x - Random_X > Board_Map_Collider_1F.bounds.max.x)
                     {
                         Debug.Log("+에서 -로 바뀌었습니다., 플레이어의 왼쪽에서 생깁니다.");
                         EnemyPos = new Vector3(playerController.transform.position.x - Random_X, Pos1F_Enemy.position.y, Pos1F_Enemy.position.z);
@@ -131,7 +134,7 @@ public class EnemyGanerator : MonoBehaviour
 
                 curPortal = Instantiate(Portal_Prefab, EnemyPos, Quaternion.identity); //포탈 생성
             }
-            if (playerPosFloor == 2)
+            if (playerPosFloor == 2) //2층
             {
                 //만약 1층이면..
                 int Random_X = Random.Range(15, 25);
@@ -142,7 +145,7 @@ public class EnemyGanerator : MonoBehaviour
                 {
                     //포탈이 플레이어의 왼쪽에 생긴다는뜻.
                     // 만약 왼쪽에 생기는데, BoundsMin.x보다 더 작아지면.. +로 바꾸기
-                    if (playerController.transform.position.x - Random_X < Board_Map_Collider.bounds.min.x)
+                    if (playerController.transform.position.x - Random_X < Board_Map_Collider_2F.bounds.min.x)
                     {
                         Debug.Log("-에서 +로 바뀌었습니다.., 플레이어의 오른쪽에서 생깁니다");
                         EnemyPos = new Vector3(playerController.transform.position.x + Random_X, Pos2F_Enemy.position.y, Pos1F_Enemy.position.z);
@@ -157,7 +160,7 @@ public class EnemyGanerator : MonoBehaviour
                 {
                     //포탈이 플레이어의 오른쪽에 생긴다는뜻.
                     // 만약 오른쪽에 생기는데, BoundsMax.x보다 더 커지면.. -로 바꾸기
-                    if (playerController.transform.position.x - Random_X > Board_Map_Collider.bounds.max.x)
+                    if (playerController.transform.position.x - Random_X > Board_Map_Collider_2F.bounds.max.x)
                     {
                         Debug.Log("+에서 -로 바뀌었습니다., 플레이어의 왼쪽에서 생깁니다.");
                         EnemyPos = new Vector3(playerController.transform.position.x - Random_X, Pos2F_Enemy.position.y, Pos1F_Enemy.position.z);
