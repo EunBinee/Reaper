@@ -122,9 +122,12 @@ public class EnemyController : MonoBehaviour
     }
     private void Move()
     {
+        GameObject.Find("Enemy_Walk").GetComponent<AudioSource>().Play();
         Vector3 moveVelocity = Vector3.zero;
         if (isChasing)
         {
+            GameObject.Find("Enemy_Chase").GetComponent<AudioSource>().Play();
+            
             if (player.ishiding)
             {
                 //만약 player가 숨었다면..
@@ -137,6 +140,7 @@ public class EnemyController : MonoBehaviour
                         //숨었는데 15초동안 숨으면.. 
 
                         isChasing = false;
+                        GameObject.Find("Enemy_Chase").GetComponent<AudioSource>().Stop();
                         Debug.Log("추적이 멈추었습니다.");
                         hidingTime = 0;
                     }
@@ -193,7 +197,7 @@ public class EnemyController : MonoBehaviour
         NotChasingMaxTime = Random.Range(15, 20);
 
         //사라지기전
-
+        GameObject.Find("Enemy_Chase").GetComponent<AudioSource>().Stop();
         StopPortal = false;
 
     }
@@ -205,11 +209,12 @@ public class EnemyController : MonoBehaviour
         if (!SameFloor)
         {
             Debug.Log("(한번더 확인을 하니)같은 층이 아닙니다.사라집니다");
-
+            GameObject.Find("Enemy_Chase").GetComponent<AudioSource>().Stop();
             StopPortal = false;
         }
         else
         {
+
             Debug.Log("(한번더 확인을 하니)같은 층입니다.사라지지않습니다.");
         }
     }
