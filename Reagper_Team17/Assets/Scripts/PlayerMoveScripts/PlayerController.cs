@@ -49,21 +49,17 @@ public class PlayerController : MonoBehaviour
     //숨었는지 확인
     public bool ishiding = false;
     //===================================
-
-    //오디오 소스!!
-    AudioSource audioSource; //케이지 안의 오디오 소스
-    public AudioClip getItem_S;
-
-
+    //==================================
+    Animator anim;
 
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
-        audioSource = GetComponent<AudioSource>();
-        //적 스크립트
-        //enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
-        Portal = enemyGanerator.curPortal;
+        anim = GetComponent<Animator>();
+         //적 스크립트
+         //enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
+         Portal = enemyGanerator.curPortal;
 
         if (Portal != null)
         {
@@ -164,21 +160,24 @@ public class PlayerController : MonoBehaviour
             {
                 if (Input.GetKey(KeyCode.Z))
                 {
-                    //Dash = true;
+                    anim.SetBool("player_Move", false);
+                    anim.SetBool("player_Run", true);
                     movementSpeed = 8;
                     condiBar.GetComponent<ConditionBar>().currentHP -= 0.3f;
                 }
                 else
                 {
-                    //Dash = false;
                     movementSpeed = 4;
-
+                    anim.SetBool("player_Move", true);
+                    anim.SetBool("player_Run", false);
                     condiBar.GetComponent<ConditionBar>().currentHP += 0.3f;
                 }
             }
             else if (condiZero) //true일때, 즉 체력이 바닥 났을때.. 실행
             {
                 //힘들어하는 애니메이션 추가
+                anim.SetBool("player_Move", true);
+                anim.SetBool("player_Run", false);
                 movementSpeed = 2;//느려진 스피드..
 
                 condiBar.GetComponent<ConditionBar>().currentHP += 0.3f;

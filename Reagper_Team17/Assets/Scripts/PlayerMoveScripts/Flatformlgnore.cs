@@ -17,8 +17,7 @@ public class Flatformlgnore : MonoBehaviour
         if(collision.CompareTag("Player"))
         {
             Physics2D.IgnoreCollision(collision.GetComponent<CapsuleCollider2D>(), platformCollider, true);
-            
-            
+        
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
