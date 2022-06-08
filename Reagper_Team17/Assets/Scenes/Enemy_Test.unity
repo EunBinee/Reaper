@@ -3758,7 +3758,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &473914554
 Transform:
   m_ObjectHideFlags: 0
@@ -11125,7 +11125,6 @@ MonoBehaviour:
   isUsingObject: 0
   inCase: 0
   ishiding: 0
-  getItem_S: {fileID: 8300000, guid: 6d465f27a78520f488688efd3406fdf0, type: 3}
 --- !u!70 &1349949219
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

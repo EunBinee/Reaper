@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6804695715426890239}
   - component: {fileID: 6804695715426890236}
   - component: {fileID: 6804695715426890238}
+  - component: {fileID: 8008115617825470602}
   m_Layer: 0
   m_Name: Reaper
   m_TagString: Enemy
@@ -74,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b21828145348809478a8ce89f7d525ae, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4e7060dc4a098d44f9af20e1f88b9a62, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -154,3 +155,22 @@ MonoBehaviour:
   movementSpeed: 3
   isChasing: 0
   StopPortal: 1
+--- !u!95 &8008115617825470602
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6804695715426890235}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 02a9bcbefbfe6984a879d05ffe9bd2a3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
