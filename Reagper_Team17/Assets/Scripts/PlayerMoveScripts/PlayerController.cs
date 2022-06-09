@@ -51,6 +51,9 @@ public class PlayerController : MonoBehaviour
     //===================================
     //==================================
     Animator anim;
+    //==================================================
+    //설명의 위한..
+    public Quest_Explanation quest_Explanation;
 
     void Start()
     {
@@ -87,19 +90,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        /*if (isLadder && Input.GetKey(KeyCode.X))
-        {
-            //만약 사다리를 타고 있다면...?
-            float v = Input.GetAxisRaw("Vertical");
-            rigid.gravityScale = 0; //사다리를 타고있을땐, 중력 없게
-            rigid.velocity = new Vector2(rigid.velocity.x, v * movementSpeed);
-            condiBar.GetComponent<ConditionBar>().currentHP += 0.3f;
-            Debug.Log(transform.position.y);
-
-
-            inLadder = true; //사다리를 타는 중이예여
-
-        }*/
         if (isLadder)
         {
             //만약 사다리를 타고 있다면...?
@@ -122,6 +112,7 @@ public class PlayerController : MonoBehaviour
         Move();
         if (!inCase)
         {
+            quest_Explanation.Text_Case(0);//
             if (Input.GetButtonDown("Jump"))
             {
                 //만약 스페이스 바를 눌렀고, 점프가 안되있을 경우!.. 점프!
@@ -331,6 +322,8 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Ladder"))
         {
             //사다리에 닿였는지
+
+  
             isLadder = true;
         }
         for(int i=1;i<11;i++)
@@ -363,6 +356,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.CompareTag("Ladder"))
         {
+            quest_Explanation.Text_Case(1);
             //사다리에 닿였는지
             isLadder = true;
         }
