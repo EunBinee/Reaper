@@ -154,7 +154,7 @@ public class PlayerController : MonoBehaviour
                     anim.SetBool("player_Move", false);
                     anim.SetBool("player_Run", true);
                     movementSpeed = 8;
-                    condiBar.GetComponent<ConditionBar>().currentHP -= 0.13f;
+                    condiBar.GetComponent<ConditionBar>().currentHP -= 0.2f;
                 }
                 else
                 {
@@ -260,6 +260,10 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.gameObject.tag == "GameClear")
         {
+
+            GameObject.Find("Background_M").GetComponent<AudioSource>().Stop();
+            GameObject.Find("Enemy_Walk").GetComponent<AudioSource>().Stop();
+            GameObject.Find("Enemy_Chase").GetComponent<AudioSource>().Stop();
             Debug.Log("¿Ã¡¶ ≥°");
             gameDirector.GameClear();
         }

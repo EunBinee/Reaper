@@ -4517,7 +4517,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPosText: {fileID: 1437188629}
   cameraShake: {fileID: 519420030}
-  LifeCount: 0
+  LifeCount: 3
   LifeCountText: {fileID: 353492384}
   GetLife: 0
   curLife: {fileID: 0}
@@ -4931,7 +4931,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519303443}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 126.79, y: 0.62, z: 6.7859335}
+  m_LocalPosition: {x: 126.56, y: 0.9, z: 6.7859335}
   m_LocalScale: {x: 0.48964414, y: 0.48964414, z: 0.48964414}
   m_Children:
   - {fileID: 1696394286}
@@ -14235,7 +14235,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349949212}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -55.24, y: 6.7, z: 0}
+  m_LocalPosition: {x: -55.34, y: 6.38, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 1971940151}
