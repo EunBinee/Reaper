@@ -76,6 +76,10 @@ public class QuestManager : MonoBehaviour
     //스프라이트 모음
     public Sprite[] ChangeSprite;
 
+    //=========================================
+    //퀘스트 힌트를 위해
+    //public Quest_Explanation quest_Explanation;
+
     void Start()
     {
         //audioSource = GetComponent<AudioSource>();
@@ -280,6 +284,11 @@ public class QuestManager : MonoBehaviour
 
                 //부서지는 소리
                 GameObject.Find("Create_Crack_S").GetComponent<AudioSource>().Play();
+
+
+                //==================================================
+                //퀘스트 힌트
+
 
                 //메시지 박스 UI=============================================
                 ExplanationBox.SetActive(true);
