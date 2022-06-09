@@ -206,8 +206,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1770374569}
-        m_TargetAssemblyTypeName: GameOver_Controller, Assembly-CSharp
+      - m_Target: {fileID: 1770374571}
+        m_TargetAssemblyTypeName: GameDirector_G, Assembly-CSharp
         m_MethodName: GameStart_B
         m_Mode: 1
         m_Arguments:
@@ -933,7 +933,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1770374570}
-  - component: {fileID: 1770374569}
   - component: {fileID: 1770374571}
   m_Layer: 0
   m_Name: GameDirector_G
@@ -942,18 +941,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1770374569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1770374568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 095910c6b83a57647acc55f2794affa7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1770374570
 Transform:
   m_ObjectHideFlags: 0
