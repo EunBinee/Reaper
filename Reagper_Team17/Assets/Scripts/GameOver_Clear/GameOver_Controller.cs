@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class GameOver_Controller : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -15,4 +15,9 @@ public class GameOver_Controller : MonoBehaviour
     {
         
     }
+
+    //==========================================
+    //게임 시작 화면 버튼
+
+
 }
