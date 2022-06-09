@@ -429,7 +429,7 @@ public class QuestManager : MonoBehaviour
             //메시지 박스 UI=============================================
             ExplanationBox.SetActive(true);
             StartCoroutine("ExBox_FadeIn");
-            TextForExplanation.text = "열쇠 구멍이 있다.\n벽뒤에 방이 있을것같다.";
+            TextForExplanation.text = "열쇠 구멍이 있다.\n벽 뒤에 방이 있을 것 같다";
             StartCoroutine("ExBox_FadeOut");
             //===========================================================
         }
