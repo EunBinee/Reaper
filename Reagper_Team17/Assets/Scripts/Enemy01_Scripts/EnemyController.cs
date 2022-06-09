@@ -50,7 +50,9 @@ public class EnemyController : MonoBehaviour
 
     void Start()
     {
-        boxCollider2D = FindObjectOfType<BoxCollider2D>();
+        //boxCollider2D = FindObjectOfType<BoxCollider2D>();
+
+        boxCollider2D = GetComponent<BoxCollider2D>();
 
         GameObject Player = GameObject.Find("Player");
         player = Player.GetComponent<PlayerController>();
