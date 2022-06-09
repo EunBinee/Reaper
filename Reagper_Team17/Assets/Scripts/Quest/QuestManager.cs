@@ -606,8 +606,8 @@ public class QuestManager : MonoBehaviour
         else
         {
             //초기화
-            
-            
+
+            GameObject.Find("PuzzleFailed").GetComponent<AudioSource>().Play();
             trueNum = 0;
             Debug.Log("초기화!");
             Replace_Quest01();
