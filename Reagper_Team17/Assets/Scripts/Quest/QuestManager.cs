@@ -61,7 +61,7 @@ public class QuestManager : MonoBehaviour
     public Text TextForExplanation;
 
     public Sprite brokenCrack; //부서진 크랙 스프라이트
-    public GameObject[] crack_object;//주변 파편과 라이트
+    public GameObject[] crack_object;//주변 파편과 라이트, 
 
     //========================
     //쿨타임 //오브젝트 사용시
@@ -73,9 +73,8 @@ public class QuestManager : MonoBehaviour
     public GameObject Life03;
 
     //==========================================
-    //오디오
-    /*AudioSource audioSource; //케이지 안의 오디오 소스
-    public AudioClip UsingItem_S;*/
+    //스프라이트 모음
+    public Sprite[] ChangeSprite;
 
     void Start()
     {
@@ -262,7 +261,7 @@ public class QuestManager : MonoBehaviour
                 //문의 잠금을 연다.
                 //스프라이트를 바꾼다.(지금은 색을 바꾸는 것으로 대신함)
                 sp = curLockItem.GetComponent<SpriteRenderer>();
-                sp.color = new Color(0.3f, 0.5f, 0.5f, 1);
+                sp.sprite = ChangeSprite[0];
                 inventory.Destroy_item();//인벤토리에 있는 Key지우기
                 curLockItem.tag = "object_Item"; //문의 태그를 Lock>>object_Item으로 변경;
 
@@ -347,7 +346,7 @@ public class QuestManager : MonoBehaviour
             case 6:
                 Debug.Log("Lock06_Door02_LastLock 오브젝트 이벤트 실행!!");
                 sp = curLockItem.GetComponent<SpriteRenderer>();
-                sp.color = new Color(0.3f, 0.5f, 0.5f, 1);
+                sp.sprite = ChangeSprite[0];
                 inventory.Destroy_item();//인벤토리에 있는 Key지우기
                 curLockItem.tag = "object_Item";
 
