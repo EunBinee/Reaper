@@ -31,7 +31,10 @@ public class GameOver_CameraShake : MonoBehaviour
         {
             ShakeTime = 0;
             if(ShakeTime==0)
-                Invoke("UI_SetTrue", 1f);//1√  µÙ∑π¿Ã
+            {
+                //GameObject.Find("I_Will_Kill_You_S").GetComponent<AudioSource>().Play();
+                Invoke("UI_SetTrue", 3f);//1√  µÙ∑π¿Ã
+            }
 
 
             
@@ -44,6 +47,7 @@ public class GameOver_CameraShake : MonoBehaviour
 
     void UI_SetTrue()
     {
+        //GameObject.Find("Monster_Sound").GetComponent<AudioSource>().Play();
         canvas.SetActive(true);
 
     }
