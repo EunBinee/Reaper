@@ -18,6 +18,8 @@ public class Inventory : MonoBehaviour
 
     GameObject usedKey;
 
+    public Sprite NullImg;
+
     void Start()
     {
         
@@ -29,7 +31,7 @@ public class Inventory : MonoBehaviour
         if (item.Count < slot_size)
         {
             //만약 가지고 있는 아이템이 없으면
-            SlotItem_Img.sprite = null; // 아무 스프라이트도 UI에 띄우지 마셔용
+            SlotItem_Img.sprite = NullImg; // 아무 스프라이트도 UI에 띄우지 마셔용
         }
 
     }
