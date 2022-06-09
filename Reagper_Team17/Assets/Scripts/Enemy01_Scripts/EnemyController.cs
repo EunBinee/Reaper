@@ -108,7 +108,7 @@ public class EnemyController : MonoBehaviour
 
         //만약 같은 층이 아니거나, chasing한지 10~15초 지난 경우
 
-        if (isChasing)
+        if (isChasing && !player.ishiding) 
         {
             boxCollider2D.enabled = true;
             NotChasingTime = 0;
