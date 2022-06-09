@@ -593,6 +593,10 @@ public class QuestManager : MonoBehaviour
             Debug.Log(colorBall.Length);
             Debug.Log("열쇠 줌~");
 
+            //해결했을 때 나는 오디오
+            GameObject.Find("PuzzleSolving").GetComponent<AudioSource>().Play();
+
+
             keys[1].SetActive(true);
 
             Exit_Quest01_B();
@@ -600,6 +604,8 @@ public class QuestManager : MonoBehaviour
         else
         {
             //초기화
+            
+            
             trueNum = 0;
             Debug.Log("초기화!");
             Replace_Quest01();
@@ -608,6 +614,7 @@ public class QuestManager : MonoBehaviour
     public void Replace_Quest01_B()
     {
         //초기화 버튼
+        GameObject.Find("PuzzleFailed").GetComponent<AudioSource>().Play();
         Replace_Quest01();
     }
     public void Exit_Quest01_B()
