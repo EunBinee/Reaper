@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6804695715426890239}
   - component: {fileID: 6804695715426890236}
   - component: {fileID: 6804695715426890238}
+  - component: {fileID: 8008115617825470602}
   m_Layer: 0
   m_Name: Reaper
   m_TagString: Enemy
@@ -73,13 +74,13 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3fc613f588ba2cc49bd49b0de6be1a8a, type: 3}
+  m_SortingOrder: 3
+  m_Sprite: {fileID: 21300000, guid: 4e7060dc4a098d44f9af20e1f88b9a62, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.94, y: 4.23}
+  m_Size: {x: 5.14, y: 5.14}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -119,18 +120,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.13556623, y: -0.08284593}
+  m_Offset: {x: 0.72882384, y: -0.08284593}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.94, y: 4.23}
-    newSize: {x: 3.94, y: 4.23}
+    oldSize: {x: 5.14, y: 5.14}
+    newSize: {x: 5.14, y: 5.14}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.5542107, y: 4.0643077}
+  m_Size: {x: 2.3006034, y: 4.0643077}
   m_EdgeRadius: 0
 --- !u!114 &6804695715426890238
 MonoBehaviour:
@@ -153,3 +154,23 @@ MonoBehaviour:
   direction: 
   movementSpeed: 3
   isChasing: 0
+  StopPortal: 1
+--- !u!95 &8008115617825470602
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6804695715426890235}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 02a9bcbefbfe6984a879d05ffe9bd2a3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

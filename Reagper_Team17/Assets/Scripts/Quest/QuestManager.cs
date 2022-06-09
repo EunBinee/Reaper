@@ -7,6 +7,10 @@ public class QuestManager : MonoBehaviour
     public Inventory inventory;
     public PlayerController playerController;
     public GameObject player;
+
+    public GameDirector gameDirector;
+    public EnemyGanerator enemyGanerator;
+
     public CameraShake cameraShake; //카메라의 흔들림
 
     SpriteRenderer sp;//나중에 openQuest()에서 lock의 sp를 불러오는데 쓰인다.
@@ -26,7 +30,7 @@ public class QuestManager : MonoBehaviour
     Item ObjectItem;
 
     //맞는 짝이 있다면.. 현재 퀘스트의 정보값, 자물쇠와 키의 pair값
-    int match_Pair = -1;
+    public int match_Pair = -1;
 
     //퀘스트에 사용될 열쇠들~~
     public GameObject[] keys;
@@ -56,6 +60,8 @@ public class QuestManager : MonoBehaviour
     public GameObject ExplanationBox;
     public Text TextForExplanation;
 
+    public Sprite brokenCrack; //부서진 크랙 스프라이트
+    public GameObject[] crack_object;//주변 파편과 라이트, 
 
     //========================
     //쿨타임 //오브젝트 사용시
@@ -65,11 +71,17 @@ public class QuestManager : MonoBehaviour
     //Quest03 대칭게임
     int count_Quest03 = 0;
     public GameObject Life03;
+
+    //==========================================
+    //스프라이트 모음
+    public Sprite[] ChangeSprite;
+
     void Start()
     {
-
+        //audioSource = GetComponent<AudioSource>();
         curInventor_Item = inventory.GetInventoryItem();
         curLockItem = playerController.GetLockAndObjectItem();
+      
     }
     void Update()
     {
@@ -77,12 +89,21 @@ public class QuestManager : MonoBehaviour
         usingObject = playerController.isUsingObject;
 
         curInventor_Item = inventory.GetInventoryItem();
+
         if (curInventor_Item != null)
         {
             KeyItem = curInventor_Item.GetComponent<Item>();//Key
             if (KeyItem.haveEventAsObject)
             {
                 UseObject(curInventor_Item, KeyItem); //만약 오브젝트에 이벤트가 포함되어있다면!
+            }
+        }
+        if(curLockItem!=null)
+        {
+            LockItem = curLockItem.GetComponent<Item>();
+            if (LockItem.haveEventAsObject)
+            {
+                UseObject(curLockItem, LockItem); //만약 오브젝트에 이벤트가 포함되어있다면!
             }
         }
 
@@ -103,6 +124,7 @@ public class QuestManager : MonoBehaviour
                     if(match_Pair != KeyItem.pair)
                     {
                         //mathcpair와 키아이템의 짝이 똑같지않다면..
+                       
                         match_Pair = KeyItem.pair;
                         OpenQuest();
                     }
@@ -133,16 +155,18 @@ public class QuestManager : MonoBehaviour
             //힌트 1일 볼때
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-
+                
                 //위방향 버튼 누르면.. 힌트 보여주기
                 if (!playerController.dontMove)
                 {
+                    GameObject.Find("Hint_S").GetComponent<AudioSource>().Play();
                     //만약 dontMove가 false면 hint보여주고
                     playerController.dontMove = true;
                     hint01_UI.SetActive(true);
                 }
                 else
                 {
+                   // GameObject.Find("Hint_S").GetComponent<AudioSource>().Play();
                     //true면
                     playerController.dontMove = false;
                     hint01_UI.SetActive(false);
@@ -175,6 +199,7 @@ public class QuestManager : MonoBehaviour
                 //위방향 버튼 누르면.. 힌트 보여주기
                 if (!playerController.dontMove)
                 {
+                    GameObject.Find("Hint_S").GetComponent<AudioSource>().Play();
                     //만약 dontMove가 false면 hint보여주고
                     playerController.dontMove = true;
                     hint02_UI.SetActive(true);
@@ -198,27 +223,34 @@ public class QuestManager : MonoBehaviour
             StartCoroutine("ExBox_FadeIn");
             TextForExplanation.text = "생명의 조각이 나타났습니다.";
             StartCoroutine("ExBox_FadeOut");
+
             //===========================================================
             //생명의 조각 true, 열쇠 true;
             Life03.SetActive(true);
             keys[6].SetActive(true);
             count_Quest03 = -1; //이제 실행안되도록
         }
+
+        //==========================================================
+        
     }
 
     void OpenQuest()
     {
-        switch(match_Pair)
+        switch (match_Pair)
         {
             case 0:
-                Debug.Log("0퀘스트입니다.");
-                keys[0].transform.position = Locks_And_Object[0].position;
                 
+                Debug.Log("발판을 옳은 위치에 두는 퀘스트.");
+
+                //오디오
+                GameObject.Find("PutItem_S").GetComponent<AudioSource>().Play();
+
+                keys[0].transform.position = Locks_And_Object[0].position;
+
                 inventory.Destory_onlyList();
 
-                //화면상에 존재하지만, 이제 아이템으로써 움직이지않겠다는 의미
-                //keys[0].GetComponent<Item>().notMoving = true;
-                keys[0].tag = "nothing";
+                keys[0].tag = "canJump";
                 //**필수 !!
                 playerController.isUsingItem = false;
 
@@ -229,7 +261,7 @@ public class QuestManager : MonoBehaviour
                 //문의 잠금을 연다.
                 //스프라이트를 바꾼다.(지금은 색을 바꾸는 것으로 대신함)
                 sp = curLockItem.GetComponent<SpriteRenderer>();
-                sp.color = new Color(0.3f, 0.5f, 0.5f, 1);
+                sp.sprite = ChangeSprite[0];
                 inventory.Destroy_item();//인벤토리에 있는 Key지우기
                 curLockItem.tag = "object_Item"; //문의 태그를 Lock>>object_Item으로 변경;
 
@@ -245,6 +277,10 @@ public class QuestManager : MonoBehaviour
                 //벽이 사라진다.
                 inventory.Destroy_item();//인벤토리에 있는 Key지우기
                 Destroy(curLockItem);// Lock인 벽도 없앤다.
+
+                //부서지는 소리
+                GameObject.Find("Create_Crack_S").GetComponent<AudioSource>().Play();
+
                 //메시지 박스 UI=============================================
                 ExplanationBox.SetActive(true);
                 StartCoroutine("ExBox_FadeIn");
@@ -265,6 +301,10 @@ public class QuestManager : MonoBehaviour
                 //액자액자!!!
                 Debug.Log("3퀘스트의 액자입니다.");
                 count_Quest03++;
+
+                //오디오
+                GameObject.Find("PutItem_S").GetComponent<AudioSource>().Play();
+
                 keys[3].transform.position = Locks_And_Object[3].position;
 
                 cameraShake.ShakeTime(0.3f, 0.3f);
@@ -281,6 +321,10 @@ public class QuestManager : MonoBehaviour
                 //발판 상자
                 count_Quest03++;
                 Debug.Log("3퀘스트의 발판상자입니다.");
+
+                //오디오
+                GameObject.Find("PutItem_S").GetComponent<AudioSource>().Play();
+
                 keys[4].transform.position = Locks_And_Object[4].position;
 
                 cameraShake.ShakeTime(0.3f, 0.3f);
@@ -298,6 +342,10 @@ public class QuestManager : MonoBehaviour
                 //촛불
                 count_Quest03++;
                 Debug.Log("3퀘스트의 촛불입니다.");
+
+                //오디오
+                GameObject.Find("PutItem_S").GetComponent<AudioSource>().Play();
+
                 keys[5].transform.position = Locks_And_Object[5].position;
 
                 cameraShake.ShakeTime(0.3f, 0.3f);
@@ -312,19 +360,14 @@ public class QuestManager : MonoBehaviour
                 keys[5].SetActive(true);
                 break;
             case 6:
-                //마지막 방문 오픈
-                Debug.Log("마지막 방 열림");
-
-                Debug.Log("1퀘스트입니다.");
-                //문의 잠금을 연다.
-                //스프라이트를 바꾼다.(지금은 색을 바꾸는 것으로 대신함)
+                Debug.Log("Lock06_Door02_LastLock 오브젝트 이벤트 실행!!");
                 sp = curLockItem.GetComponent<SpriteRenderer>();
-                sp.color = new Color(0.3f, 0.5f, 0.5f, 1);
+                sp.sprite = ChangeSprite[0];
                 inventory.Destroy_item();//인벤토리에 있는 Key지우기
-                curLockItem.tag = "object_Item"; //문의 태그를 Lock>>object_Item으로 변경;
+                curLockItem.tag = "object_Item";
 
-                //**필수 !!
                 playerController.isUsingItem = false;
+
                 break;
 
             default:
@@ -335,11 +378,14 @@ public class QuestManager : MonoBehaviour
     void UseObject()
     {
         //오브젝트 (문 등) 사용!
-        if(ObjectItem.itemName== "Key01_lock_And_Door01_Quest01")
+        if (ObjectItem.itemName == "Key01_lock_And_Door01_Quest01")
         {
             //ObjectItem.itemName은 현재 오브젝트의 Item 스크립트를 받고있다.
             //Quest1번 문이라면..
             float ObectPosX = Locks_And_Object[2].position.x;
+
+            //소리
+            GameObject.Find("Door_S").GetComponent<AudioSource>().Play();
 
             player.transform.position = new Vector3(ObectPosX, player.transform.position.y, player.transform.position.z);
 
@@ -348,7 +394,8 @@ public class QuestManager : MonoBehaviour
         if (ObjectItem.itemName == "Door02_Quest01")
         {
             float ObectPosX = Locks_And_Object[1].position.x;
-
+            //소리
+            GameObject.Find("Door_S").GetComponent<AudioSource>().Play();
             player.transform.position = new Vector3(ObectPosX, player.transform.position.y, player.transform.position.z);
 
 
@@ -359,6 +406,7 @@ public class QuestManager : MonoBehaviour
         {
             //Quest02의 crack
             //열쇠를 줌.
+            crack_object[1].SetActive(false);//빛..
             keys[2].SetActive(true);
             changeTag[1].tag = "nothing"; //크랙의 tag를 이제 오브젝트에서 그냥 아무것도 아닌 것으로 바꿔줌
         }
@@ -379,27 +427,36 @@ public class QuestManager : MonoBehaviour
 
         //마지막 문---------------------------------------
         //오브젝트 (문 등) 사용!
+
         if (ObjectItem.itemName == "Lock06_Door03_LastLock")
         {
-            //ObjectItem.itemName은 현재 오브젝트의 Item 스크립트를 받고있다.
-            //Lock06_Door02_LastLock 문이라면..
-            float ObectPosX = Locks_And_Object[7].position.x;
+            if (gameDirector.LifeCount < 3)
+            {
+                //생명의 조각이 부족하다면
+                //item.haveEventAsObject = false;
 
-            player.transform.position = new Vector3(ObectPosX, player.transform.position.y, player.transform.position.z);
+                //메시지 박스 UI=============================================
+                ExplanationBox.SetActive(true);
+                StartCoroutine("ExBox_FadeIn");
+                TextForExplanation.text = "생명의 조각이 부족합니다.";
+                StartCoroutine("ExBox_FadeOut");
+                //===========================================================
+            }
+            else
+            {
+                float ObectPosX = Locks_And_Object[7].position.x;
+                // enemyGanerator.SetActive(false); //마지막 문을 열면, 적 생성기 없앰
+                enemyGanerator.stop_Ganerator = true;
 
-            Debug.Log("Lock06_Door02_LastLock 오브젝트 이벤트 실행!!");
+                //소리
+                GameObject.Find("Door_S").GetComponent<AudioSource>().Play();
+
+                player.transform.position = new Vector3(ObectPosX, player.transform.position.y, player.transform.position.z);
+
+                Debug.Log("Lock06_Door02_LastLock 오브젝트 이벤트 실행!!");
+            }
+
         }
-        if (ObjectItem.itemName == "Door04_LastDoor")
-        {
-            float ObectPosX = Locks_And_Object[6].position.x;
-
-            player.transform.position = new Vector3(ObectPosX, player.transform.position.y, player.transform.position.z);
-
-
-            Debug.Log("Door04_LastDoor 오브젝트 이벤트 실행!!");
-        }
-
-
 
     }
     void UseObject(GameObject curItem_, Item item)
@@ -446,11 +503,13 @@ public class QuestManager : MonoBehaviour
             //===========================================================
         }
         //액자 이벤트_Key03_대칭에 쓰임.
-        if (item.itemName== "PhotoPrame_Key03_Quest03")
+        if (item.itemName == "PhotoPrame_Key03_Quest03")
         {
             item.haveEventAsObject = false;
+            //부서지는 소리
+            GameObject.Find("Create_Crack_S").GetComponent<AudioSource>().Play();
 
-            cameraShake.ShakeTime(0.3f,0.4f);
+            cameraShake.ShakeTime(0.3f, 0.4f);
             cameraShake.Shake = true;
             //메시지 박스 UI=============================================
             ExplanationBox.SetActive(true);
@@ -459,10 +518,16 @@ public class QuestManager : MonoBehaviour
             StartCoroutine("ExBox_FadeOut");
             //===========================================================
 
+            SpriteRenderer Sr = changeTag[1].GetComponent<SpriteRenderer>();
+            Sr.sprite = brokenCrack; //크랙의 스프라이트를 부서진 것으로 교체해준다.
+
+            crack_object[0].SetActive(true);//파편
+            crack_object[1].SetActive(true);//빛..
+
             changeTag[1].tag = "object_Item"; //crack의 태그를 바꿔준다.
         }
-
-        if(item.itemName == "Key06_LastKey")
+        //마지막 엔딩으로 가는 키
+        if (item.itemName == "Key06_LastKey")
         {
             item.haveEventAsObject = false;
 
@@ -474,6 +539,29 @@ public class QuestManager : MonoBehaviour
             //===========================================================
 
         }
+
+        //문
+        if (item.itemName == "Lock06_Door03_LastLock")
+        {
+            item.haveEventAsObject = false;
+
+            cameraShake.ShakeTime(0.3f, 0.3f);
+            cameraShake.Shake = true;
+            //소리
+            GameObject.Find("Door_S").GetComponent<AudioSource>().Play();
+            //메시지 박스 UI=============================================
+            ExplanationBox.SetActive(true);
+            StartCoroutine("ExBox_FadeIn");
+            TextForExplanation.text = "생명의 조각 3조각과 열쇠가 필요합니다.";
+            StartCoroutine("ExBox_FadeOut");
+            //===========================================================
+        }
+
+
+
+
+
+
     }
     //메세지 박스 페이드인 페이드 아웃
     IEnumerator ExBox_FadeOut()
@@ -532,6 +620,10 @@ public class QuestManager : MonoBehaviour
             Debug.Log(colorBall.Length);
             Debug.Log("열쇠 줌~");
 
+            //해결했을 때 나는 오디오
+            GameObject.Find("PuzzleSolving").GetComponent<AudioSource>().Play();
+
+
             keys[1].SetActive(true);
 
             Exit_Quest01_B();
@@ -539,6 +631,8 @@ public class QuestManager : MonoBehaviour
         else
         {
             //초기화
+
+            GameObject.Find("PuzzleFailed").GetComponent<AudioSource>().Play();
             trueNum = 0;
             Debug.Log("초기화!");
             Replace_Quest01();
@@ -547,6 +641,7 @@ public class QuestManager : MonoBehaviour
     public void Replace_Quest01_B()
     {
         //초기화 버튼
+        GameObject.Find("PuzzleFailed").GetComponent<AudioSource>().Play();
         Replace_Quest01();
     }
     public void Exit_Quest01_B()

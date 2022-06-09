@@ -49,14 +49,17 @@ public class PlayerController : MonoBehaviour
     //숨었는지 확인
     public bool ishiding = false;
     //===================================
+    //==================================
+    Animator anim;
+
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
-
-        //적 스크립트
-        //enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
-        Portal = enemyGanerator.curPortal;
+        anim = GetComponent<Animator>();
+         //적 스크립트
+         //enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
+         Portal = enemyGanerator.curPortal;
 
         if (Portal != null)
         {
@@ -84,7 +87,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (isLadder && Input.GetKey(KeyCode.X))
+        /*if (isLadder && Input.GetKey(KeyCode.X))
         {
             //만약 사다리를 타고 있다면...?
             float v = Input.GetAxisRaw("Vertical");
@@ -96,21 +99,36 @@ public class PlayerController : MonoBehaviour
 
             inLadder = true; //사다리를 타는 중이예여
 
+        }*/
+        if (isLadder)
+        {
+            //만약 사다리를 타고 있다면...?
+            float v = Input.GetAxisRaw("Vertical");
+            rigid.gravityScale = 0; //사다리를 타고있을땐, 중력 없게
+            rigid.velocity = new Vector2(rigid.velocity.x, v * movementSpeed);
+            condiBar.GetComponent<ConditionBar>().currentHP += 0.3f;
+            // Debug.Log(transform.position.y);
+
+
+            inLadder = true; //사다리를 타는 중이예여
+
         }
         else
         {
-            inLadder = false;
-            Move();
-            if (!inCase)
-            {
-                if (Input.GetButtonDown("Jump"))
-                {
-                    //만약 스페이스 바를 눌렀고, 점프가 안되있을 경우!.. 점프!
-                    Jump(); //사다리를 타고있지 않을 땐, 중력 있게
-                }
-            }
+
             rigid.gravityScale = 2f;
         }
+
+        Move();
+        if (!inCase)
+        {
+            if (Input.GetButtonDown("Jump"))
+            {
+                //만약 스페이스 바를 눌렀고, 점프가 안되있을 경우!.. 점프!
+                Jump(); //사다리를 타고있지 않을 땐, 중력 있게
+            }
+        }
+        //}
 
     }
 
@@ -142,21 +160,24 @@ public class PlayerController : MonoBehaviour
             {
                 if (Input.GetKey(KeyCode.Z))
                 {
-                    //Dash = true;
+                    anim.SetBool("player_Move", false);
+                    anim.SetBool("player_Run", true);
                     movementSpeed = 8;
-                    //condiBar.GetComponent<ConditionBar>().currentHP -= 0.3f;
+                    condiBar.GetComponent<ConditionBar>().currentHP -= 0.3f;
                 }
                 else
                 {
-                    //Dash = false;
                     movementSpeed = 4;
-
+                    anim.SetBool("player_Move", true);
+                    anim.SetBool("player_Run", false);
                     condiBar.GetComponent<ConditionBar>().currentHP += 0.3f;
                 }
             }
             else if (condiZero) //true일때, 즉 체력이 바닥 났을때.. 실행
             {
                 //힘들어하는 애니메이션 추가
+                anim.SetBool("player_Move", true);
+                anim.SetBool("player_Run", false);
                 movementSpeed = 2;//느려진 스피드..
 
                 condiBar.GetComponent<ConditionBar>().currentHP += 0.3f;
@@ -246,6 +267,13 @@ public class PlayerController : MonoBehaviour
         {
             inCase = true;
         }
+        if (collision.gameObject.tag == "GameClear")
+        {
+            Debug.Log("이제 끝");
+            gameDirector.GameClear();
+        }
+
+
     }
     private void OnCollisionStay2D(Collision2D collision)
     {
@@ -314,9 +342,31 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+        if (collision.CompareTag("end_Collider"))
+        {
+            //end를 위한 collider를 밟는다면..?
+            gameDirector.End_Scene();
+
+            //플레이어 체력 가득 채워주기
+            condiBar.GetComponent<ConditionBar>().MaxHP();
+        }
+      //====================
+        //적
+        if (collision.CompareTag("Enemy"))
+        {
+            gameDirector.GameOver();
+
+        }
+
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (collision.CompareTag("Ladder"))
+        {
+            //사다리에 닿였는지
+            isLadder = true;
+        }
+
         if (collision.CompareTag("key"))
         {
             //만약 플레이어와 닿아있는 Key에서 shift를 누르면.. 인벤토리에 저장
@@ -327,6 +377,11 @@ public class PlayerController : MonoBehaviour
                 if(!isCilck)
                 {
                     isCilck = true;
+
+                    /*audioSource.clip = getItem_S;
+                    audioSource.Play();*/
+                    GameObject.Find("GetItem_S").GetComponent<AudioSource>().Play();
+
                     inventory.AddItem(_item.gameObject, _item.gameObject.GetComponent<Item>());
                     Invoke("isCilck_Return", 1); //1초뒤에 이제 아이템을 클릭 할 수 있음.
                 }

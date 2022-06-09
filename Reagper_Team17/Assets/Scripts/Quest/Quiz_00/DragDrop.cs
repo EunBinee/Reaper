@@ -23,8 +23,8 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler,IBeginDragHandler,IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Debug.Log("OnBeginDrag");
-
+        Debug.Log("OnBeginDrag"); 
+        GameObject.Find("Quest_01_Click").GetComponent<AudioSource>().Play();
         item_DragDrop.Matching = false;
         canvasGroup.alpha = 0.6f;
         canvasGroup.blocksRaycasts = false;

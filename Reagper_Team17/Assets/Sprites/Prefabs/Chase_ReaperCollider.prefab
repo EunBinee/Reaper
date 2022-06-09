@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 729467129168787598}
   - component: {fileID: 729467129168787584}
-  - component: {fileID: 729467129168787585}
+  - component: {fileID: 2554359955788598568}
   m_Layer: 0
   m_Name: Chase_ReaperCollider
   m_TagString: chase
@@ -44,10 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 857bd3eb8f1cb92458c06d5ed1b79b90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyMove: {fileID: 0}
-  playerController: {fileID: 0}
---- !u!70 &729467129168787585
-CapsuleCollider2D:
+--- !u!61 &2554359955788598568
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -59,6 +57,16 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 1.14}
-  m_Size: {x: 10.35, y: 6.34}
-  m_Direction: 0
+  m_Offset: {x: 1.2404516, y: 0.8789458}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 11.856785, y: 8.193601}
+  m_EdgeRadius: 0

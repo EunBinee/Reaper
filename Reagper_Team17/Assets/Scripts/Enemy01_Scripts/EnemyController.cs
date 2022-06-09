@@ -9,6 +9,8 @@ public class EnemyController : MonoBehaviour
     public int playerRoomPos; //플레이어가 있는 방
     public int playerFloorPos;//플레이어가 있는 층
 
+    EnemyGanerator enemyGanerator;
+
     public int EnemyRoomPos; //적이 있는 방
     public int EnemyFloorPos; //적이 있는 층
 
@@ -19,7 +21,8 @@ public class EnemyController : MonoBehaviour
     SpriteRenderer sr;
     public string direction = ""; //저승사자가 움직일 방향
 
-    public int movementSpeed = 3;
+    public float movementSpeed = 3;
+    float plus = 0;
 
     //==============================
     //추적 시작을 알리는 변수
@@ -28,24 +31,46 @@ public class EnemyController : MonoBehaviour
     float maxtime = 3f; //추격중_플레이어의 위치를 받아올 타이밍
 
     float hidingTime = 0;
-    float maxhidingTime = 15f;
+    float maxhidingTime = 10f;
 
     //======================================
     //사라지기위한 변수
     float NotChasingTime;
-    float NotChasingMaxTime = 10;
+    float NotChasingMaxTime = 18;
     public bool StopPortal = true;
 
+    //오디오
+    // 한번만 실행되도록..
+    bool AudioStart_Walk = false;
+    bool AudioStart_Chase = false;
+
+    //=======================================
+    //플레이어 추적 중에만 콜라이더 키기.
+    BoxCollider2D boxCollider2D;
 
     void Start()
     {
+        //boxCollider2D = FindObjectOfType<BoxCollider2D>();
+
+        boxCollider2D = GetComponent<BoxCollider2D>();
+
         GameObject Player = GameObject.Find("Player");
         player = Player.GetComponent<PlayerController>();
-
+        enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
         sr = GetComponent<SpriteRenderer>();
         playerRoomPos = player.GetRoom();
         playerFloorPos = player.GetFloor();
         CheckDirec();
+
+        if (enemyGanerator.End_Enemy_Ganerator)
+        {
+            //마지막 씬에 나오는 적일 경우,
+            //바로 추적 ㄱㄱㄱ
+            isChasing = true;
+            plus += 1.5f;
+
+
+        }
     }
 
     // Update is called once per frame
@@ -55,6 +80,10 @@ public class EnemyController : MonoBehaviour
         player = Player.GetComponent<PlayerController>();
         playerRoomPos = player.GetRoom();
         playerFloorPos = player.GetFloor();
+
+        //마지막 엔딩씬 enemy인지 확인
+        
+
 
         //플레이어와 같은 층인지 계속 연산
         if (EnemyFloorPos == playerFloorPos)
@@ -79,12 +108,14 @@ public class EnemyController : MonoBehaviour
 
         //만약 같은 층이 아니거나, chasing한지 10~15초 지난 경우
 
-        if (isChasing)
+        if (isChasing && !player.ishiding) 
         {
+            boxCollider2D.enabled = true;
             NotChasingTime = 0;
         }
         else
         {
+            boxCollider2D.enabled = false;
             NotChasingTime += Time.deltaTime;
 
             if (NotChasingTime > NotChasingMaxTime)
@@ -105,36 +136,55 @@ public class EnemyController : MonoBehaviour
     }
     private void Move()
     {
+        if(!AudioStart_Walk)
+        {
+            GameObject.Find("Enemy_Walk").GetComponent<AudioSource>().Play();
+            AudioStart_Walk = true;
+        }
         Vector3 moveVelocity = Vector3.zero;
         if (isChasing)
         {
+            if(!AudioStart_Chase)
+            {
+
+                GameObject.Find("Enemy_Chase").GetComponent<AudioSource>().Play();
+                AudioStart_Chase = true;
+            }
+            
             if (player.ishiding)
             {
                 //만약 player가 숨었다면..
-                hidingTime += Time.deltaTime;
-                if (hidingTime > maxhidingTime)
+                if(!enemyGanerator.End_Enemy_Ganerator)
                 {
-                    //숨었는데 15초동안 숨으면.. 
+                    //만약 추적이 멈추는 때는 , 마지막 씬의 적이 아니고, 플레이어가 숨엇을 경우...^^..
+                    hidingTime += Time.deltaTime;
+                    if (hidingTime > maxhidingTime)
+                    {
+                        //숨었는데 15초동안 숨으면.. 
 
-                    isChasing = false;
-                    Debug.Log("추적이 멈추었습니다.");
-                    hidingTime = 0;
+                        isChasing = false;
+                        AudioStart_Chase = false;
+                        GameObject.Find("Enemy_Chase").GetComponent<AudioSource>().Stop();
+                        Debug.Log("추적이 멈추었습니다.");
+                        hidingTime = 0;
+                    }
                 }
+                
             }
             //만약 추격 중이라면.
             time += Time.deltaTime;
             if (time > maxtime)
             {
                 CheckDirec();// maxtime초 마다 플레이어의 위치 받아옴.
-                maxtime = Random.Range(2, 4);
+                maxtime = Random.Range(1, 4);
                 time = 0;
             }
-            movementSpeed = 6;//ㅈㄴ빠르게
+            movementSpeed = (7+ plus);//ㅈㄴ빠르게
         }
         else
         {
             time = 0;
-            movementSpeed = 3;
+            movementSpeed = (4 + plus);
         }
 
         if (direction == "Left")
@@ -171,7 +221,10 @@ public class EnemyController : MonoBehaviour
         NotChasingMaxTime = Random.Range(15, 20);
 
         //사라지기전
-
+        AudioStart_Chase = false;
+        AudioStart_Walk = false;
+        GameObject.Find("Enemy_Chase").GetComponent<AudioSource>().Stop();
+        GameObject.Find("Enemy_Walk").GetComponent<AudioSource>().Stop();
         StopPortal = false;
 
     }
@@ -183,11 +236,15 @@ public class EnemyController : MonoBehaviour
         if (!SameFloor)
         {
             Debug.Log("(한번더 확인을 하니)같은 층이 아닙니다.사라집니다");
-
+            AudioStart_Chase = false;
+            AudioStart_Walk = false;
+            GameObject.Find("Enemy_Chase").GetComponent<AudioSource>().Stop();
+            GameObject.Find("Enemy_Walk").GetComponent<AudioSource>().Stop();
             StopPortal = false;
         }
         else
         {
+
             Debug.Log("(한번더 확인을 하니)같은 층입니다.사라지지않습니다.");
         }
     }

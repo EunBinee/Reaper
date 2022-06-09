@@ -30,9 +30,7 @@ public class Chase_Manager : MonoBehaviour
                 enemyController = Enemy.GetComponent<EnemyController>();
             }
         }
-/*
-        Enemy = portalScript.CurEnemy;
-        enemyController = Enemy.GetComponent<EnemyController>();*/
+
     }
 
     // Update is called once per frame

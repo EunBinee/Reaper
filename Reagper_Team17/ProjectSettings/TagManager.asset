@@ -33,6 +33,8 @@ TagManager:
   - chase
   - Enemy
   - sidewall
+  - end_Collider
+  - GameClear
   layers:
   - Default
   - TransparentFX

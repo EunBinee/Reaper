@@ -15,18 +15,20 @@ public class CameraShake : MonoBehaviour
 
     public bool Shake = false;
     bool getPos = false;
+
+    float cameraHeight = 6f;
     void Start()
     {
         shakeTime = 0.15f;
         //initiaIpostion = transform.position;
-        initiaIpostion = new Vector3(player.transform.position.x - 0.15f, player.transform.position.y+2.3f, this.transform.position.z);
+        initiaIpostion = new Vector3(player.transform.position.x - 0.15f, player.transform.position.y+ cameraHeight, this.transform.position.z);
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        this.transform.position = new Vector3(player.transform.position.x - 0.15f, player.transform.position.y + 2.3f, this.transform.position.z);
+        this.transform.position = new Vector3(player.transform.position.x - 0.15f, player.transform.position.y + cameraHeight, this.transform.position.z);
 
 
         if (Shake)
@@ -64,7 +66,7 @@ public class CameraShake : MonoBehaviour
     public void Getpos()
     {
         //initiaIpostion = transform.position;
-        initiaIpostion = new Vector3(player.transform.position.x - 0.15f, player.transform.position.y + 2.3f, this.transform.position.z);
+        initiaIpostion = new Vector3(player.transform.position.x - 0.15f, player.transform.position.y + cameraHeight, this.transform.position.z);
     }
     public void Stop()
     {
