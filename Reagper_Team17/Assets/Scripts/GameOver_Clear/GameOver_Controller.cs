@@ -16,8 +16,6 @@ public class GameOver_Controller : MonoBehaviour
         
     }
 
-    //==========================================
-    //게임 시작 화면 버튼
 
 
 }

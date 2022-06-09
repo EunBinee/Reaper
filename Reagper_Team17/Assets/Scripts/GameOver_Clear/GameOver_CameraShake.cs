@@ -11,6 +11,8 @@ public class GameOver_CameraShake : MonoBehaviour
     Vector3 initialPosition;
     Vector3 curPos;
 
+
+    public GameObject canvas;
     void Start()
     {
         initialPosition = transform.position;
@@ -28,7 +30,22 @@ public class GameOver_CameraShake : MonoBehaviour
         else
         {
             ShakeTime = 0;
+            if(ShakeTime==0)
+                Invoke("UI_SetTrue", 1f);//1√  µÙ∑π¿Ã
+
+
+            
             this.transform.position = Vector3.Lerp(curPos, initialPosition, Time.deltaTime * 2f);
+
+            ShakeTime = -1;
+
         }
     }
+
+    void UI_SetTrue()
+    {
+        canvas.SetActive(true);
+
+    }
+
 }

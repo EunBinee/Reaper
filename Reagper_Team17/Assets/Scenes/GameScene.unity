@@ -12809,7 +12809,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349949212}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30.7, y: 6.6, z: 0}
+  m_LocalPosition: {x: -55.2, y: 6.6, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_Children:
   - {fileID: 1971940151}
@@ -12839,7 +12839,7 @@ MonoBehaviour:
   condiZero: 0
   isJumping: 0
   playerPos_Floor: 1
-  playerPos_Room: 0
+  playerPos_Room: 1
   inLadder: 0
   inventory: {fileID: 1837113313}
   _item: {fileID: 0}
