@@ -482,6 +482,8 @@ public class QuestManager : MonoBehaviour
         if (item.itemName == "PhotoPrame_Key03_Quest03")
         {
             item.haveEventAsObject = false;
+            //부서지는 소리
+            GameObject.Find("Create_Crack_S").GetComponent<AudioSource>().Play();
 
             cameraShake.ShakeTime(0.3f, 0.4f);
             cameraShake.Shake = true;

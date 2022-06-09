@@ -56,18 +56,28 @@ public class GameDirector : MonoBehaviour
                 //만약 max Time만큼 생명의 조각에 닿고 시간이 지나면..
                 LifeCount++;
 
-                //메시지 박스 UI=============================================
-                ExplanationBox.SetActive(true);
-                StartCoroutine("ExBox_FadeIn");
-                TextForExplanation.text = "생명의 조각을 얻었다.";
-                StartCoroutine("ExBox_FadeOut");
-                //===========================================================
+                
 
                 if (curLife.name== "Life02")
                 {
                     //만약 Life02가 사라졌을 경우
                     //Quest02 힌트 주기
+                    ExplanationBox.SetActive(true);
+                    StartCoroutine("ExBox_FadeIn");
+                    TextForExplanation.text = "생명의 조각을 얻었고, 힌트가 나타났다.";
+                    StartCoroutine("ExBox_FadeOut");
+
                     questManager.Start_Quest02();
+
+                }
+                else
+                {
+                    //메시지 박스 UI=============================================
+                    ExplanationBox.SetActive(true);
+                    StartCoroutine("ExBox_FadeIn");
+                    TextForExplanation.text = "생명의 조각을 얻었다.";
+                    StartCoroutine("ExBox_FadeOut");
+                    //===========================================================
 
                 }
                 Destroy(curLife);
