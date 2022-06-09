@@ -51,6 +51,9 @@ public class PlayerController : MonoBehaviour
     //===================================
     //==================================
     Animator anim;
+    //==================================================
+    //설명의 위한..
+    public Quest_Explanation quest_Explanation;
 
     void Start()
     {
@@ -87,19 +90,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        /*if (isLadder && Input.GetKey(KeyCode.X))
-        {
-            //만약 사다리를 타고 있다면...?
-            float v = Input.GetAxisRaw("Vertical");
-            rigid.gravityScale = 0; //사다리를 타고있을땐, 중력 없게
-            rigid.velocity = new Vector2(rigid.velocity.x, v * movementSpeed);
-            condiBar.GetComponent<ConditionBar>().currentHP += 0.3f;
-            Debug.Log(transform.position.y);
-
-
-            inLadder = true; //사다리를 타는 중이예여
-
-        }*/
         if (isLadder)
         {
             //만약 사다리를 타고 있다면...?
@@ -122,6 +112,7 @@ public class PlayerController : MonoBehaviour
         Move();
         if (!inCase)
         {
+            quest_Explanation.Text_Case(0);//
             if (Input.GetButtonDown("Jump"))
             {
                 //만약 스페이스 바를 눌렀고, 점프가 안되있을 경우!.. 점프!
@@ -331,6 +322,8 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Ladder"))
         {
             //사다리에 닿였는지
+
+  
             isLadder = true;
         }
         for(int i=1;i<11;i++)
@@ -338,7 +331,18 @@ public class PlayerController : MonoBehaviour
             //플레이어가 있는 방 위치 파악
             if (collision.CompareTag("room"+i.ToString()))
             {
+               
                 playerPos_Room = i;
+                if(playerPos_Room == 5)
+                {
+                    //첫번째 아이템인 의자를 만났을 경우..
+                    quest_Explanation.Text_Case(7);
+                }
+                else
+                {
+                    quest_Explanation.ReMoveText_Case(7);
+
+                }
             }
         }
 
@@ -363,6 +367,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.CompareTag("Ladder"))
         {
+            quest_Explanation.Text_Case(1);
             //사다리에 닿였는지
             isLadder = true;
         }
@@ -371,7 +376,15 @@ public class PlayerController : MonoBehaviour
         {
             //만약 플레이어와 닿아있는 Key에서 shift를 누르면.. 인벤토리에 저장
             _item = collision.gameObject;
-            
+            if(_item.GetComponent<Item>().itemName== "chair_Key00_Quest00")
+            {
+                //첫번째 아이템인 의자를 만났을 경우..
+                quest_Explanation.Text_Case(2);
+            }
+
+
+
+
             if (Input.GetKey(KeyCode.C))
             {
                 if(!isCilck)
@@ -391,7 +404,14 @@ public class PlayerController : MonoBehaviour
         {
             //만약 자물쇠에 맞닿아 있다면.
             _lock_And_Object_Item = collision.gameObject;
-            if(Input.GetKey(KeyCode.C))
+
+            if (_lock_And_Object_Item.GetComponent<Item>().itemName == "Key00_lock")
+            {
+                //첫번째 아이템인 의자를 만났을 경우..
+                quest_Explanation.Text_Case(3);
+            }
+
+            if (Input.GetKey(KeyCode.C))
             {
                 isUsingItem = true;
             }
@@ -416,6 +436,8 @@ public class PlayerController : MonoBehaviour
         //
         if (collision.CompareTag("Hide"))
         {
+
+            quest_Explanation.Text_Case(8);
             if (Input.GetKey(KeyCode.DownArrow))
             {
                 //숨었나요?
@@ -446,16 +468,23 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Hint01_Quest01"))
         {
             Debug.Log(collision.tag);
+            //첫번째 힌트를 만난경우
+            quest_Explanation.Text_Case(4);
+
             questManager.Hint01_Quest01 = true;
  
         }
         if (collision.CompareTag("Color_Quest01"))
         {
+            //색 퍼즐을 만난 경우
+            quest_Explanation.Text_Case(5);
             questManager.color_Quest01 = true;
         }
         //Quest02
         if (collision.CompareTag("Hint02_Quest02"))
         {
+            //두번째 힌트를 만난경우
+            quest_Explanation.Text_Case(6);
             //힌트 보기
             questManager.Hint02_Quest02 = true;
         }
@@ -492,6 +521,7 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.CompareTag("Hide"))
         {
+            quest_Explanation.ReMoveText_Case(8);
             sr.color = new Color(1, 1, 1, 1);
             ishiding = false;
         }
@@ -499,17 +529,20 @@ public class PlayerController : MonoBehaviour
         //Quest01======================================
         if (collision.CompareTag("Hint01_Quest01"))
         {
+            quest_Explanation.ReMoveText_Case(4);
             questManager.Hint01_Quest01 = false;
 
         }
         if (collision.CompareTag("Color_Quest01"))
         {
+            quest_Explanation.ReMoveText_Case(5);
             questManager.color_Quest01 = false;
         }
 
         //Quest02======================================
         if (collision.CompareTag("Hint02_Quest02"))
         {
+            quest_Explanation.ReMoveText_Case(6);
             //힌트 보기
             questManager.Hint02_Quest02 = false;
         }
