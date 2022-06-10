@@ -154,14 +154,14 @@ public class PlayerController : MonoBehaviour
                     anim.SetBool("player_Move", false);
                     anim.SetBool("player_Run", true);
                     movementSpeed = 8;
-                    condiBar.GetComponent<ConditionBar>().currentHP -= 0.28f;
+                    condiBar.GetComponent<ConditionBar>().currentHP -= 0.45f;
                 }
                 else
                 {
                     movementSpeed = 4;
                     anim.SetBool("player_Move", true);
                     anim.SetBool("player_Run", false);
-                    condiBar.GetComponent<ConditionBar>().currentHP += 0.3f;
+                    condiBar.GetComponent<ConditionBar>().currentHP += 0.6f;
                 }
             }
             else if (condiZero) //true일때, 즉 체력이 바닥 났을때.. 실행

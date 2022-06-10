@@ -21,20 +21,24 @@ public class GameDirector_G : MonoBehaviour
     //게임 시작 화면 버튼
     public void GameStart_B()
     {
+        GameObject.Find("Button_S").GetComponent<AudioSource>().Play();
         SceneManager.LoadScene("GameScene");
     }
     //==============================================
     //게임 오버, 게임 클리어
     public void GoStartScene_B()
     {
+        GameObject.Find("Button_S").GetComponent<AudioSource>().Play();
         SceneManager.LoadScene("StartScene");
     }
     public void ReStart_B()
     {
+        GameObject.Find("Button_S").GetComponent<AudioSource>().Play();
         SceneManager.LoadScene("GameScene");
     }
     public void Exit_B()
     {
+        GameObject.Find("Button_S").GetComponent<AudioSource>().Play();
         Application.Quit();
     }
 }
