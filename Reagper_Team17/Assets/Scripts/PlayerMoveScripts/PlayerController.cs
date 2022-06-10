@@ -154,7 +154,7 @@ public class PlayerController : MonoBehaviour
                     anim.SetBool("player_Move", false);
                     anim.SetBool("player_Run", true);
                     movementSpeed = 8;
-                    condiBar.GetComponent<ConditionBar>().currentHP -= 0.2f;
+                    condiBar.GetComponent<ConditionBar>().currentHP -= 0.28f;
                 }
                 else
                 {
