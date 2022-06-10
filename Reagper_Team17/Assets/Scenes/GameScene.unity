@@ -4517,7 +4517,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPosText: {fileID: 1437188629}
   cameraShake: {fileID: 519420030}
-  LifeCount: 3
+  LifeCount: 0
   LifeCountText: {fileID: 353492384}
   GetLife: 0
   curLife: {fileID: 0}
