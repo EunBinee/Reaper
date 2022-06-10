@@ -209,46 +209,4 @@ public class Quest_Explanation : MonoBehaviour
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    /*    public IEnumerator FadeTextToFullAlpha() // 알파값 0에서 1로 전환
-        {
-            Ex_text.color = new Color(Ex_text.color.r, Ex_text.color.g, Ex_text.color.b, 0);
-            while (Ex_text.color.a < 1.0f)
-            {
-                Ex_text.color = new Color(Ex_text.color.r, Ex_text.color.g, Ex_text.color.b, Ex_text.color.a + (Time.deltaTime / 2.0f));
-                yield return null;
-            }
-            StartCoroutine(FadeTextToZeroAlpha());
-        }
-
-        public IEnumerator FadeTextToZero()  // 알파값 1에서 0으로 전환
-        {
-            Ex_text.color = new Color(Ex_text.color.r, Ex_text.color.g, Ex_text.color.b, 1);
-            while (Ex_text.color.a > 0.0f)
-            {
-                Ex_text.color = new Color(Ex_text.color.r, Ex_text.color.g, Ex_text.color.b, text.color.a - (Time.deltaTime / 2.0f));
-                yield return null;
-            }
-            StartCoroutine(FadeTextToFullAlpha());
-        }*/
-
-
-
-
-
-
 }

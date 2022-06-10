@@ -366,6 +366,39 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        //=======================================
+        //힌트를 위해사
+        if (collision.CompareTag("key"))
+        {
+            //만약 플레이어와 닿아있는 Key에서 shift를 누르면.. 인벤토리에 저장
+            _item = collision.gameObject;
+            if(_item.GetComponent<Item>().itemName== "chair_Key00_Quest00")
+            {
+                //첫번째 아이템인 의자를 만났을 경우..
+                quest_Explanation.Text_Case(2);
+            }
+
+        }
+        if (collision.CompareTag("lock"))
+        {
+            //만약 자물쇠에 맞닿아 있다면.
+            _lock_And_Object_Item = collision.gameObject;
+
+            if (_lock_And_Object_Item.GetComponent<Item>().itemName == "Key00_lock")
+            {
+                //첫번째 아이템인 의자를 만났을 경우..
+                quest_Explanation.Text_Case(3);
+            }
+
+
+        }
+        if (collision.CompareTag("Hide"))
+        {
+
+            quest_Explanation.Text_Case(8);
+
+        }
+
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -380,14 +413,6 @@ public class PlayerController : MonoBehaviour
         {
             //만약 플레이어와 닿아있는 Key에서 shift를 누르면.. 인벤토리에 저장
             _item = collision.gameObject;
-            if(_item.GetComponent<Item>().itemName== "chair_Key00_Quest00")
-            {
-                //첫번째 아이템인 의자를 만났을 경우..
-                quest_Explanation.Text_Case(2);
-            }
-
-
-
 
             if (Input.GetKey(KeyCode.C))
             {
@@ -409,11 +434,6 @@ public class PlayerController : MonoBehaviour
             //만약 자물쇠에 맞닿아 있다면.
             _lock_And_Object_Item = collision.gameObject;
 
-            if (_lock_And_Object_Item.GetComponent<Item>().itemName == "Key00_lock")
-            {
-                //첫번째 아이템인 의자를 만났을 경우..
-                quest_Explanation.Text_Case(3);
-            }
 
             if (Input.GetKey(KeyCode.C))
             {
@@ -441,7 +461,6 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Hide"))
         {
 
-            quest_Explanation.Text_Case(8);
             if (Input.GetKey(KeyCode.DownArrow))
             {
                 //숨었나요?
