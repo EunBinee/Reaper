@@ -7,15 +7,25 @@ public class Quest_Explanation : MonoBehaviour
    // public GameObject text;
     public Text Ex_text; //설명을 위한 text..
     public List<int> arr = new List<int>();
+
+    //퀘스트 설명 페이드 아웃
+    public bool start_PadeOut = false;
     void Start()
     {
         Ex_text.text = "";
     }
 
+    bool startPadeIn;
+    bool startPadeOut;
+
     // Update is called once per frame
     void Update()
     {
-        
+        if(start_PadeOut)
+        {
+            start_PadeOut = false;
+            StartCoroutine(Ex_Text_FadeOut());
+        }
     }
 
    public void Text_Case(int num)
@@ -164,6 +174,8 @@ public class Quest_Explanation : MonoBehaviour
         if (arr.Contains(num))
         {
             arr.Remove(num);
+            StopCoroutine("Ex_Text_FadeOut");
+            StopCoroutine("Ex_Text_FadeIn");
         }
     }
 
@@ -175,11 +187,22 @@ public class Quest_Explanation : MonoBehaviour
 
     IEnumerator Ex_Text_FadeOut()
     {
-        yield return new WaitForSeconds(4f); //4초동안 기다리는 뜻
+        yield return new WaitForSeconds(6f); //4초동안 기다리는 뜻
+        startPadeOut = true;
 
+        if (startPadeIn)
+        {
+            StopCoroutine("Ex_Text_FadeOut");
+            startPadeOut = false;
+        }
         int i = 10;
         while (i >= 0)
         {
+            if (startPadeIn)
+            {
+                StopCoroutine("Ex_Text_FadeOut");
+                startPadeOut = false;
+            }
             i -= 1;
             float f = i / 10.0f;
             Color color = Ex_text.color;
@@ -187,12 +210,14 @@ public class Quest_Explanation : MonoBehaviour
             Ex_text.color = color;
             yield return new WaitForSeconds(0.02f);
         }
-        
+        startPadeOut = false;
+
     }
 
     IEnumerator Ex_Text_FadeIn()
     {
-        int i = 0;
+        startPadeIn = true;
+        float i = Ex_text.color.a;
         while (i < 10)
         {
             i += 1;
@@ -202,7 +227,8 @@ public class Quest_Explanation : MonoBehaviour
             Ex_text.color = color;
             yield return new WaitForSeconds(0.02f);
         }
-        StartCoroutine(Ex_Text_FadeOut());
+        startPadeIn = false;
+        start_PadeOut = true;
     }
 
 

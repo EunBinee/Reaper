@@ -260,7 +260,6 @@ public class PlayerController : MonoBehaviour
         }
         if (collision.gameObject.tag == "GameClear")
         {
-
             GameObject.Find("Background_M").GetComponent<AudioSource>().Stop();
             GameObject.Find("Enemy_Walk").GetComponent<AudioSource>().Stop();
             GameObject.Find("Enemy_Chase").GetComponent<AudioSource>().Stop();
@@ -327,8 +326,8 @@ public class PlayerController : MonoBehaviour
         {
             //사다리에 닿였는지
 
-  
-            isLadder = true;
+            quest_Explanation.Text_Case(1);
+           // isLadder = true;
         }
         for(int i=1;i<11;i++)
         {
@@ -404,7 +403,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.CompareTag("Ladder"))
         {
-            quest_Explanation.Text_Case(1);
+            //quest_Explanation.Text_Case(1);
             //사다리에 닿였는지
             isLadder = true;
         }

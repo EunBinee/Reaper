@@ -251,7 +251,7 @@ public class QuestManager : MonoBehaviour
                 GameObject.Find("PutItem_S").GetComponent<AudioSource>().Play();
 
                 keys[0].transform.position = Locks_And_Object[0].position;
-
+                Locks_And_Object[0].gameObject.SetActive(false); //발판 위치 오브젝트 비활성화
                 inventory.Destory_onlyList();
 
                 keys[0].tag = "canJump";
