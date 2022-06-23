@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class Case : MonoBehaviour
+public class Cage : MonoBehaviour
 {
     public CameraShake cameraShake;
     public GameObject EnemyGenerator;
