@@ -9,14 +9,15 @@ public class Quest_Explanation : MonoBehaviour
     public List<int> arr = new List<int>();
 
     //퀘스트 설명 페이드 아웃
-    public bool start_PadeOut = false;
+    public bool start_PadeOut = false; 
+    public bool startPadeOut = false;
     void Start()
     {
         Ex_text.text = "";
     }
 
     bool startPadeIn;
-    bool startPadeOut;
+
 
     // Update is called once per frame
     void Update()
