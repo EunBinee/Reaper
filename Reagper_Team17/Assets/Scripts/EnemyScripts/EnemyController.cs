@@ -128,7 +128,7 @@ public class EnemyController : MonoBehaviour
         if(!SameFloor)
         {
             Debug.Log("같은 층이 아닙니다.사라집니다");
-            Invoke("EnemyDestroy_NotSameFloor", 15f);
+            Invoke("EnemyDestroy_NotSameFloor", 13f);
         }
 
 
@@ -176,7 +176,7 @@ public class EnemyController : MonoBehaviour
             if (time > maxtime)
             {
                 CheckDirec();// maxtime초 마다 플레이어의 위치 받아옴.
-                maxtime = Random.Range(1, 4);
+                maxtime = Random.Range(1, 3);
                 time = 0;
             }
             movementSpeed = (7+ plus);//ㅈㄴ빠르게
