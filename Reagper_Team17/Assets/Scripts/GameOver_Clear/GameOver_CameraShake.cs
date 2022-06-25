@@ -13,6 +13,7 @@ public class GameOver_CameraShake : MonoBehaviour
 
 
     public GameObject canvas;
+    public GameObject description;
     void Start()
     {
         initialPosition = transform.position;
@@ -21,35 +22,35 @@ public class GameOver_CameraShake : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(ShakeTime > 0)
+        if(ShakeTime!=-1)
         {
-            transform.position = Random.insideUnitSphere * ShakeAmount + initialPosition;
-            curPos = transform.position;
-            ShakeTime -= Time.deltaTime;
-        }
-        else
-        {
-            ShakeTime = 0;
-            if(ShakeTime==0)
+            if (ShakeTime > 0)
             {
-                //GameObject.Find("I_Will_Kill_You_S").GetComponent<AudioSource>().Play();
-                Invoke("UI_SetTrue", 3f);//1√  µÙ∑π¿Ã
+                transform.position = Random.insideUnitSphere * ShakeAmount + initialPosition;
+                curPos = transform.position;
+                ShakeTime -= Time.deltaTime;
             }
+            else
+            {
+                ShakeTime = 0;
+                if (ShakeTime == 0)
+                {
+                    Invoke("UI_SetTrue", 3f);//1√  µÙ∑π¿Ã
+                    ShakeTime = -1;
+                }
 
+                this.transform.position = Vector3.Lerp(curPos, initialPosition, Time.deltaTime * 2f);
 
-            
-            this.transform.position = Vector3.Lerp(curPos, initialPosition, Time.deltaTime * 2f);
-
-            ShakeTime = -1;
-
+            }
         }
+       
     }
 
     void UI_SetTrue()
     {
         //GameObject.Find("Monster_Sound").GetComponent<AudioSource>().Play();
         canvas.SetActive(true);
-
+        description.SetActive(false);
     }
 
 }

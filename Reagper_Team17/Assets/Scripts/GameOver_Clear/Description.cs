@@ -16,8 +16,10 @@ public class Description : MonoBehaviour
     
     void Start()
     {
+        Time.timeScale = 0;
         img = GetComponent<Image>();
         cur_ImageNum = 0; //처음 이미지 순서는 0번
+        img.sprite = Des_arr[cur_ImageNum];
     }
     // Update is called once per frame
     void Update()
@@ -32,6 +34,7 @@ public class Description : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Tab))
         {
+            Time.timeScale = 1;
             this.gameObject.SetActive(false);
         }
     }

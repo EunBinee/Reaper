@@ -32,6 +32,11 @@ public class GameDirector : MonoBehaviour
     
     public GameObject GameClearLight;//글로벌 라이트;
     public GameObject Light;//글로벌 라이트;
+
+    //===========================
+    //게임 방법
+    public GameObject Desc;
+
     void Start()
     {
         playercontroller = GameObject.Find("Player").GetComponent<PlayerController>();
@@ -41,7 +46,17 @@ public class GameDirector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GetLife)
+
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            //일시정지
+
+            Time.timeScale = 0;
+            Desc.SetActive(true);
+        }
+
+
+        if (GetLife)
         {
             time += Time.deltaTime;
             Debug.Log((int)time);
