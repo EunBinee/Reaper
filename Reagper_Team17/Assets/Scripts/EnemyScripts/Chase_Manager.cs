@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Chase_Manager : MonoBehaviour
 {
-    EnemyGanerator enemyGanerator;
+    EnemyGenerator enemyGenerator;
     GameObject Portal;
     Portal portalScript;
 
@@ -15,10 +15,10 @@ public class Chase_Manager : MonoBehaviour
     bool checking = false; //Stay2d에서enemyMove.CheckDirec();을 여러번 반복하는게 싫어서 // 추적이 풀리면 checking을 다시 푼다.
     void Start()
     {
-        enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
+        enemyGenerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGenerator>();
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
 
-        Portal = enemyGanerator.curPortal;
+        Portal = enemyGenerator.curPortal;
 
         if (Portal != null)
         {

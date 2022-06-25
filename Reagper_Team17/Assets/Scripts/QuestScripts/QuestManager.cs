@@ -9,7 +9,7 @@ public class QuestManager : MonoBehaviour
     public GameObject player;
 
     public GameDirector gameDirector;
-    public EnemyGanerator enemyGanerator;
+    public EnemyGenerator enemyGenerator;
 
     public CameraShake cameraShake; //카메라의 흔들림
 
@@ -251,7 +251,7 @@ public class QuestManager : MonoBehaviour
                 GameObject.Find("PutItem_S").GetComponent<AudioSource>().Play();
 
                 keys[0].transform.position = Locks_And_Object[0].position;
-
+                Locks_And_Object[0].gameObject.SetActive(false); //발판 위치 오브젝트 비활성화
                 inventory.Destory_onlyList();
 
                 keys[0].tag = "canJump";
@@ -455,7 +455,7 @@ public class QuestManager : MonoBehaviour
             {
                 float ObectPosX = Locks_And_Object[7].position.x;
                 // enemyGanerator.SetActive(false); //마지막 문을 열면, 적 생성기 없앰
-                enemyGanerator.stop_Ganerator = true;
+                enemyGenerator.stop_Ganerator = true;
 
                 //소리
                 GameObject.Find("Door_S").GetComponent<AudioSource>().Play();

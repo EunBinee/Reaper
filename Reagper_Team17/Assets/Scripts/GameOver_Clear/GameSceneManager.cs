@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameDirector_G : MonoBehaviour
+public class GameSceneManager: MonoBehaviour
 {
     // Start is called before the first frame update
+
+    public GameObject Description;
     void Start()
     {
         
@@ -14,6 +16,12 @@ public class GameDirector_G : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            Description.SetActive(true);
+        }
+        
+
         
     }
 

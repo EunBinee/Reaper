@@ -13,7 +13,7 @@ public class Portal : MonoBehaviour
     bool EndPortal = false; //만약 false인 경우, 막 처음 생성 된 경우, true인 경우 이제 사라질 포탈
 
     //현재 적 오브젝트
-    EnemyGanerator enemyGanerator; //existEnemy을 변경해줘야함. 나중에
+    EnemyGenerator enemyGenerator; //existEnemy을 변경해줘야함. 나중에
     GameObject Enemy_Prefab;
     GameObject Enemy_Prefab_collider;
     GameObject Enemy_Prefab_Light;
@@ -32,10 +32,10 @@ public class Portal : MonoBehaviour
 
         sr = GetComponent<SpriteRenderer>();
         maxtime = Random.Range(4, 7);
-        enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
-        Enemy_Prefab = enemyGanerator.enemyPrefab[0];
-        Enemy_Prefab_collider= enemyGanerator.enemyPrefab[1];
-        Enemy_Prefab_Light = enemyGanerator.enemyPrefab[2];
+        enemyGenerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGenerator>();
+        Enemy_Prefab = enemyGenerator.enemyPrefab[0];
+        Enemy_Prefab_collider= enemyGenerator.enemyPrefab[1];
+        Enemy_Prefab_Light = enemyGenerator.enemyPrefab[2];
     }
 
     // Update is called once per frame
@@ -43,7 +43,7 @@ public class Portal : MonoBehaviour
     {
         if (!EndPortal) //갓 태어난 포탈일 경우
         {
-            if(enemyGanerator.End_Enemy_Ganerator)
+            if(enemyGenerator.End_Enemy_Ganerator)
             {
                 //마지막 씬인 경우
                 EnemyPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
@@ -105,13 +105,13 @@ public class Portal : MonoBehaviour
 
     void Destroy_Portal()
     {
-        enemyGanerator.existEnemy = false;
+        enemyGenerator.existEnemy = false;
         Destroy(gameObject);
     }
 
     public void Destroy_All()
     {
-        enemyGanerator.existEnemy = false;
+        enemyGenerator.existEnemy = false;
 
         Destroy(CurEnemy);
         Destroy(CurEnemyCollider);

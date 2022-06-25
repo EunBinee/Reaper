@@ -27,13 +27,21 @@ public class GameDirector : MonoBehaviour
 
     //==========================
     //엔딩
-    public EnemyGanerator enemyGanerator;
+    public EnemyGenerator enemyGenerator;
     public GameObject GameClearBoard; //화면을 밝게 해줄..
     
     public GameObject GameClearLight;//글로벌 라이트;
     public GameObject Light;//글로벌 라이트;
+
+    //===========================
+    //게임 방법 및 일시정지
+    public GameObject Desc;
+    public GameObject Button_panel;
+    bool isPause = false;
+
     void Start()
     {
+        Time.timeScale = 1;
         playercontroller = GameObject.Find("Player").GetComponent<PlayerController>();
         questManager= GameObject.Find("QuestManager").GetComponent<QuestManager>();
     }
@@ -41,7 +49,32 @@ public class GameDirector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GetLife)
+        if (Input.GetKeyDown(KeyCode.Escape)&& !isPause)
+        {
+            //일시정지,하고 종료 버튼 보여주기
+
+            Time.timeScale = 0;
+            Button_panel.SetActive(true);
+            isPause = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && isPause)
+        {
+            //일시정지,하고 종료 버튼 보여주기
+
+            Time.timeScale = 1;
+            Button_panel.SetActive(false);
+            isPause = false;
+        }
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            //일시정지gkrh, 설명창보여주기
+
+            Time.timeScale = 0;
+            Desc.SetActive(true);
+        }
+
+
+        if (GetLife)
         {
             time += Time.deltaTime;
             Debug.Log((int)time);
@@ -153,8 +186,8 @@ public class GameDirector : MonoBehaviour
     public void End_Scene()
     {
         //적 생성
-        enemyGanerator.End_Enemy_Ganerator = true;
-        enemyGanerator.stop_Ganerator = true;
+        enemyGenerator.End_Enemy_Ganerator = true;
+        enemyGenerator.stop_Ganerator = true;
         ChasingTrue();
     }
     void ChasingTrue()
@@ -182,8 +215,8 @@ public class GameDirector : MonoBehaviour
 
     public void GameClear()
     {
-        enemyGanerator.End_Enemy_Ganerator = true;
-        enemyGanerator.stop_Ganerator = true;
+        enemyGenerator.End_Enemy_Ganerator = true;
+        enemyGenerator.stop_Ganerator = true;
         GameClearLight.SetActive(false);
         Light.SetActive(true);
         GameObject.Find("Background_M").GetComponent<AudioSource>().Stop();
@@ -233,6 +266,26 @@ public class GameDirector : MonoBehaviour
 
         SceneManager.LoadScene("GameClearScene");
 
+    }
+
+
+
+    //=====================================================================
+    //esc누르고 일시정지후 나오는 버튼들
+    public void GoStartScene_B()
+    {
+        GameObject.Find("Button_S").GetComponent<AudioSource>().Play();
+        SceneManager.LoadScene("StartScene");
+    }
+    public void ReStart_B()
+    {
+        GameObject.Find("Button_S").GetComponent<AudioSource>().Play();
+        SceneManager.LoadScene("GameScene");
+    }
+    public void Exit_B()
+    {
+        GameObject.Find("Button_S").GetComponent<AudioSource>().Play();
+        Application.Quit();
     }
 
 

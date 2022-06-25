@@ -21,7 +21,7 @@ public class Item : MonoBehaviour
     public int pair; //Lock과 Key의 pair가 맞을 때, 사용 가능.
 
     public bool notMoving;//화면상에 존재하지만, 이제 아이템으로써 움직이지않겠다는 의미
-    public bool haveEventAsObject;
+    public bool haveEventAsObject; //오브젝트로써 이벤트가 있는지 여부
     public bool Use()
     {
         //아이템 사용의 성공 여부를 반환하기 위해..
