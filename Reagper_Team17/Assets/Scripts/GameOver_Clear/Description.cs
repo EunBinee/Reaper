@@ -30,6 +30,10 @@ public class Description : MonoBehaviour
         {
             Next_Image();
         }
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            this.gameObject.SetActive(false);
+        }
     }
 
     void Pre_Image()
