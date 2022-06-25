@@ -349,6 +349,36 @@ public class PlayerController : MonoBehaviour
             }
         }
 
+
+
+        if (collision.CompareTag("Hide"))
+        {
+
+            //숨었나요?
+            //납짝 업드린 애니메이션 추가
+            sr.color = new Color(0.55f, 0.5f, 0.5f, 0.7f);
+            if (Enemy != null)
+            {
+                if (enemyController.SameRoom)
+                {
+                    //만약 같은 방에 enemy가 있다면, ishiding실패
+                    ishiding = false;
+                }
+                else
+                {
+                    //만약 같은 방에 enemy가 없다면, ishiding성공
+                    ishiding = true;
+                }
+            }
+            else
+            {
+                //만약 같은 방에 enemy가 없다면, ishiding성공
+                ishiding = true;
+            }
+
+        }
+     
+
         if (collision.CompareTag("end_Collider"))
         {
             //end를 위한 collider를 밟는다면..?
@@ -444,7 +474,7 @@ public class PlayerController : MonoBehaviour
             }
         }
         //
-        if (collision.CompareTag("Hide"))
+        /*if (collision.CompareTag("Hide"))
         {
 
             if (Input.GetKey(KeyCode.DownArrow))
@@ -471,7 +501,7 @@ public class PlayerController : MonoBehaviour
                     ishiding = true;
                 }
             }
-        }
+        }*/
 
         //Quest01
         if (collision.CompareTag("Hint01_Quest01"))
