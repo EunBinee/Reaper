@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rigid;
     SpriteRenderer sr;
 
-    public EnemyGanerator enemyGanerator;
+    public EnemyGenerator enemyGenerator;
     Portal portalScript;
     GameObject Enemy;
     GameObject Portal;
@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
         anim = GetComponent<Animator>();
          //적 스크립트
          //enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
-         Portal = enemyGanerator.curPortal;
+         Portal = enemyGenerator.curPortal;
 
         if (Portal != null)
         {
@@ -473,35 +473,6 @@ public class PlayerController : MonoBehaviour
                 isUsingObject = false;
             }
         }
-        //
-        /*if (collision.CompareTag("Hide"))
-        {
-
-            if (Input.GetKey(KeyCode.DownArrow))
-            {
-                //숨었나요?
-                //납짝 업드린 애니메이션 추가
-                sr.color = new Color(0.55f, 0.5f, 0.5f, 0.7f);
-                if(Enemy!=null)
-                {
-                    if (enemyController.SameRoom)
-                    {
-                        //만약 같은 방에 enemy가 있다면, ishiding실패
-                        ishiding = false;
-                    }
-                    else
-                    {
-                        //만약 같은 방에 enemy가 없다면, ishiding성공
-                        ishiding = true;
-                    }
-                }
-               else
-                {
-                    //만약 같은 방에 enemy가 없다면, ishiding성공
-                    ishiding = true;
-                }
-            }
-        }*/
 
         //Quest01
         if (collision.CompareTag("Hint01_Quest01"))

@@ -27,7 +27,7 @@ public class GameDirector : MonoBehaviour
 
     //==========================
     //엔딩
-    public EnemyGanerator enemyGanerator;
+    public EnemyGenerator enemyGenerator;
     public GameObject GameClearBoard; //화면을 밝게 해줄..
     
     public GameObject GameClearLight;//글로벌 라이트;
@@ -186,8 +186,8 @@ public class GameDirector : MonoBehaviour
     public void End_Scene()
     {
         //적 생성
-        enemyGanerator.End_Enemy_Ganerator = true;
-        enemyGanerator.stop_Ganerator = true;
+        enemyGenerator.End_Enemy_Ganerator = true;
+        enemyGenerator.stop_Ganerator = true;
         ChasingTrue();
     }
     void ChasingTrue()
@@ -215,8 +215,8 @@ public class GameDirector : MonoBehaviour
 
     public void GameClear()
     {
-        enemyGanerator.End_Enemy_Ganerator = true;
-        enemyGanerator.stop_Ganerator = true;
+        enemyGenerator.End_Enemy_Ganerator = true;
+        enemyGenerator.stop_Ganerator = true;
         GameClearLight.SetActive(false);
         Light.SetActive(true);
         GameObject.Find("Background_M").GetComponent<AudioSource>().Stop();
@@ -287,15 +287,6 @@ public class GameDirector : MonoBehaviour
         GameObject.Find("Button_S").GetComponent<AudioSource>().Play();
         Application.Quit();
     }
-
-
-
-
-
-
-
-
-
 
 
 }

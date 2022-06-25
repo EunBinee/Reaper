@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy_Light : MonoBehaviour
 {
-    EnemyGanerator enemyGanerator;
+    EnemyGenerator enemyGenerator;
     GameObject Portal;
     Portal portalScript;
 
@@ -12,8 +12,8 @@ public class Enemy_Light : MonoBehaviour
     EnemyController enemyController;
     void Start()
     {
-        enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
-        Portal = enemyGanerator.curPortal;
+        enemyGenerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGenerator>();
+        Portal = enemyGenerator.curPortal;
 
         if (Portal != null)
         {
@@ -30,7 +30,7 @@ public class Enemy_Light : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Portal = enemyGanerator.curPortal;
+        Portal = enemyGenerator.curPortal;
 
         if (Portal != null)
         {

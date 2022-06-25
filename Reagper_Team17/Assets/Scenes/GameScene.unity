@@ -4578,7 +4578,7 @@ MonoBehaviour:
   curLife: {fileID: 0}
   ExplanationBox: {fileID: 1201882223}
   TextForExplanation: {fileID: 1043286901}
-  enemyGanerator: {fileID: 473914555}
+  enemyGenerator: {fileID: 473914555}
   GameClearBoard: {fileID: 1620377495}
   GameClearLight: {fileID: 1172784138}
   Light: {fileID: 2068344149}
@@ -13413,7 +13413,7 @@ MonoBehaviour:
   playerController: {fileID: 1349949218}
   player: {fileID: 1349949212}
   gameDirector: {fileID: 502994340}
-  enemyGanerator: {fileID: 473914555}
+  enemyGenerator: {fileID: 473914555}
   cameraShake: {fileID: 519420030}
   curInventor_Item: {fileID: 0}
   curLockItem: {fileID: 0}
@@ -14935,7 +14935,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3906b55abd9ae5443be917819d4103f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyGanerator: {fileID: 473914555}
+  enemyGenerator: {fileID: 473914555}
   questManager: {fileID: 1253860569}
   gameDirector: {fileID: 502994340}
   dontMove: 0

@@ -9,7 +9,7 @@ public class EnemyController : MonoBehaviour
     public int playerRoomPos; //플레이어가 있는 방
     public int playerFloorPos;//플레이어가 있는 층
 
-    EnemyGanerator enemyGanerator;
+    EnemyGenerator enemyGenerator;
 
     public int EnemyRoomPos; //적이 있는 방
     public int EnemyFloorPos; //적이 있는 층
@@ -56,13 +56,13 @@ public class EnemyController : MonoBehaviour
 
         GameObject Player = GameObject.Find("Player");
         player = Player.GetComponent<PlayerController>();
-        enemyGanerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGanerator>();
+        enemyGenerator = GameObject.Find("EnemyGanerator").GetComponent<EnemyGenerator>();
         sr = GetComponent<SpriteRenderer>();
         playerRoomPos = player.GetRoom();
         playerFloorPos = player.GetFloor();
         CheckDirec();
 
-        if (enemyGanerator.End_Enemy_Ganerator)
+        if (enemyGenerator.End_Enemy_Ganerator)
         {
             //마지막 씬에 나오는 적일 경우,
             //바로 추적 ㄱㄱㄱ
@@ -154,7 +154,7 @@ public class EnemyController : MonoBehaviour
             if (player.ishiding)
             {
                 //만약 player가 숨었다면..
-                if(!enemyGanerator.End_Enemy_Ganerator)
+                if(!enemyGenerator.End_Enemy_Ganerator)
                 {
                     //만약 추적이 멈추는 때는 , 마지막 씬의 적이 아니고, 플레이어가 숨엇을 경우...^^..
                     hidingTime += Time.deltaTime;
